@@ -4,6 +4,7 @@ import helmet from 'helmet';
 import dotenv from 'dotenv';
 import swaggerUi from 'swagger-ui-express';
 import YAML from 'yamljs';
+import { UserRouter, ProjectRouter, TaskRouter, TasklistRouter } from './routers';
 
 dotenv.config();
 
@@ -14,14 +15,14 @@ app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('<h1>Hello from the TypeScript world!</h1>');
-});
 
 
-app.get('/abcd/:abc', function (req: { headers: any; }, res: { send: (arg0: any) => void; }) {
-    res.send(req.headers );
-});
+app.use('/user', UserRouter);
+app.use('/project', ProjectRouter);
+app.use('/tasklist', TasklistRouter);
+app.use('/task', TaskRouter);
+
+
 
 const swaggerDocument = YAML.load("./basic-api-doc.yml");
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
