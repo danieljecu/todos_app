@@ -1,0 +1,75 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model flyway_schema_history {
+  installed_rank Int      @id(map: "flyway_schema_history_pk")
+  version        String?  @db.VarChar(50)
+  description    String   @db.VarChar(200)
+  type           String   @db.VarChar(20)
+  script         String   @db.VarChar(1000)
+  checksum       Int?
+  installed_by   String   @db.VarChar(100)
+  installed_on   DateTime @default(now()) @db.Timestamp(6)
+  execution_time Int
+  success        Boolean
+
+  @@index([success], map: "flyway_schema_history_s_idx")
+}
+
+model project_users {
+  id         Int       @id(map: "project_users_pk") @default(autoincrement())
+  project_id Int?
+  user_id    Int?
+  projects   projects? @relation(fields: [project_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "project_users_project_id_fk")
+  users      users?    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "project_users_user_id_fk")
+}
+
+model projects {
+  id            Int             @id(map: "projects_pk") @default(autoincrement())
+  name          String?
+  project_users project_users[]
+  task_lists    task_lists[]
+}
+
+model task_lists {
+  id         Int       @id(map: "task_lists_pk") @default(autoincrement())
+  name       String?
+  project_id Int?
+  projects   projects? @relation(fields: [project_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "task_lists_project_id_fk")
+  tasks      tasks[]
+}
+
+model task_statuses {
+  id    Int     @id(map: "task_statuses_pk") @default(autoincrement())
+  name  String
+  tasks tasks[]
+}
+
+model tasks {
+  id             Int            @id(map: "tasks_pk") @default(autoincrement())
+  title          String?
+  description    String?
+  due_date       DateTime?      @db.Date
+  created_at     DateTime?      @db.Timestamp(6)
+  comments       String?
+  task_list_id   Int?
+  task_status_id Int?
+  task_lists     task_lists?    @relation(fields: [task_list_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "tasks_task_list_id_fk")
+  task_statuses  task_statuses? @relation(fields: [task_status_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "tasks_task_status_id_fk")
+}
+
+model users {
+  id            Int             @id(map: "users_pk") @default(autoincrement())
+  email         String?
+  username      String?
+  password      String?
+  first_name    String?
+  last_name     String?
+  project_users project_users[]
+}

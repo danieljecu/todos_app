@@ -1,5 +1,5 @@
-INSERT INTO users (id, email, username, password)
-VALUES (0, 'danu.com', 'dan', '999');
+INSERT INTO users (id, email, username, password, first_name, last_name)
+VALUES (0, 'danielu.com', 'danielj', '999','Catalin Daniel','Jecu');
 
 
 INSERT INTO projects (id, name)
