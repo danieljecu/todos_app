@@ -1,4 +1,4 @@
-import { getAllTasklists, getTasklist, createTasklist,updateTasklist, deleteTasklist } from '../controllers/tasklist';
+import { getAllTasklists, getTasklist, createTasklist,updateTasklist, deleteTasklist } from '../../controllers/tasklist';
 import { Router } from 'express';
 
 const TasklistRouter = Router();
