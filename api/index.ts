@@ -4,7 +4,7 @@ import helmet from 'helmet';
 import dotenv from 'dotenv';
 import swaggerUi from 'swagger-ui-express';
 import YAML from 'yamljs';
-import { UserRouter, ProjectRouter, TaskRouter, TasklistRouter } from './routers';
+import { UserRouter, ProjectRouter, TaskRouter } from './routers';
 
 dotenv.config();
 
@@ -15,13 +15,10 @@ app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-
-
 app.use('/user', UserRouter);
 app.use('/project', ProjectRouter);
-app.use('/tasklist', TasklistRouter);
+// will use /tasklist always under the project
 app.use('/task', TaskRouter);
-
 
 
 const swaggerDocument = YAML.load("./basic-api-doc.yml");
@@ -29,11 +26,5 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.listen(PORT, () => console.log(`Running on ${PORT} ⚡`));
 
-
-
-
-
-
-console.log('Hello World!');
 
 
