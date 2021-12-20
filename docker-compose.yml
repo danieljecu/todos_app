@@ -19,5 +19,13 @@ services:
       - ./Migrations:/flyway/sql
     depends_on:
       - db
+  api:
+    build: ./api
+    ports:
+      - 3000:3000
+    environment:
+      DATABASE_URL: "postgresql://user:password@db:5432/todo?schema=public"
+    depends_on:
+      - flyway
 volumes:
   db: 
