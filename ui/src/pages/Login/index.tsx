@@ -1,4 +1,4 @@
-import '@reach/dialog/styles.css'
+import '@reach/dialog/styles.css';
 import React from 'react';
 import {Dialog} from '@reach/dialog';
 
@@ -24,16 +24,28 @@ function LoginForm({onSubmit, buttonText}: LoginFormProps){
         })
     }
     return(
-        <form onSubmit={handleSubmit}>
+        <form
+        // css={{
+        //   display: 'flex',
+        //   flexDirection: 'column',
+        //   alignItems: 'stretch',
+        //   '> div': {
+        //     margin: '10px auto',
+        //     width: '100%',
+        //     maxWidth: '300px',
+        //   },
+        // }}
+        onSubmit={handleSubmit}
+      >
             <div>
-            <label htmlFor="username">Username</label>
+                <label htmlFor="username">Username</label>
                 <Input id="username" type="text" />
             </div>
             <div>
             <label htmlFor="password">Password</label>
                 <Input id="password" type="password" />
             </div>
-            <button type="submit">{buttonText}</button>
+            <Button type="submit">{buttonText}</Button>
         </form>
     )
 }
@@ -56,13 +68,13 @@ function Login() {
     {openModal === 'login' && 
     <Dialog aria-label='login form' isOpen={openModal === 'login'}>
         <div>
-            <Button onClick={()=> {setOpenModal('none')}}>Close</Button>
+            <button onClick={()=> {setOpenModal('none')}}>Close</button>
             <LoginForm onSubmit={login} buttonText="Login" />
         </div>
     </Dialog>}
     {openModal === 'register' && <Dialog aria-label='register form' isOpen={openModal === 'register'}>
         <div>
-            <Button onClick={()=> {setOpenModal('none')}}>Close</Button>
+            <button onClick={()=> {setOpenModal('none')}}>Close</button>
             <LoginForm onSubmit={register} buttonText="register" />
         </div>
     </Dialog>}
