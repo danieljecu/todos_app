@@ -5,12 +5,14 @@ import dotenv from 'dotenv';
 import swaggerUi from 'swagger-ui-express';
 import YAML from 'yamljs';
 import { UserRouter, ProjectRouter, TaskRouter } from './routers';
+import cors from 'cors';
 
 dotenv.config();
 
 const PORT = process.env.PORT || 3000;
 const app: Express = express();
 
+app.use(cors());
 app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
