@@ -34,7 +34,7 @@ const Input = styled.input({
 });
 
 
-const FormGroup = styled.input({
+const FormGroup = styled.div({
   display: 'flex',
   flexDirection: 'column',
 })
