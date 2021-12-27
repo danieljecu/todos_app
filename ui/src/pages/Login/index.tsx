@@ -3,7 +3,8 @@ import React from 'react';
 import {Dialog} from '@reach/dialog';
 
 import {Logo} from '../../components/logo';
-import {Button, Input, FormGroup} from '../../components/lib';
+import {Button, Input, FormGroup,CircleButton} from '../../components/lib';
+    // Spinner
 
 
 interface FormDataType {
@@ -37,15 +38,16 @@ function LoginForm({onSubmit, buttonText}: LoginFormProps){
         // }}
         onSubmit={handleSubmit}
       >
-            <div>
+            <FormGroup>
                 <label htmlFor="username">Username</label>
                 <Input id="username" type="text" />
-            </div>
-            <div>
+            </FormGroup>
+            <FormGroup>
             <label htmlFor="password">Password</label>
                 <Input id="password" type="password" />
-            </div>
+            </FormGroup>
             <Button type="submit">{buttonText}</Button>
+            {/* <Spinner /> */}
         </form>
     )
 }
@@ -68,13 +70,13 @@ function Login() {
     {openModal === 'login' && 
     <Dialog aria-label='login form' isOpen={openModal === 'login'}>
         <div>
-            <button onClick={()=> {setOpenModal('none')}}>Close</button>
+            <CircleButton onClick={()=> {setOpenModal('none')}}>Close</CircleButton>
             <LoginForm onSubmit={login} buttonText="Login" />
         </div>
     </Dialog>}
     {openModal === 'register' && <Dialog aria-label='register form' isOpen={openModal === 'register'}>
         <div>
-            <button onClick={()=> {setOpenModal('none')}}>Close</button>
+            <CircleButton onClick={()=> {setOpenModal('none')}}>Close</CircleButton>
             <LoginForm onSubmit={register} buttonText="register" />
         </div>
     </Dialog>}
