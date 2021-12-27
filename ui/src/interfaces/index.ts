@@ -4,3 +4,10 @@ export type {
 export type {
     IUserDetails,
     } from './users';
+export type {
+  ITasklistDetails
+} from './tasklists';
+
+export type {
+  ITaskDetails
+} from './tasks';
