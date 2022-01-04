@@ -1,15 +1,14 @@
 import { AxiosResponse } from "axios";
 import axiosInstance from "../utils/axiosInstance";
 
-import { ITaskDetails } from '../interfaces';
+import { ITaskDetails } from "../interfaces";
 
 const getTasks = (): Promise<AxiosResponse<ITaskDetails[]>> => {
-  return axiosInstance.get<ITaskDetails[]>('/task');
+  return axiosInstance.get<ITaskDetails[]>("/task");
 };
 
-
 const TaskService = {
-  getTasks
+  getTasks,
 };
 
 export default TaskService;
