@@ -1,19 +1,3 @@
-import "./App.css";
-// import { , Routes, Route } from "react-router-dom";
-
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-
-/*
-/projects
-/projects/:projectId/taskslist // taskslists
-/projects/:projectId/taskslist/ ;tasklistId // task?tasklistId=2
-
-/scratchpad
-/due-date-view
-/progress-view
-*/
-
 import * as React from "react";
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
@@ -26,7 +10,6 @@ import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import {
-  BrowserRouter,
   Link as RouterLink,
   Route,
   Routes,
@@ -34,7 +17,7 @@ import {
   useLocation
 } from "react-router-dom";
 
-import { IProjectDetails } from "./interfaces";
+import { IProjectDetails } from "../../interfaces";
 
 interface ListItemLinkProps extends ListItemProps {
   to: string;
@@ -44,9 +27,9 @@ interface ListItemLinkProps extends ListItemProps {
 const breadcrumbNameMap: { [key: string]: string } = {
   "/projects": "projects",
   "/projects/default": "default",
-  "/home": "home",
-  "/login": "login",
-
+  "/trash": "Trash",
+  "/spam": "Spam",
+  "/drafts": "Drafts"
 };
 
 function ListItemLink(props: ListItemLinkProps) {
@@ -104,9 +87,7 @@ const Page = () => {
   );
 };
 
-type AppProps = {projects: IProjectDetails[]};
-
-function App( {projects}: AppProps ) {
+export default function RouterBreadcrumbs({projects}: {projects: IProjectDetails[]}) {
   const [open, setOpen] = React.useState(true);
 
   const handleClick = () => {
@@ -121,10 +102,6 @@ function App( {projects}: AppProps ) {
       <Box sx={{ display: "flex", flexDirection: "column", width: 360 }}>
         <Routes>
           <Route path="*" element={<Page />} />
-
-          <Route path="/" element={<Home />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/login" element={<Login />} />
         </Routes>
         <Box
           sx={{
@@ -141,14 +118,11 @@ function App( {projects}: AppProps ) {
                 <ListItemLink sx={{ pl: 4 }} to="/projects/default" />
               </List>
             </Collapse>
-            <ListItemLink to="/home" />
-            <ListItemLink to="/login" />
+            <ListItemLink to="/projects" />
+            <ListItemLink to="/projects" />
           </List>
         </Box>
       </Box>
     </MemoryRouter>
   );
 }
-
-
-export default App;

@@ -6,6 +6,10 @@ import { IProjectDetails } from "../../interfaces";
 
 import {Link} from 'react-router-dom';
 import { ProjectService } from "../../services";
+import NavBar from './NavBar';
+import ProjectsNav from './ProjectsNav';
+import Button from '@mui/material/Button';
+
 
 const Wrapper = styled.div`
   width: 32%;
@@ -16,7 +20,7 @@ const Wrapper = styled.div`
 `;
 
 const AppWrapper = styled.div`
-  background-color: #282c34;
+  background-color: #95979a;
   text-align: center;
 `;
 
@@ -37,7 +41,10 @@ const Home = () => {
 
   return (
     <AppWrapper className="App">
+
+      <NavBar/>
       <h1>Home</h1>
+      <Button variant="contained">Hello World</Button>
       <ul>
         <li>
           <Link to="/">Home</Link>
@@ -46,6 +53,7 @@ const Home = () => {
           <Link to="/login">login</Link>
         </li>
       </ul>
+      {/* {projects  && <ProjectsNav projects={projects} />} */}
       {projects && projects.map(({id,name})=> <div key={id}>
         <header className="App-header"> {name}</header>
       </div>)}
