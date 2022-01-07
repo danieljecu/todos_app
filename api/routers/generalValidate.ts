@@ -7,11 +7,6 @@ const generalValidate = (req: Request, res: Response, next: NextFunction ) => {
     if (!error.isEmpty()) {
         return res.status(400).json({ errors: error.array() });
     }
-    const hasError = !error.isEmpty();
-    
-    if (hasError) {
-    res.status(400).json({ error: error.array() });
-    }
 
     next();
 };

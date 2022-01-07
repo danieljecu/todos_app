@@ -10,15 +10,14 @@ import generalValidate from '../generalValidate';
 const ProjectRouter = Router();
 ProjectRouter.get("/", generalValidate, getAllProjects);
 
-ProjectRouter.get("/:project_id([0-9]+)",
-    [
-        // check('project_id').isInt().withMessage("project_id must be numeric"),
+ProjectRouter.get("/:project_id",
+    [   param('project_id').exists().withMessage("project_id must exist ProjectRouter"),
         param('project_id').isNumeric().withMessage("project_id must be numeric")],
     generalValidate,
     getProject);
 
 ProjectRouter.post(
-    "/", 
+    "/",
     check("name")
     .notEmpty()
     .isLength({ min: 3 })
@@ -30,16 +29,16 @@ ProjectRouter.put("/:project_id([0-9]+)",
     .isLength({ min: 3 })
     .withMessage("name longer than 3 characters"),generalValidate, updateProject);
 
-ProjectRouter.delete("/:project_id([0-9]+)", 
+ProjectRouter.delete("/:project_id([0-9]+)",
 param('project_id').isNumeric().withMessage("project_id must be numeric"), generalValidate, deleteProject);
 
 
-//////// "/:project_id/tasklist" 
+//////// "/:project_id/tasklist"
 
 const TasklistRouter = Router({ mergeParams: true });
 
-TasklistRouter.get("/",     
-// param('project_id').isNumeric().withMessage("project_id must be numeric TasklistRouter"),
+TasklistRouter.get("/",
+param('project_id').isNumeric().withMessage("project_id must be numeric TasklistRouter"),
 generalValidate, getAllTasklists);
 
 TasklistRouter.get("/:tasklist_id([0-9]+)",

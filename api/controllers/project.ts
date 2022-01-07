@@ -4,7 +4,20 @@ import prisma from './db_service';
 
 async function getAllProjects(req: Request, res: Response) {
   console.log("getAllProjects")
-  const projects= await prisma.projects.findMany();
+
+  // TODO get projects by user_id
+  const projects= await prisma.projects.findMany({
+    select: {
+      id:true,
+      name:true,
+      task_lists: {
+        select:{
+          id: true,
+          name:true,
+          project_id:true
+        }
+      }
+    }});
   if (projects?.length > 0) {
   res.status(200).json(projects);
   } else {
@@ -57,7 +70,7 @@ async function updateProject(req: Request, res: Response) {
   const { project_id } = req.params;
   const { name } = req.body;
   console.log("updateProject")
-  
+
   try {
   const project = await prisma.projects.update(
     { where : {
@@ -92,7 +105,7 @@ async function deleteProject(req: Request, res: Response) {
   } catch (db_error) {
     res.status(404).json({ error: "Project not found", db_error });
   }
- 
+
 }
 
 
