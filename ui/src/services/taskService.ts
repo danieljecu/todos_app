@@ -7,7 +7,12 @@ const getTasks = (): Promise<AxiosResponse<ITaskDetails[]>> => {
   return axiosInstance.get<ITaskDetails[]>("/task");
 };
 
+const getTasksByTasklistId = (tasklistId: number): Promise<AxiosResponse<ITaskDetails[]>> => {
+  return axiosInstance.get<ITaskDetails[]>(`/task?tasklist=${tasklistId}`);
+};
+
 const TaskService = {
+  getTasksByTasklistId,
   getTasks,
 };
 
