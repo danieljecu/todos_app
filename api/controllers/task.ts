@@ -4,7 +4,6 @@ import prisma from "./db_service";
 
 async function getAllTasks(req: Request, res: Response) {
   const { tasklist } = req.query;
-  console.log("query", tasklist, req.params, req.query);
   const tasks = await prisma.tasks.findMany({
     select: {
       id: true,
@@ -17,9 +16,7 @@ async function getAllTasks(req: Request, res: Response) {
       task_status_id: true,
     },
     where: {
-      task_list_id: tasklist
-        ? { equals: Number(tasklist) }
-        : null,
+      task_list_id: tasklist ? { equals: Number(tasklist) } : null,
     },
   });
 
