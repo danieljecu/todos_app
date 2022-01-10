@@ -1,17 +1,9 @@
 import React, { useState } from "react";
-import { TextField } from "@mui/material";
 
 import { styled, alpha } from "@mui/material/styles";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
-import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
-import MenuItem from "@mui/material/MenuItem";
-import Menu from "@mui/material/Menu";
+
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -64,7 +56,6 @@ export default function SearchBar() {
   };
 
   return (
-    <div>
       <Search>
         <SearchIconWrapper>
           <SearchIcon />
@@ -72,16 +63,9 @@ export default function SearchBar() {
         <StyledInputBase
           placeholder="Search…"
           inputProps={{ "aria-label": "search" }}
+          value={searchValue}
+          onChange={handleInput}
         />
       </Search>
-
-      <TextField helperText="search" id="search" label="search" />
-      <input
-        type="text"
-        value={searchValue}
-        placeholder="Search"
-        onChange={handleInput}
-      />
-    </div>
   );
 }
