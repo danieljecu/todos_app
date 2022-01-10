@@ -1,33 +1,16 @@
 import React from "react";
-import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Home from "./pages/Home";
-import Login from "./pages/Login";
+const AuthRouter = React.lazy(() => import('./routers/authentication.router'));
+const AppRouter = React.lazy(() => import('./routers/app.router'));
 
-/*
-/projects
-/projects/:projectId/taskslist // taskslists
-/projects/:projectId/taskslist/ ;tasklistId // task?tasklistId=2
-
-
-/scratchpad
-/due-date-view
-/progress-view
-
-
-
-*/
 function App() {
-  return (
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-        </Routes>
-      </BrowserRouter>
-  );
+    const isLoggedIn = true;
+
+    if (!isLoggedIn) {
+        return <AuthRouter/>
+    }
+
+    return <AppRouter/>
 }
 
 export default App;

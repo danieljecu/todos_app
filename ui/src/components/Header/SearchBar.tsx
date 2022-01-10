@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { TextField } from "@mui/material";
 
 export default function SearchBar() {
   const [searchValue, setSearchValue] = useState("");
@@ -11,7 +11,12 @@ export default function SearchBar() {
 
   return (
     <div>
-         <input
+      <TextField
+        helperText="search"
+        id="search"
+        label="search"
+      />
+      <input
         type="text"
         value={searchValue}
         placeholder="Search"
