@@ -3,9 +3,13 @@ import React from "react";
 import { Dialog } from "@reach/dialog";
 
 import { Logo } from "../../components/logo";
-import { Button, Input,
-    Spinner,
- FormGroup, CircleButton } from "../../components/lib";
+import {
+  Button,
+  Input,
+  Spinner,
+  FormGroup,
+  CircleButton,
+} from "../../components/lib";
 
 interface FormDataType {
   username: string;
@@ -51,7 +55,7 @@ function LoginForm({ onSubmit, buttonText }: LoginFormProps) {
     </form>
   );
 }
-function Login() {
+export const Login = () => {
   const [openModal, setOpenModal] = React.useState("none");
 
   function login(formData: FormDataType) {
@@ -110,6 +114,4 @@ function Login() {
       )}
     </>
   );
-}
-
-export default Login;
+};
