@@ -1,16 +1,17 @@
 import React from "react";
+import { useCurrentUser } from "./context/auth";
 
-const AuthRouter = React.lazy(() => import('./routers/authentication.router'));
-const AppRouter = React.lazy(() => import('./routers/app.router'));
+const AuthRouter = React.lazy(() => import("./routers/authentication.router"));
+const AppRouter = React.lazy(() => import("./routers/app.router"));
 
 function App() {
-    const isLoggedIn = true;
+  const { auth } = useCurrentUser();
 
-    if (!isLoggedIn) {
-        return <AuthRouter/>
-    }
+  if (!auth) {
+    return <AuthRouter />;
+  }
 
-    return <AppRouter/>
+  return <AppRouter />;
 }
 
 export default App;
