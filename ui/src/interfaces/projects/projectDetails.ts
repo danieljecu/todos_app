@@ -1,7 +1,7 @@
 import { ITasklistDetails } from "..";
 
 export default interface IProjectDetails {
-    id: string;
+    id: number;
     name: string;
     task_lists: ITasklistDetails[];
   }

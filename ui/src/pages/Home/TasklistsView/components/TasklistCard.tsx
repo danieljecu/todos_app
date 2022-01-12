@@ -2,27 +2,27 @@ import React from "react";
 import {Link as ReactLink} from "react-router-dom";
 import Link from '@mui/material/Link';
 import styled from "styled-components";
+import { ITaskDetails } from "../../../../interfaces/tasks";
 
 
-interface ProjectCardProps {
+interface TasklistCardProps {
     id: number;
-    title: string;
-    items?: any[];
-
+    name: string;
+    tasks?: any[];
 }
 
-export const ProjectCard: React.FC<ProjectCardProps> = ({id: projectID, title, items}) => {
+export const TasklistCard: React.FC<TasklistCardProps> = ({id:tasklistId, name, tasks}) => {
     return (
         <ProjectCardContainer>
             <CardTitle>
-                <Link to={`/projects/${projectID}`} component={ReactLink} underline={"none"}
-                      color="black">{title}</Link>
+                <Link to={`/task/?=tasklist=${tasklistId}`} component={ReactLink} underline={"none"}
+                      color="black">{name} List</Link>
             </CardTitle>
             <CardBody>
-                {items?.map(({id, name}) => (
-                    <CardBodyItem>
-                        <Link to={`/project/${projectID}/tasklist/${id}`} component={ReactLink} underline={"none"}
-                          color="black">{name}</Link>
+                {tasks?.map(({id: taskId, title}: ITaskDetails) => (
+                    <CardBodyItem key={taskId}>
+                        <Link to={`/project/${tasklistId}/tasklist/${taskId}`} component={ReactLink} underline={"none"}
+                          color="black">{title}</Link>
                     </CardBodyItem>)
                 )}
             </CardBody>
