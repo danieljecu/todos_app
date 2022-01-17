@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "@components": ["./src/components"],
+      "@interfaces": ["./src/interfaces"]
+    }
+  }
+}
