@@ -3,7 +3,7 @@ import { useProjectTasklists } from "./hooks";
 import { TasklistCard } from "./components/TasklistCard";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
-import { ITasklistDetails } from "../../../interfaces/tasklists";
+import { ITasklistDetails } from "interfaces/tasklists";
 
 import styled from "styled-components";
 import { useParams } from "react-router-dom";

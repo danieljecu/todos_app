@@ -1,11 +1,11 @@
 import React from 'react'
 
-function PageContainer() {
+function PageContainer(props: any) {
     return (
         <div>
-            
+            {props.children}
         </div>
     )
 }
 
-export default PageContainer;
+export { PageContainer };

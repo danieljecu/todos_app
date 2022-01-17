@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
-import {IProjectDetails, ITaskDetails} from "../../../../interfaces";
-import {dummyProjects} from "../../../../dummydata/dummy";
+import {IProjectDetails, ITaskDetails} from "interfaces";
+import dummyProjects from "dummydata/dummy";
 import {DropResult, ResponderProvided} from "react-beautiful-dnd";
 
 export const useProjectTasklists = () => {
