@@ -1,4 +1,4 @@
-export const dummyProjects = [
+const dummyProjects = [
   {
     id: 0,
     name: "Project 0",
@@ -92,3 +92,5 @@ export const dummyProjects = [
     ],
   },
 ];
+
+export default dummyProjects;

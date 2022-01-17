@@ -33,7 +33,7 @@ const initialUser = {
 const AuthProvider: React.FC<React.ReactNode> = ({ children }) => {
   const [userState, setUserState] = useState(initialUser);
 
-  const [auth, setAuth] = useState<boolean>(false);
+  const [auth, setAuth] = useState<boolean>(true);
 
   return (
     <AuthContext.Provider value={{ auth, setAuth }}>
