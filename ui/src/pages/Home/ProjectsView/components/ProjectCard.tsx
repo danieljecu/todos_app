@@ -1,52 +1,84 @@
 import React from "react";
-import {Link as ReactLink} from "react-router-dom";
-import Link from '@mui/material/Link';
-import styled from "styled-components";
-
+import { Link as ReactLink } from "react-router-dom";
+import Link from "@mui/material/Link";
+import {
+  ProjectCardContainer,
+  CardTitle,
+  CardBody,
+  CardBodyItem
+} from "./styled";
+import { IProjectDetails } from "interfaces";
 
 interface ProjectCardProps {
-    id: number;
-    title: string;
-    items?: any[];
-
+  id: number;
+  title: string;
+  items?: any[];
+  removeProjectById: (projectId: number) => void;
+  updateProjectById: (projectId: number, projectName: string) => void;
 }
 
-export const ProjectCard: React.FC<ProjectCardProps> = ({id: projectID, title, items}) => {
-    return (
-        <ProjectCardContainer>
-            <CardTitle>
-                <Link to={`/projects/${projectID}`} component={ReactLink} underline={"none"}
-                      color="black">{title}</Link>
-            </CardTitle>
-            <CardBody>
-                {items?.map(({id, name}) => (
-                    <CardBodyItem>
-                        <Link to={`/project/${projectID}/tasklist/${id}`} component={ReactLink} underline={"none"}
-                          color="black">{name}</Link>
-                    </CardBodyItem>)
-                )}
-            </CardBody>
-        </ProjectCardContainer>
-    );
+export const ProjectCard: React.FC<ProjectCardProps> = ({
+  id: projectId,
+  title,
+  items,
+  removeProjectById,
+  updateProjectById,
+}) => {
+  const [editMode, setEditMode] = React.useState(false);
+  const [newProjectName, setNewProjectName] = React.useState(title);
+
+  return (  
+    <ProjectCardContainer>
+      <CardTitle>
+        {editMode === false ? (
+          <Link
+            to={`/project/${projectId}`}
+            component={ReactLink}
+            underline={"none"}
+            color="black"
+          >
+            {title}
+          </Link>
+        ) : (
+          <input
+            type="text"
+            value={newProjectName}
+            //onChange={() => updateProjectById(projectId, projectName)}
+            onChange={(e) => setNewProjectName(e.target.value)}
+          />
+        )}
+        <button onClick={() => removeProjectById(projectId)}>Remove</button>
+        <button
+          onClick={() => {
+            if (editMode === true) {
+              setEditMode(!editMode); //turn edit mode off
+              updateProjectById(projectId, newProjectName); //save new data
+            } else {
+              setEditMode(!editMode); //turn edit mode on
+            }
+          }}
+        >
+          {editMode ? "Save" : "Edit"}
+        </button>
+      </CardTitle>
+      <CardBody>
+        {items?.map(({ id, name }) => (
+          <CardBodyItem key={id}>
+            {editMode === false ? (
+              <Link
+                to={`/project/${projectId}/tasklist/${id}`}
+                component={ReactLink}
+                underline={"none"}
+                color="black"
+              >
+                {name}
+              </Link>
+            ) : (
+              <input type="text" value={name} readOnly />
+            )}
+          </CardBodyItem>
+        ))}
+      </CardBody>
+    </ProjectCardContainer>
+  );
 };
-
-const ProjectCardContainer = styled.div`
-  width: 30vmax;
-  border: 2px solid #aaa3a3;
-  margin: 1.5rem 0.5rem 1.5rem 0.5rem;
-  overflow: hidden;
-`;
-
-const CardTitle = styled.div`
-  background-color: #00d3ff;
-  padding: 0.33rem 0 0.33rem 1rem;
-  border-bottom: 1px solid;
-`;
-
-const CardBody = styled.div`
-  display: flex;
-  flex-direction: column;
-`
-const CardBodyItem = styled.div`
-    margin: 0.3rem 0 0.3rem 0.3rem;
-`

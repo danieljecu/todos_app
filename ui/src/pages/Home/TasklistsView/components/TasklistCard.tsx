@@ -1,52 +1,105 @@
 import React from "react";
-import {Link as ReactLink} from "react-router-dom";
-import Link from '@mui/material/Link';
+import { Link as ReactLink } from "react-router-dom";
+import Link from "@mui/material/Link";
 import styled from "styled-components";
-import { ITaskDetails } from "interfaces/tasks";
+import { TaskCard } from "components/TaskCard";
+import { GenericCard } from "components/GenericCard";
+import { CreateTaskCard } from "components/CreateTaskCard";
 
-
+import {
+  TasklistCardContainer,
+  CardTitle,
+  CardBody,
+  CardBodyItem,
+} from "./styled";
 interface TasklistCardProps {
-    id: number;
-    name: string;
-    tasks?: any[];
+  id: number;
+  name: string;
+  tasks?: any[];
+  removeTasklistById: (tasklistId: number) => void;
+  addTask: (task: any, tasklistId?: number) => void;
 }
 
-export const TasklistCard: React.FC<TasklistCardProps> = ({id:tasklistId, name, tasks}) => {
-    return (
-        <ProjectCardContainer>
-            <CardTitle>
-                <Link to={`/tasklist/${tasklistId}`} component={ReactLink} underline={"none"}
-                      color="black">{name} List</Link>
-            </CardTitle>
-            <CardBody>
-                {tasks?.map(({id: taskId, title}: ITaskDetails) => (
-                    <CardBodyItem key={taskId}>
-                        <Link to={`/tasklist/${tasklistId}/task/${taskId}`} component={ReactLink} underline={"none"}
-                          color="black">{title}</Link>
-                    </CardBodyItem>)
-                )}
-            </CardBody>
-        </ProjectCardContainer>
-    );
+export const TasklistCard: React.FC<TasklistCardProps> = ({
+  id: tasklistId,
+  name,
+  tasks,
+  removeTasklistById,
+  addTask,
+}) => {
+  return (
+    <>
+      <TasklistCardContainer>
+        <CardTitle>
+          <Link
+            to={`/tasklist/${tasklistId}`}
+            component={ReactLink}
+            underline={"none"}
+            color="black"
+          >
+            {name} List
+          </Link>
+          <button onClick={() => removeTasklistById(tasklistId)}>Remove</button>
+        </CardTitle>
+        <CardBody>
+          {tasks?.map(
+            ({
+              id: taskId,
+              title,
+              description,
+              task_status_id,
+              due_date,
+              created_at,
+            }: any) => (
+              <CardBodyItem key={taskId}>
+                <TaskCard
+                  key={taskId}
+                  id={taskId}
+                  title={title}
+                  description={description}
+                  task_list_id={tasklistId}
+                  due_date={due_date}
+                  created_at={created_at}
+                  // removeTaskById={(taskId) => {}}
+                  // updateTaskById={(taskId, task) => {}}
+                />
+              </CardBodyItem>
+            )
+          )}
+        </CardBody>
+        <CreateTaskCard addTask={addTask} />
+      </TasklistCardContainer>
+
+      {/* <GenericCard
+        id={tasklistId}
+        cardTitle={
+          <Link
+            to={`/tasklist/${tasklistId}`}
+            component={ReactLink}
+            underline={"none"}
+            color="black"
+          >
+            {name} List
+          </Link>
+        }
+        itemsList={tasks}
+        cardBodyItem={({
+          id: taskId,
+          title,
+          description,
+          task_status_id,
+          due_date,
+          created_at,
+        }: ITaskDetails) => (
+          <TaskCard
+            key={taskId}
+            id={taskId}
+            title={title}
+            description={description}
+            task_list_id={tasklistId}
+          />
+        )}
+      /> */}
+    </>
+  );
 };
-
-const ProjectCardContainer = styled.div`
-  width: 30vmax;
-  border: 2px solid #aaa3a3;
-  margin: 1.5rem 0.5rem 1.5rem 0.5rem;
-  overflow: hidden;
-`;
-
-const CardTitle = styled.div`
-  background-color: #00d3ff;
-  padding: 0.33rem 0 0.33rem 1rem;
-  border-bottom: 1px solid;
-`;
-
-const CardBody = styled.div`
-  display: flex;
-  flex-direction: column;
-`
-const CardBodyItem = styled.div`
-    margin: 0.3rem 0 0.3rem 0.3rem;
-`
