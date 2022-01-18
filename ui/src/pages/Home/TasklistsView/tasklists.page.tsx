@@ -1,29 +1,36 @@
 import React from "react";
 import { useProjectTasklists } from "./hooks";
-import { TasklistCard } from "./components/TasklistCard";
+import { TasklistCard, CreateTasklistCard } from "./components/";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-
-import { ITasklistDetails } from "interfaces/tasklists";
 
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 
 export const TasklistsView: React.FC<{}> = ({}) => {
-  const { project, setProject } = useProjectTasklists(); // projectId
+  const { project, setProject, addTask, addTasklist, removeTasklistById } = useProjectTasklists(); // projectId
   const { projectId, id } = useParams();
 
   if (!project) {
-      return <div>{projectId}
-      {id} project dosn't existss
-      <br />Create Project</div>
+    return (
+      <div>
+        {projectId}
+        {id} project dosn't existss
+        <br />
+        Create Project
+      </div>
+    );
   }
   return (
     <TasklistContainer>
+      <CreateTasklistCard addTasklist={addTasklist} />
       {project?.task_lists?.map((task_list) => (
         <TasklistCard
+          key={task_list.id}
           id={task_list.id}
           name={task_list.name}
           tasks={task_list?.tasks}
+          removeTasklistById={removeTasklistById}
+          addTask={addTask}
         />
       ))}
     </TasklistContainer>

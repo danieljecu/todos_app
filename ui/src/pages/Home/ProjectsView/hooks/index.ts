@@ -1,1 +1,1 @@
-export * from "./useGetProjects"
+export * from "./useProjectsHandler"
