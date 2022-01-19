@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { IProjectDetails, ITaskDetails, ITasklistDetails } from "interfaces";
-import dummyProjects from "dummydata/dummy";
 import { DropResult, ResponderProvided } from "react-beautiful-dnd";
 import { ProjectService, TasklistService } from "services";
 
@@ -17,16 +16,17 @@ export const useProjectTasklists = (projectId: number) => {
     setProject(projectResponse.data);
   };
 
-  console.log("useProjectTasklists", project);
   const addTasklist = (newTasklist: ITasklistDetails) => {
-    if (project) {
-      setProject((prevState) => ({
-        ...prevState,
-        task_lists: [...prevState.task_lists, newTasklist],
-      }));
-    }
-    TasklistService.createTasklist(newTasklist);
+    TasklistService.createTasklist(projectId, newTasklist)
+      .then(retrieveTasklists)
+      .catch(console.log);
+
+    setProject((prevState) => ({
+      ...prevState,
+      task_lists: [newTasklist, ...prevState.task_lists],
+    }));
   };
+  console.log(project.task_lists);
 
   const addTask = (task: ITaskDetails) => {
     console.log("not yet supported");
@@ -47,16 +47,16 @@ export const useProjectTasklists = (projectId: number) => {
   };
 
   const removeTasklistById = (tasklistId: number) => {
-    if (project) {
-      setProject((prevState) => ({
-        ...prevState,
-        task_lists: prevState.task_lists.filter(
-          (tasklist) => tasklist.id !== tasklistId
-        ),
-      }));
-      //TODO: push to the api
-      // TasklistService.deleteTasklist(tasklistId);
-    }
+    TasklistService.deleteTasklist(projectId, tasklistId)
+      .then(retrieveTasklists)
+      .catch(console.log);
+    console.log("useProjectTasklists-removeTasklistById", tasklistId);
+    // setProject((prevState) => ({
+    //   ...prevState,
+    //   task_lists: prevState.task_lists.filter(
+    //     (tasklist) => tasklist.id !== tasklistId
+    //   ),
+    // }));
   };
 
   useEffect(() => {
