@@ -56,6 +56,7 @@ const TasklistService = {
   getTasklistsByProjectId,
   createTasklist,
   deleteTasklist,
+  updateTasklist
 };
 
 export default TasklistService;
