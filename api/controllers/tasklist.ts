@@ -37,7 +37,19 @@ async function getTasklist( req: Request, res: Response){
     select:{
       id: true,
       name:true,
-      project_id:true
+      project_id:true,
+      tasks: {
+        select: {
+          id: true,
+          title: true,
+          description: true,
+          due_date: true,
+          created_at: true,
+          comments: true,
+          task_list_id: true,
+          task_status_id: true,
+        }
+      }
     }
   });
 

@@ -2,14 +2,18 @@ import { useEffect, useState } from "react";
 import { ITaskDetails } from "interfaces";
 import dummyProjects from "../../../dummydata/dummy";
 import { DropResult, ResponderProvided } from "react-beautiful-dnd";
+import { ProjectService, TasklistService, TaskService } from "services";
 
-export const useTasklistTasks = () => {
+
+export const useTasklistTasks = (tasklistId: number) => {
   const [tasks, setTasks] = useState<any[]>([]);
   const retrieveTasklist = async () => {
-    setTimeout(() => {
-      setTasks(dummyProjects[0]?.task_lists); //tasklistId
-    }, 30);
+
+    const tasksResponse = await TaskService.getTasksByTasklistId(tasklistId);
+    setTasks(tasksResponse.data);
+    console.log("task;",tasksResponse.data);
   };
+  
 
   useEffect(() => {
     retrieveTasklist().catch(console.log);

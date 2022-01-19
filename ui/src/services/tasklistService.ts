@@ -12,9 +12,14 @@ const getTasklistsByProjectId = async (projectId: number): Promise<ITasklistDeta
     //return axiosInstance.get<ITasklistDetails[]>(`/tasklist?projectId=${projectId}`);
 };
 
+const createTasklist = async (tasklist: ITasklistDetails): Promise<ITasklistDetails> => {
+  return (await axiosInstance.post<ITasklistDetails>('/tasklist', tasklist)).data;
+};
+
 
 const TasklistService = {
-  getTasklistsByProjectId
+  getTasklistsByProjectId,
+  createTasklist,
 };
 
 export default TasklistService;

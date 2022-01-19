@@ -19,9 +19,11 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
-export const TasksView: React.FC<{}> = ({}) => {
+export const TasksView: React.FC<{}> = () => {
   const { tasklistId, id } = useParams();
-  const { tasks, addTask, removeTaskById } = useTasklistTasks(); // tasklistId
+  const { tasks, addTask, removeTaskById } = useTasklistTasks(
+    Number(tasklistId)
+  );
 
   if (!tasks) {
     return (

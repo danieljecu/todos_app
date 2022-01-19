@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import { IProjectDetails, ITaskDetails, ITasklistDetails } from "interfaces";
 import dummyProjects from "dummydata/dummy";
 import { DropResult, ResponderProvided } from "react-beautiful-dnd";
+import { ProjectService, TasklistService } from "services";
 
-export const useProjectTasklists = () => {
+// i want something like a set project action
+export const useProjectTasklists = (projectId: number) => {
   const [project, setProject] = useState<IProjectDetails>({
     id: NaN,
     name: "",
@@ -11,36 +13,36 @@ export const useProjectTasklists = () => {
   });
   const retrieveTasklists = async () => {
     //TODO get only user projects
-    // const projectsResponse = await ProjectService.getProjects();
-    setTimeout(() => {
-      setProject(dummyProjects[0]);
-    }, 30);
+    const projectResponse = await ProjectService.getProject(projectId);
+    setProject(projectResponse.data);
   };
 
-  const addTasklist = (tasklist: ITasklistDetails) => {
+  console.log("useProjectTasklists", project);
+  const addTasklist = (newTasklist: ITasklistDetails) => {
     if (project) {
       setProject((prevState) => ({
         ...prevState,
-        task_lists: [...prevState.task_lists, tasklist],
+        task_lists: [...prevState.task_lists, newTasklist],
       }));
     }
+    TasklistService.createTasklist(newTasklist);
   };
 
   const addTask = (task: ITaskDetails) => {
     console.log("not yet supported");
     // if (project) {
-      // setProject((prevState) => ({
-        //   ...prevState,
-        //   task_lists: prevState.task_lists.map((tasklist) => {
-      //     if (tasklist.id === task.task_list_id) {
-      //       return {
-      //         ...tasklist,
-      //         tasks: [...tasklist.tasks, task],
-      //       };
-      //     }
-      //     return tasklist;
-      //   }),
-      // }));
+    // setProject((prevState) => ({
+    //   ...prevState,
+    //   task_lists: prevState.task_lists.map((tasklist) => {
+    //     if (tasklist.id === task.task_list_id) {
+    //       return {
+    //         ...tasklist,
+    //         tasks: [...tasklist.tasks, task],
+    //       };
+    //     }
+    //     return tasklist;
+    //   }),
+    // }));
     // }
   };
 
@@ -53,6 +55,7 @@ export const useProjectTasklists = () => {
         ),
       }));
       //TODO: push to the api
+      // TasklistService.deleteTasklist(tasklistId);
     }
   };
 
