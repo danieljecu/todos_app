@@ -1,31 +1,22 @@
 import React from "react";
-import { Link as ReactLink } from "react-router-dom";
-import Link from "@mui/material/Link";
-import styled from "styled-components";
-
 import { useParams } from "react-router-dom";
-
 import { TasklistCardContainer, CardTitle } from "./styled";
 import { ITasklistDetails } from "interfaces";
-
-
 
 interface TasklistCardProps {
   addTasklist: (tasklist: ITasklistDetails) => void;
 }
 
 export const CreateTasklistCard: React.FC<TasklistCardProps> = ({
-  addTasklist
+  addTasklist,
 }) => {
   const { projectId } = useParams();
-  const [tasklist, setTasklist] =
-    React.useState<ITasklistDetails>({
-      id: NaN,
-      project_id: Number(projectId),
-      name: "",
-      tasks: [],
-    });
-  
+  const [tasklist, setTasklist] = React.useState<ITasklistDetails>({
+    id: Math.random(),
+    project_id: Number(projectId),
+    name: "",
+    tasks: [],
+  });
 
   const handleCreate = (e: any) => {
     e.preventDefault();
@@ -34,6 +25,7 @@ export const CreateTasklistCard: React.FC<TasklistCardProps> = ({
       ...tasklist,
       id: Math.random(), //TODO : maybe this already exists?
     };
+    console.log("CreateTasklistCard add tasklist", newTasklist);
     if (addTasklist) {
       addTasklist(newTasklist);
     }
@@ -55,17 +47,7 @@ export const CreateTasklistCard: React.FC<TasklistCardProps> = ({
         />
         <button onClick={handleCreate}>Add Tasklist</button>
       </CardTitle>
-
-      <label>
-        This new Tasklist will be added by default to current project id
-        <select>
-          {[{ id: 1, name: "current project" }].map((project) => (
-            <option key={project.id} value={project.name}>
-              {project.name}
-            </option>
-          ))}
-        </select>
-      </label>
+      This new Tasklist will be added by default to current project id
     </TasklistCardContainer>
   );
 };
