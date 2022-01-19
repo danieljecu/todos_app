@@ -57,7 +57,10 @@ export const TasksView: React.FC<{}> = ({}) => {
               id={task.id}
               title={task.title}
               description={task.description}
-              task_list_id={task.task_list_id}
+              task_list_id={task.task_list_id} // use tasklistId
+              task_status_id={task.task_status_id}
+              // due_date={task.due_date} //problem
+              // created_at={task.created_at} //problem
               removeTaskById={removeTaskById}
             />
           </CardBodyItem>
