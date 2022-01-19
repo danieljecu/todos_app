@@ -27,20 +27,21 @@ export const useProjectTasklists = () => {
   };
 
   const addTask = (task: ITaskDetails) => {
-    if (project) {
-      setProject((prevState) => ({
-        ...prevState,
-        task_lists: prevState.task_lists.map((tasklist) => {
-          if (tasklist.id === task.task_list_id) {
-            return {
-              ...tasklist,
-              tasks: [...tasklist.tasks, task],
-            };
-          }
-          return tasklist;
-        }),
-      }));
-    }
+    console.log("not yet supported");
+    // if (project) {
+      // setProject((prevState) => ({
+        //   ...prevState,
+        //   task_lists: prevState.task_lists.map((tasklist) => {
+      //     if (tasklist.id === task.task_list_id) {
+      //       return {
+      //         ...tasklist,
+      //         tasks: [...tasklist.tasks, task],
+      //       };
+      //     }
+      //     return tasklist;
+      //   }),
+      // }));
+    // }
   };
 
   const removeTasklistById = (tasklistId: number) => {

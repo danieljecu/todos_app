@@ -1,5 +1,19 @@
 import styled from "styled-components";
 
+const ProjectCardContainer = styled.div`
+  width: 30vmax;
+  border: 2px solid #aaa3a3;
+  margin: 1.5rem 0.5rem 1.5rem 0.5rem;
+  overflow: hidden;
+`;
+
+const TasklistCardContainer = styled.div`
+  width: 30vmax;
+  border: 2px solid #aaa3a3;
+  margin: 1.5rem 0.5rem 1.5rem 0.5rem;
+  overflow: hidden;
+`;
+
 const TaskContainer = styled.div`
   width: 30vmax;
   border: 2px solid #aaa3a3;
@@ -21,4 +35,11 @@ const CardBodyItem = styled.div`
   margin: 0.3rem 0 0.3rem 0.3rem;
 `;
 
-export { TaskContainer, CardTitle, CardBody, CardBodyItem };
+export {
+  ProjectCardContainer,
+  TasklistCardContainer,
+  TaskContainer,
+  CardTitle,
+  CardBody,
+  CardBodyItem,
+};
