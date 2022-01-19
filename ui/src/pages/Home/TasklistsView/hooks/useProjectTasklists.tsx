@@ -50,7 +50,6 @@ export const useProjectTasklists = (projectId: number) => {
     TasklistService.deleteTasklist(projectId, tasklistId)
       .then(retrieveTasklists)
       .catch(console.log);
-    console.log("useProjectTasklists-removeTasklistById", tasklistId);
     // setProject((prevState) => ({
     //   ...prevState,
     //   task_lists: prevState.task_lists.filter(
