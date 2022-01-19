@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import { IProjectDetails } from "interfaces";
 import dummyProjects from "../../../../dummydata/dummy";
 import { DropResult, ResponderProvided } from "react-beautiful-dnd";
+import { ProjectService } from "services";
 
 interface ProjectsHandlerReturnType {
   projects: IProjectDetails[];
   addProject: (data: IProjectDetails) => void;
   removeProjectById: (id: number) => void;
-  updateProjectById: (id: number, projectName:string) => void;
+  updateProjectById: (id: number, projectName: string) => void;
   onDragEnd: any;
   retrieveProjects: any;
 }
@@ -17,11 +18,14 @@ export const useProjectsHandler = (): ProjectsHandlerReturnType => {
 
   const retrieveProjects = async () => {
     //TODO get only user projects
-    // const projectsResponse = await ProjectService.getProjects();
-    await setTimeout(() => {
-      setProjects(dummyProjects);
-    }, 0);
+    const projectsResponse = await ProjectService.getProjects();
+    setProjects(projectsResponse.data);
   };
+
+  console.log("projects", projects);
+  useEffect(() => {
+    retrieveProjects().catch(console.log);
+  }, []);
 
   const onDragEnd = (result: DropResult, provided: ResponderProvided) => {
     const { source, destination } = result;
@@ -40,12 +44,16 @@ export const useProjectsHandler = (): ProjectsHandlerReturnType => {
       })
     );
   };
-  useEffect(() => {
-    retrieveProjects().catch(console.log);
-  }, []);
 
   const addProject = (newProject: IProjectDetails) => {
-    setProjects((state) => [...state, newProject]);
+    // TODO: improvement
+    // project id is random first time. maybe just replace the id in the state
+    // setProjects((state) => [...state, newProject]);
+    ProjectService.createProject(newProject)
+      .then(retrieveProjects)
+      .catch(console.log);
+
+    console.log("newProject", newProject);
   };
 
   const removeProjectById = (projectId: number) => {
@@ -53,22 +61,27 @@ export const useProjectsHandler = (): ProjectsHandlerReturnType => {
     setProjects((state) =>
       state.filter((project: IProjectDetails) => project.id !== projectId)
     );
+
+    ProjectService.removeProjectById(projectId);
   };
 
-  type PartialProject = Partial<IProjectDetails>;
-
   const updateProjectById = (projectId: number, projectName: string) => {
+    ProjectService.updateProjectById(projectId, {
+      id: projectId,
+      name: projectName,
+      task_lists: [],
+    });
+    // .then(retrieveProjects)
+    // .catch(console.log);
+
     const newProjects = projects.map((p) => {
       if (p.id === projectId) {
         return { ...p, name: projectName };
       }
       return p;
     });
+
     setProjects(newProjects);
-    // setProjects((state) => {
-    //   const index = state.findIndex((p) => p.id === project.id);
-    //   return [...state.slice(0, index), project, ...state.slice(index + 1)];
-    //   });
   };
 
   return {

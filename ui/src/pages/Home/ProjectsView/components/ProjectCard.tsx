@@ -37,7 +37,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
             underline={"none"}
             color="black"
           >
-            {title}
+            {projectId}. {title}
           </Link>
         ) : (
           <input
