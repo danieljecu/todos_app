@@ -4,27 +4,32 @@ import prisma from "./db_service";
 
 async function getAllTasks(req: Request, res: Response) {
   const { tasklist } = req.query;
-  const tasks = await prisma.tasks.findMany({
-    select: {
-      id: true,
-      title: true,
-      description: true,
-      due_date: true,
-      created_at: true,
-      comments: true,
-      task_list_id: true,
-      task_status_id: true,
-    },
-    where: {
-      task_list_id: tasklist ? { equals: Number(tasklist) } : null,
-    },
-  });
 
-  if (tasks?.length > 0) {
-    res.status(200).json(tasks);
-  } else {
-    console.log("getAllTasks", tasks);
-    res.sendStatus(404);
+  try {
+    const tasks = await prisma.tasks.findMany({
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        due_date: true,
+        created_at: true,
+        comments: true,
+        task_list_id: true,
+        task_status_id: true,
+      },
+      where: {
+        task_list_id: tasklist ? { equals: Number(tasklist) } : null,
+      },
+    });
+
+    if (tasks && tasks.length > 0) {
+      res.status(200).json(tasks);
+    }
+    if (tasks && tasks.length == 0) {
+      res.status(204).json(tasks);
+    }
+  } catch (error) {
+    res.status(404).json(error);
   }
 }
 
