@@ -20,23 +20,11 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
 export const TasksView: React.FC<{}> = () => {
-  const { tasklistId, id } = useParams();
-  const { tasks, addTask, removeTaskById } = useTasklistTasks(
+  const { tasklistId } = useParams();
+  const { tasks, addTask, removeTaskById, updateTaskById } = useTasklistTasks(
     Number(tasklistId)
   );
 
-  if (!tasks) {
-    return (
-      <div>
-        {tasklistId}
-        {id} dosn't existss
-        <br />
-        Create task
-      </div>
-    );
-  }
-
-  console.log(tasks);
   return (
     <TasksContainer>
       <CardTitle>
@@ -52,21 +40,24 @@ export const TasksView: React.FC<{}> = () => {
 
       <CardBody>
         <CreateTaskCard addTask={addTask} />
-        {tasks.map((task: any) => (
-          <CardBodyItem key={task.id}>
-            <TaskCard
-              key={task.id}
-              id={task.id}
-              title={task.title}
-              description={task.description}
-              task_list_id={task.task_list_id} // use tasklistId
-              task_status_id={task.task_status_id}
-              // due_date={task.due_date} //problem
-              // created_at={task.created_at} //problem
-              removeTaskById={removeTaskById}
-            />
-          </CardBodyItem>
-        ))}
+        {tasks &&
+          tasks.map((task: any) => (
+            <CardBodyItem key={task.id}>
+              <TaskCard
+                key={task.id}
+                id={task.id}
+                title={task.title}
+                description={task.description}
+                task_list_id={task.task_list_id} // use tasklistId
+                task_status_id={task.task_status_id}
+                // due_date={task.due_date} //problem
+                // created_at={task.created_at} //problem
+                updateTaskById={updateTaskById}
+                removeTaskById={removeTaskById}
+              />
+            </CardBodyItem>
+          ))}
+        {!tasks && <>This tasklist({tasklistId}) has no content</>}
       </CardBody>
 
       <Card sx={{ maxWidth: 345 }}>

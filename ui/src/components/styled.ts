@@ -26,6 +26,13 @@ const CardTitle = styled.div`
   padding: 0.33rem 0 0.33rem 1rem;
   border-bottom: 1px solid;
 `;
+const CardCreateTitle = styled.div`
+  display: flex;
+  flex-direction: column;
+  background-color: #00d3ff;
+  padding: 0.33rem 0 0.33rem 1rem;
+  border-bottom: 1px solid;
+`;
 
 const CardBody = styled.div`
   display: flex;
@@ -40,6 +47,7 @@ export {
   TasklistCardContainer,
   TaskContainer,
   CardTitle,
+  CardCreateTitle,
   CardBody,
   CardBodyItem,
 };

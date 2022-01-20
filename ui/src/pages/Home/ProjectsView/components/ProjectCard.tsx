@@ -5,7 +5,7 @@ import {
   ProjectCardContainer,
   CardTitle,
   CardBody,
-  CardBodyItem
+  CardBodyItem,
 } from "./styled";
 import { IProjectDetails } from "interfaces";
 
@@ -27,7 +27,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   const [editMode, setEditMode] = React.useState(false);
   const [newProjectName, setNewProjectName] = React.useState(title);
 
-  return (  
+  return (
     <ProjectCardContainer>
       <CardTitle>
         {editMode === false ? (
@@ -64,18 +64,14 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
       <CardBody>
         {items?.map(({ id, name }) => (
           <CardBodyItem key={id}>
-            {editMode === false ? (
-              <Link
-                to={`/project/${projectId}/tasklist/${id}`}
-                component={ReactLink}
-                underline={"none"}
-                color="black"
-              >
-                {name}
-              </Link>
-            ) : (
-              <input type="text" value={name} readOnly />
-            )}
+            <Link
+              to={`/project/${projectId}/tasklist/${id}`}
+              component={ReactLink}
+              underline={"none"}
+              color="black"
+            >
+              {name}
+            </Link>
           </CardBodyItem>
         ))}
       </CardBody>

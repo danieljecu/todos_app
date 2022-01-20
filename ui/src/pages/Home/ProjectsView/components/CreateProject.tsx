@@ -1,9 +1,5 @@
 import React from "react";
-import { Link as ReactLink } from "react-router-dom";
-import Link from "@mui/material/Link";
-import styled from "styled-components";
 import { IProjectDetails } from "interfaces";
-
 import { ProjectCardContainer, CardTitle } from "./styled";
 
 const initialProjectState = {
