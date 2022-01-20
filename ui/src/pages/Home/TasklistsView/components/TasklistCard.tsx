@@ -62,8 +62,8 @@ export const TasklistCard: React.FC<TasklistCardProps> = ({
                   task_status_id={task_status_id}
                   // due_date={due_date}
                   // created_at={created_at}
-                  // removeTaskById={(taskId) => {}}
-                  // updateTaskById={(taskId, task) => {}}
+                  removeTaskById={(taskId) => {}}
+                  updateTaskById={(taskId, task) => {}}
                 />
               </CardBodyItem>
             )
