@@ -4,7 +4,15 @@ import { Link as ReactLink } from "react-router-dom";
 import { ITaskDetails } from "interfaces/tasks";
 import { useParams } from "react-router-dom";
 
-import { TaskContainer, CardTitle, CardBody, CardBodyItem } from "./styled";
+import {
+  TaskContainer,
+  CardCreateTitle,
+  CardTitle,
+  CardBody,
+  CardBodyItem,
+} from "./styled";
+
+import { STATUSES } from "constants/taskStatuses";
 
 interface CreateTaskCardProps {
   addTask: (task: ITaskDetails, tasklistId?: number) => void;
@@ -21,6 +29,7 @@ export const CreateTaskCard: React.FC<CreateTaskCardProps> = ({ addTask }) => {
     task_list_id: Number(tasklistId),
     task_status_id: 0,
   });
+
   const handleCreate = (e: any) => {
     e.preventDefault();
 
@@ -36,10 +45,14 @@ export const CreateTaskCard: React.FC<CreateTaskCardProps> = ({ addTask }) => {
     }
   };
   return (
-
-      <TaskContainer>
-        <CardTitle>
-          Create Task
+    <TaskContainer>
+      <CardTitle>
+        Create Task
+        <button onClick={handleCreate}>add task</button>
+      </CardTitle>
+      <CardBody>
+        <label>
+          name:
           <input
             onChange={(e) => {
               console.log(e.target.value);
@@ -49,8 +62,40 @@ export const CreateTaskCard: React.FC<CreateTaskCardProps> = ({ addTask }) => {
             type="text"
             placeholder="Input task name"
           />
-          <button onClick={handleCreate}>add task</button>
-        </CardTitle>
-      </TaskContainer>
+        </label>
+        <label>
+          description
+          <input
+            type={"text"}
+            onChange={(e) => {
+              console.log(e.target.value);
+              setTask((prevState) => ({
+                ...prevState,
+                description: e.target.value,
+              }));
+            }}
+            value={task.description}
+            placeholder="Input description"
+          />
+        </label>
+        <label>
+          Select status:
+          <select
+            onChange={(e) => {
+              setTask((prevState) => ({
+                ...prevState,
+                task_status_id: Number(e.target.value),
+              }));
+            }}
+          >
+            {STATUSES.map((status) => (
+              <option key={status.id} value={status.id}>
+                {status.name}
+              </option>
+            ))}
+          </select>
+        </label>
+      </CardBody>
+    </TaskContainer>
   );
 };
