@@ -9,7 +9,6 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { IProjectDetails, ITaskDetails } from "interfaces";
-import { GenericCard } from "components/GenericCard";
 import { Link as ReactLink } from "react-router-dom";
 import Link from "@mui/material/Link";
 

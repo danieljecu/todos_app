@@ -1,15 +1,13 @@
-import React from 'react';
-import {ProjectsPage} from "./ProjectsView"
+import { ProjectsPage } from "./ProjectsView";
 
-import {TasklistsView} from "./TasklistsView/tasklists.page";
+import { TasklistsView } from "./TasklistsView/tasklists.page";
 
-import {TasksView} from "./TasksView/tasks.page";
+import { TasksView } from "./TasksView/tasks.page";
 
 export const Home: React.FC<{}> = ({}) => {
-    return (<>
-            <ProjectsPage/>
-            </>
-    )
-
+  return (
+    <>
+      <ProjectsPage />
+    </>
+  );
 };
-

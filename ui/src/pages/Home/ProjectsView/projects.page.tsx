@@ -9,6 +9,7 @@ import Link from "@mui/material/Link";
 
 import styled from "styled-components";
 import { ITasklistDetails } from "interfaces";
+import { SideBar } from "./components/SideBar";
 
 export const ProjectsPage: React.FC<{}> = ({}) => {
   const {
@@ -24,6 +25,7 @@ export const ProjectsPage: React.FC<{}> = ({}) => {
   }
   return (
     <ProjectPageContainer>
+      {/* <SideBar /> */}
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="projectList">
           {(provided) => (
