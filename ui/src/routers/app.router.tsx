@@ -16,10 +16,8 @@ const AppRouter: React.FC = () => (
         path="/project/:projectId/tasklist/:id"
         element={<TasklistsView />}
       />
-      <Route
-        path="/project/:projectId"
-        element={<TasklistsView />}/>
-      
+      <Route path="/project/:projectId" element={<TasklistsView />} />
+
       <Route path="/tasklist/:tasklistId" element={<TasksView />} />
       <Route path="/tasklist/:tasklistId/task/:id" element={<TasksView />} />
     </Routes>
