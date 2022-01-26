@@ -54,7 +54,7 @@ export const CreateTaskCard: React.FC<CreateTaskCardProps> = ({ addTask }) => {
         <label>
           name:
           <input
-            onChange={(e) => {
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               console.log(e.target.value);
               setTask((prevState) => ({ ...prevState, title: e.target.value }));
             }}
@@ -67,7 +67,7 @@ export const CreateTaskCard: React.FC<CreateTaskCardProps> = ({ addTask }) => {
           description
           <input
             type={"text"}
-            onChange={(e) => {
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               console.log(e.target.value);
               setTask((prevState) => ({
                 ...prevState,
@@ -81,7 +81,7 @@ export const CreateTaskCard: React.FC<CreateTaskCardProps> = ({ addTask }) => {
         <label>
           Select status:
           <select
-            onChange={(e) => {
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
               setTask((prevState) => ({
                 ...prevState,
                 task_status_id: Number(e.target.value),
