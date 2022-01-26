@@ -24,25 +24,18 @@ async function login(req: Request, res: Response) {
     res.status(401).json({ error: "Unotorised, User not found" });
   }
 
-  // const password = await bcrypt.hash(req.body.password);
-  // console.log("passwordbcrit ", password);
   console.log("find user by email", userByEmail);
   try {
-    // if (userByEmail && userByEmail.password === password)
-    const match = await bcrypt.compare(
+    const passwordsMatchCheck = await bcrypt.compare(
       req.body.password,
       <string>userByEmail?.password
     );
-    console.log("match", match);
+    console.log("match", passwordsMatchCheck);
 
-    if (match) {
-      const expiresIn = 24 * 60 * 60;
+    if (passwordsMatchCheck) {
       const accessToken = jwt.sign({ id: userByEmail?.id }, JWT_SECRET_KEY, {
-        expiresIn: expiresIn,
+        expiresIn: "24h",
       });
-      // const accessToken = jwt.sign({ id: userByEmail?.id },//JSON.stringify(userByEmail),
-      // JWT_SECRET_KEY, { expiresIn: "24h" });
-      //process.env.TOKEN_SECRET
 
       res
         .status(200)
@@ -82,14 +75,14 @@ async function createUser(req: Request, res: Response) {
     });
     const expiresIn = 24 * 60 * 60;
     const accessToken = jwt.sign({ id: user.id }, JWT_SECRET_KEY, {
-      expiresIn: expiresIn,
+      expiresIn: "24h",
     });
 
     res
       .status(201)
       .json({ user: user, access_token: accessToken, expires_in: expiresIn });
   } catch (db_error) {
-    res.status(500).json(db_error); //.send("Server error!");
+    res.status(500).json(db_error);
   }
 }
 

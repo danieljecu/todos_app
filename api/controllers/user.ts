@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import prisma from "./db_service";
+import * as bcrypt from "bcryptjs";
 
 async function getAllUsers(req: Request, res: Response) {
   const { email } = req.query;
@@ -43,6 +44,37 @@ async function getUser(req: Request, res: Response) {
     res.status(200).json(user);
   } catch (db_error) {
     res.status(404).json(db_error);
+  }
+}
+
+async function createUser(req: Request, res: Response) {
+  console.log("createUser");
+  try {
+    const { username, email } = req.body;
+    const password = await bcrypt.hash(req.body.password, 10);
+
+    // console.log("createUser", username, email, password);
+    // const userByEmail = await prisma.users.findMany({
+    //   where: {
+    //     email: email,
+    //   },
+    //   select: {
+    //     id: true,
+    //     username: true,
+    //   },
+    // });
+    // console.log("create user find by email", userByEmail);
+
+    const user = await prisma.users.create({
+      data: {
+        username: username,
+        email: email,
+        password: password,
+      },
+    });
+    res.status(201).json({ user: user });
+  } catch (db_error) {
+    res.status(500).json(db_error);
   }
 }
 
