@@ -117,4 +117,4 @@ async function deleteUser(req: Request, res: Response) {
   }
 }
 
-export { getAllUsers, getUser, updateUser, deleteUser };
+export { getAllUsers, getUser, createUser, updateUser, deleteUser };
