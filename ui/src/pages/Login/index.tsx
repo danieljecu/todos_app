@@ -1,7 +1,6 @@
 import "@reach/dialog/styles.css";
 import React from "react";
 import { Dialog } from "@reach/dialog";
-
 import { Logo } from "../../components/logo";
 import {
   Button,
@@ -10,41 +9,30 @@ import {
   FormGroup,
   CircleButton,
 } from "../../components/lib";
+import { UserService } from "services";
 
-interface FormDataType {
-  username: string;
+interface UserCredentialsFormDataType {
+  email: string;
   password: string;
 }
 interface LoginFormProps {
-  onSubmit: (formData: { username: string; password: string }) => void;
+  onSubmit: (formData: { email: string; password: string }) => void;
   buttonText: string;
 }
 function LoginForm({ onSubmit, buttonText }: LoginFormProps) {
   function handleSubmit(event: any): void {
     event.preventDefault();
-    const [username, password] = event.target.elements;
+    const [email, password] = event.target.elements;
     onSubmit({
-      username: username.value,
+      email: email.value,
       password: password.value,
     });
   }
   return (
-    <form
-      // css={{
-      //   display: 'flex',
-      //   flexDirection: 'column',
-      //   alignItems: 'stretch',
-      //   '> div': {
-      //     margin: '10px auto',
-      //     width: '100%',
-      //     maxWidth: '300px',
-      //   },
-      // }}
-      onSubmit={handleSubmit}
-    >
+    <form onSubmit={handleSubmit}>
       <FormGroup>
-        <label htmlFor="username">Username</label>
-        <Input id="username" type="text" />
+        <label htmlFor="email">email</label>
+        <Input id="email" type="text" />
       </FormGroup>
       <FormGroup>
         <label htmlFor="password">Password</label>
@@ -55,14 +43,17 @@ function LoginForm({ onSubmit, buttonText }: LoginFormProps) {
     </form>
   );
 }
+
 export const Login = () => {
   const [openModal, setOpenModal] = React.useState("none");
 
-  function login(formData: FormDataType) {
+  function login(formData: UserCredentialsFormDataType) {
     console.log("login", formData);
+    UserService.login(formData);
   }
-  function register(formData: FormDataType) {
+  function register(formData: UserCredentialsFormDataType) {
     console.log("register", formData);
+    UserService.register(formData);
   }
 
   return (
