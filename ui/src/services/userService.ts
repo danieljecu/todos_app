@@ -40,10 +40,24 @@ const register = ({
   });
 };
 
+const logout = () => {
+  //TODO:
+  //how do we logout?? on the server side?
+  //or just clear the session?
+};
+
+const refreshUser = (
+  refreshToken: string
+): Promise<AxiosResponse<IUserSession>> => {
+  return axiosInstance.post("/refresh", refreshToken);
+};
+
 const UserService = {
   getUsers,
   login,
   register,
+  logout,
+  refreshUser,
 };
 
 export default UserService;

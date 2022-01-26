@@ -18,13 +18,16 @@ const createProject = (
   return axiosInstance.post<IProjectDetails>("/project", body);
 };
 
-const removeProjectById = (projectId : number): Promise<AxiosResponse<IProjectDetails>> => {
+const removeProjectById = (
+  projectId: number
+): Promise<AxiosResponse<IProjectDetails>> => {
   return axiosInstance.delete<IProjectDetails>(`/project/${projectId}`);
 };
 
 const updateProjectById = (
   projectId: number | string,
-  body: IProjectDetails): Promise<AxiosResponse<IProjectDetails>> => {
+  body: IProjectDetails
+): Promise<AxiosResponse<IProjectDetails>> => {
   return axiosInstance.put<IProjectDetails>(`/project/${projectId}`, body);
 };
 
