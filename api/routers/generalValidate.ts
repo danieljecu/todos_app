@@ -1,14 +1,14 @@
-import { NextFunction,Response, Request} from 'express';
-import {validationResult } from 'express-validator';
+import { NextFunction, Response, Request } from "express";
+import { validationResult } from "express-validator";
 
-const generalValidate = (req: Request, res: Response, next: NextFunction ) => {
-    const error = validationResult(req);
+const generalValidate = (req: Request, res: Response, next: NextFunction) => {
+  const error = validationResult(req);
 
-    if (!error.isEmpty()) {
-        return res.status(400).json({ errors: error.array() });
-    }
+  if (!error.isEmpty()) {
+    return res.status(400).json({ errors: error.array() });
+  }
 
-    next();
+  next();
 };
 
 export default generalValidate;

@@ -1,4 +1,4 @@
-import express, { Express, Request, Response } from "express";
+import express, { Express, Request, Response, NextFunction } from "express";
 import bodyParser from "body-parser";
 import helmet from "helmet";
 import dotenv from "dotenv";

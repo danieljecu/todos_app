@@ -25,7 +25,12 @@ import {
 import generalValidate from "../generalValidate";
 
 const ProjectRouter = Router();
-ProjectRouter.get("/", generalValidate, getAllProjects);
+ProjectRouter.get(
+  "/",
+
+  generalValidate,
+  getAllProjects
+);
 
 ProjectRouter.get(
   "/:project_id",
