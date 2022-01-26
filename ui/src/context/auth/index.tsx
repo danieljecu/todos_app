@@ -7,7 +7,7 @@ const AuthContext = React.createContext<IAuthContext | null>(null);
 interface IAuthContext {
   auth: boolean;
   setAuth: (value: boolean) => void;
-  accessToken: string;
+  accessToken: string | null;
   setAccessToken: (value: string) => void;
   // TODO add authentication
   // isAuthLoading: boolean;
@@ -30,11 +30,11 @@ const initialUser = {
   firstName: "Daniel",
   lastName: "J",
   email: "cj@example.com",
-  accessToken: localStorage.getItem("accessToken") || "",
+  accessToken: "",
   refreshToken: "",
 };
 
-const localStorageKey = "__auth_provider_token__";
+// const localStorageKey = "__auth_provider_token__";
 // function handleUserResponse({ accessToken, refreshToken }) {
 //   window.localStorage.setItem(localStorageKey, accessToken);
 // }
@@ -53,10 +53,11 @@ const localStorageKey = "__auth_provider_token__";
 
 const AuthProvider: React.FC<React.ReactNode> = ({ children }) => {
   //init from localStorage
-  const [accessToken, setAccessToken] = useState(initialUser.accessToken);
+  const [accessToken, setAccessToken] = useState(() =>
+    localStorage.getItem("token")
+  );
 
   const [auth, setAuth] = useState<boolean>(true);
-  console.log("context", process.env.accessToken);
   return (
     <AuthContext.Provider
       value={{ auth, setAuth, accessToken, setAccessToken }}
