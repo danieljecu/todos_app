@@ -10,6 +10,7 @@ import {
   CircleButton,
 } from "../../components/lib";
 import { UserService } from "services";
+import { useCurrentUser } from "context/auth";
 
 interface UserCredentialsFormDataType {
   email: string;
@@ -47,13 +48,20 @@ function LoginForm({ onSubmit, buttonText }: LoginFormProps) {
 export const Login = () => {
   const [openModal, setOpenModal] = React.useState("none");
 
+  const { setAccessToken } = useCurrentUser();
   function login(formData: UserCredentialsFormDataType) {
     console.log("login", formData);
-    UserService.login(formData);
+    UserService.login(formData).then((accessToken) => {
+      console.log("login", accessToken);
+      setAccessToken(String(accessToken));
+    });
   }
   function register(formData: UserCredentialsFormDataType) {
     console.log("register", formData);
-    UserService.register(formData);
+    UserService.register(formData).then((accessToken) => {
+      console.log("register", accessToken);
+      setAccessToken(String(accessToken));
+    });
   }
 
   return (
