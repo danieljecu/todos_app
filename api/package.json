@@ -34,9 +34,11 @@
     "yamljs": "^0.3.0"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
     "@types/cors": "^2.8.12",
     "@types/express-validator": "^3.0.0",
-    "@types/node": "^16.11.12",
+    "@types/jsonwebtoken": "^8.5.8",
+    "@types/node": "^16.11.21",
     "concurrently": "^5.3.0",
     "nodemon": "^2.0.15",
     "prisma": "^3.6.0",
