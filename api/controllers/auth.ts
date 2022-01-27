@@ -61,24 +61,30 @@ async function createUser(req: Request, res: Response) {
     const password = await bcrypt.hash(req.body.password, 10);
 
     // console.log("createUser", username, email, password);
-    // const userByEmail = await prisma.users.findMany({
-    //   where: {
-    //     email: email,
-    //   },
-    //   select: {
-    //     id: true,
-    //     username: true,
-    //   },
-    // });
-    // console.log("create user find by email", userByEmail);
-
-    const user = await prisma.users.create({
-      data: {
-        username: username,
+    // email lookup
+    // TODO make email unique
+    let user = await prisma.users.findFirst({
+      where: {
         email: email,
-        password: password,
+      },
+      select: {
+        id: true,
+        username: true,
+        email: true,
       },
     });
+
+    if (user) {
+      res.status(409).json({ error: "User already exists" });
+    } else {
+      user = await prisma.users.create({
+        data: {
+          username: username,
+          email: email,
+          password: password,
+        },
+      });
+    }
 
     const accessToken = jwt.sign(
       { id: user.id, email: user.email },
