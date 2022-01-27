@@ -6,6 +6,7 @@ import swaggerUi from "swagger-ui-express";
 import YAML from "yamljs";
 import { UserRouter, ProjectRouter, TaskRouter, AuthRouter } from "./routers";
 import cors from "cors";
+import { verifyToken } from "./middlewares/checkJwt";
 
 dotenv.config();
 
@@ -18,6 +19,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/", AuthRouter);
+app.all("*", verifyToken);
 app.use("/user", UserRouter);
 app.use("/project", ProjectRouter);
 // will use /tasklist always under the project
