@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import prisma from "./db_service";
+import { prisma } from "./../utils/db_client";
 import * as bcrypt from "bcryptjs";
 
 async function getAllUsers(req: Request, res: Response) {

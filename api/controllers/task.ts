@@ -1,6 +1,6 @@
 import { equal } from "assert";
 import { query, Request, Response } from "express";
-import prisma from "./db_service";
+import { prisma } from "./../utils/db_client";
 
 async function getAllTasks(req: Request, res: Response) {
   const { tasklist } = req.query;

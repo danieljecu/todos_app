@@ -9,7 +9,7 @@ function verifyToken(req: Request, res: Response, next: NextFunction) {
   //Get auth header value
   console.log("verifyToken1", req.headers.authorization);
 
-  const token = req.headers.authorization?.split(" ")[1];
+  const token = req.headers.authorization.split(" ")[1];
   console.log("verifyToken2", token);
   let jwtPayload;
   //Verify token
@@ -24,12 +24,12 @@ function verifyToken(req: Request, res: Response, next: NextFunction) {
 
   //The token is valid for 1 hour
   //We want to send a new token on every request
-  const { id, email } = jwtPayload;
-  const newToken = jwt.sign({ id, email }, JWT_SECRET_KEY, {
-    expiresIn,
-  });
+  // const { id, email } = jwtPayload;
+  // const newToken = jwt.sign({ id, email }, JWT_SECRET_KEY, {
+  //   expiresIn,
+  // });
 
-  res.setHeader("token", newToken);
+  // res.setHeader("token", newToken);
 
   // const decoded = jwt.verify(
   //   String(token),

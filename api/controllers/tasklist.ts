@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import prisma from "./db_service";
+import { prisma } from "./../utils/db_client";
 
 async function getAllTasklists(req: Request, res: Response) {
   const { project_id } = req.params;
@@ -69,9 +69,9 @@ async function createTasklist(req: Request, res: Response) {
       data: {
         name: name,
         project_id: project_id,
-        tasks:  {
-          create: []
-        } 
+        tasks: {
+          create: [],
+        },
       },
     });
 

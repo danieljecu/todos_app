@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import prisma from "./db_service";
+import { prisma } from "./../utils/db_client";
 
 async function getAllProjects(req: Request, res: Response) {
   console.log("getAllProjects");
