@@ -6,19 +6,7 @@ import { verifyToken } from "../middlewares/checkJwt";
 
 const AuthRouter = Router();
 
-AuthRouter.post(
-  "/refresh",
-  [
-    check("email").isEmail(),
-    check("password")
-      .isLength({ min: 3 })
-      .withMessage("password must be at least 3 characters long")
-      .trim(),
-  ],
-  verifyToken,
-  generalValidate,
-  refreshToken
-);
+AuthRouter.post("/refresh", generalValidate, refreshToken);
 
 AuthRouter.post(
   "/register",

@@ -8,7 +8,8 @@ CREATE TABLE IF NOT EXISTS public.users (
     created_at timestamp with time zone,
     updated_at timestamp with time zone,
     deleted_at timestamp with time zone,
-    deleted boolean
+    deleted boolean,
+    refresh_token text
 );
 ALTER TABLE public."users"
 ADD CONSTRAINT users_email_key UNIQUE (email),
