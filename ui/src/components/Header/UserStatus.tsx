@@ -18,7 +18,7 @@ import { NAVIGATION_ROUTES } from "../../constants/navigation";
 import { useCurrentUser } from "../../context/auth";
 
 export const UserStatus: React.FC = () => {
-  const { auth, setAuth } = useCurrentUser();
+  const { auth, setAuth, logout } = useCurrentUser();
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -80,9 +80,7 @@ export const UserStatus: React.FC = () => {
           >
             <MenuItem onClick={handleClose}>Profile</MenuItem>
             <MenuItem onClick={handleClose}>My account</MenuItem>
-            <MenuItem onClick={handleClose}>
-              {auth ? "Logout" : "Login"}
-            </MenuItem>
+            <MenuItem onClick={logout}>{auth ? "Logout" : "Login"}</MenuItem>
           </Menu>
         </div>
       )}

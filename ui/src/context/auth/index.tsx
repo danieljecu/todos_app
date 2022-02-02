@@ -1,4 +1,6 @@
 import React, { useState, useContext } from "react";
+import { useLocalStorageState } from "../../utils";
+import { useNavigate } from "react-router-dom";
 
 // import { login, logout, register } from "services/userService";
 
@@ -9,6 +11,7 @@ interface IAuthContext {
   setAuth: (value: boolean) => void;
   accessToken: string | null;
   setAccessToken: (value: string) => void;
+  logout?: () => void;
   // TODO add authentication
   // isAuthLoading: boolean;
   // userSession: IUserSession;
@@ -53,14 +56,33 @@ const initialUser = {
 
 const AuthProvider: React.FC<React.ReactNode> = ({ children }) => {
   //init from localStorage
-  const [accessToken, setAccessToken] = useState(() =>
-    localStorage.getItem("token")
-  );
+
+  // jwt useAuthContext.setAuth(true);
+  // useCurrentUser(jwt);
+  // userSession(jwt);
+  // userSession, currentUserSession, updateUserSession, clearUserSession
+
+  //{currentUserSession{email, accessToken, refreshToken }, setAccessToken, setRefreshToken, isAuthLoading, auth === true false loading, jwt }= useAuth()
+  // actions: login(setCurrentUserSession), logout (clearSession, call /logout), register(setCurrentUserSession) refreshToken(setCurrentUserSession)
+  const [accessToken, setAccessToken] = useState(() => {
+    let val = localStorage.getItem("token") || "not set";
+    if (val === "not set") {
+      setAuth(false);
+    }
+    console.log("set initial context", val);
+    return val;
+  });
+
+  const logout = () => {
+    setAccessToken("");
+    setAuth(false);
+    console.log("logout");
+  };
 
   const [auth, setAuth] = useState<boolean>(true);
   return (
     <AuthContext.Provider
-      value={{ auth, setAuth, accessToken, setAccessToken }}
+      value={{ auth, setAuth, accessToken, setAccessToken, logout }}
     >
       {children}
     </AuthContext.Provider>

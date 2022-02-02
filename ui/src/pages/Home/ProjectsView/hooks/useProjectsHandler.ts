@@ -11,21 +11,29 @@ interface ProjectsHandlerReturnType {
   updateProjectById: (id: number, projectName: string) => void;
   onDragEnd: any;
   retrieveProjects: any;
+  error: string;
 }
 
 export const useProjectsHandler = (): ProjectsHandlerReturnType => {
   const [projects, setProjects] = useState<IProjectDetails[]>([]);
+  const [error, setError] = useState<string>("test");
 
   const retrieveProjects = async () => {
     //TODO get only user projects
-    const projectsResponse = await ProjectService.getProjects();
-    setProjects(projectsResponse.data);
+    try {
+      const projectsResponse = await ProjectService.getProjects();
+      setProjects(projectsResponse.data);
+    } catch (error) {
+      // setError(error);
+      setError("401 (Unauthorized) to retrieve projects");
+      console.log("err", error);
+    }
   };
 
   console.log("projects", projects);
   useEffect(() => {
-    retrieveProjects().catch(console.log);
-  }, []);
+    retrieveProjects();
+  }, [error, setError]);
 
   const onDragEnd = (result: DropResult, provided: ResponderProvided) => {
     const { source, destination } = result;
@@ -86,6 +94,7 @@ export const useProjectsHandler = (): ProjectsHandlerReturnType => {
 
   return {
     projects,
+    error,
     retrieveProjects,
     onDragEnd,
     addProject,

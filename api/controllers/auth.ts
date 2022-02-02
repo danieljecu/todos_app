@@ -108,7 +108,7 @@ async function createUser(req: Request, res: Response) {
       return res.status(409).json({ error: "User already exists" });
     }
 
-    const newUser = UserService.createNewUser({
+    const newUser = await UserService.createNewUser({
       username,
       email,
       hashPassword,
