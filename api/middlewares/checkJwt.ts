@@ -1,10 +1,9 @@
 import { NextFunction, Router, Response, Request } from "express";
 import * as jwt from "jsonwebtoken";
-import { UserService } from "./../services";
 
-// TODO replace with: const JWT_SECRET_KEY=process.env.ACCESS_TOKEN_SECRET;
-const ACCESS_TOKEN_SECRET = "secretkey23456";
-const REFRESH_TOKEN_SECRET = "secretkey23456";
+// TODO: move this to constants
+const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET || "not-a-secret";
+const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET || "not-a-secret";
 const expiresIn = "1m";
 
 async function verifyToken(req: Request, res: Response, next: NextFunction) {
