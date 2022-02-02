@@ -42,6 +42,22 @@ async function refreshToken(req: Request, res: Response) {
   console.log("refreshToken");
 }
 
+async function logout(req: Request, res: Response) {
+  console.log("logout");
+  try {
+    const token = req.headers.authorization?.split(" ")[1];
+    const jwtPayload = <any>jwt.verify(String(token), ACCESS_TOKEN_SECRET);
+    const user = await UserService.getUserById(jwtPayload.id);
+    if (!user) {
+      res.status(401).send();
+      return;
+    }
+    res.status(200).send({ message: "logout success" });
+  } catch (error) {
+    res.status(401).send({ error });
+  }
+}
+
 async function login(req: Request, res: Response) {
   // input: login recive an email and password
   console.log("login");
@@ -132,4 +148,4 @@ export const createRefreshToken = (user: User) => {
   );
 };
 
-export { refreshToken, login, createUser };
+export { refreshToken, login, logout, createUser };

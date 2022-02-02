@@ -1,4 +1,4 @@
-import { createUser, login, refreshToken } from "../controllers/auth";
+import { createUser, login, refreshToken, logout } from "../controllers/auth";
 import { NextFunction, Router, Response, Request } from "express";
 import { check, param, body, validationResult } from "express-validator";
 import generalValidate from "./generalValidate";
@@ -7,6 +7,8 @@ import { verifyToken } from "../middlewares/checkJwt";
 const AuthRouter = Router();
 
 AuthRouter.post("/refresh", generalValidate, refreshToken);
+
+AuthRouter.post("/logout", generalValidate, logout);
 
 AuthRouter.post(
   "/register",
