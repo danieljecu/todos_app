@@ -1,26 +1,60 @@
-import axios, { AxiosRequestHeaders } from "axios";
+import axios, { AxiosRequestHeaders, AxiosRequestConfig } from "axios";
+import { TokenService } from "../services";
+
 const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_API_URL || "http://localhost:3000/",
 });
 
-// require("dotenv").config();
-//reading env doesn't work so i need to set it manualy process.env.accessToken
-localStorage.setItem(
-  "token",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiaWF0IjoxNjQzMjAzMDk1LCJleHAiOjE2NDMyODk0OTV9.C6BfeINUi8f-_bMWx-PRRRRztyyx8BncINKSpS7XgBA" ||
-    "not set"
-);
-
 axiosInstance.interceptors.request.use(
   (config: any) => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      config.headers.authorization = `Bearer ${token}`;
+    //if accestoken is expired, refresh it
+    const { accessToken, refreshToken } = TokenService.getUserSession();
+
+    if (accessToken) {
+      config.headers.authorization = `Bearer ${accessToken}`;
     }
+
     return config;
   },
   (error) => {
     return Promise.reject(error);
+  }
+);
+
+axiosInstance.interceptors.response.use(
+  (response) => response,
+  async (err) => {
+    const originalConfig = err.config;
+    console.log("org,:", originalConfig);
+
+    if (err.response && err.response.status === 401) {
+      const refreshUrl = "/refresh";
+      const refreshToken = TokenService.getRefreshToken();
+
+      // this should check if the URL is not the refresh and if the refresh token exists it should try get a new access token
+      if (originalConfig.url !== refreshUrl && refreshToken) {
+        try {
+          const rs = await axiosInstance.post("/refresh", {
+            refreshToken: TokenService.getRefreshToken(),
+          });
+
+          console.log("response", rs);
+
+          const { accessToken } = rs.data;
+
+          console.log("updateNewAccessToken", accessToken);
+          TokenService.setAccessToken(accessToken);
+
+          return axiosInstance(originalConfig);
+        } catch (_error) {
+          console.log("remove refresh token expired");
+          TokenService.handleLogout();
+          return Promise.reject(_error);
+        }
+      }
+    }
+
+    return Promise.reject(err);
   }
 );
 

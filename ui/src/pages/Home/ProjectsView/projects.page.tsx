@@ -18,11 +18,24 @@ export const ProjectsPage: React.FC<{}> = ({}) => {
     removeProjectById,
     updateProjectById,
     onDragEnd,
+    error,
   } = useProjectsHandler();
 
-  if (!projects?.length) {
-    return <CreateProject />;
+  if (!projects?.length && error) {
+    return (
+      <>
+        <div>{error}</div>
+      </>
+    );
   }
+  if (!projects?.length) {
+    return (
+      <>
+        <CreateProject />
+      </>
+    );
+  }
+
   return (
     <ProjectPageContainer>
       {/* <SideBar /> */}

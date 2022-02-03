@@ -36,8 +36,7 @@ async function refreshToken(req: Request, res: Response) {
   }
 
   const newToken = createAccessToken(jwtPayload);
-  // res.setHeader("token", newToken);
-  res.status(200).send({ accesTocken: newToken });
+  res.status(200).send({ accessToken: newToken });
 
   console.log("refreshToken");
 }
@@ -108,7 +107,7 @@ async function createUser(req: Request, res: Response) {
       return res.status(409).json({ error: "User already exists" });
     }
 
-    const newUser = UserService.createNewUser({
+    const newUser = await UserService.createNewUser({
       username,
       email,
       hashPassword,

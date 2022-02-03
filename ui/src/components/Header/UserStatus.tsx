@@ -18,13 +18,9 @@ import { NAVIGATION_ROUTES } from "../../constants/navigation";
 import { useCurrentUser } from "../../context/auth";
 
 export const UserStatus: React.FC = () => {
-  const { auth, setAuth } = useCurrentUser();
+  const { auth, setAuth, logout } = useCurrentUser();
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setAuth(event.target.checked);
-  };
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -38,18 +34,12 @@ export const UserStatus: React.FC = () => {
     <Box>
       <FormGroup>
         <FormControlLabel
-          control={
-            <Switch
-              checked={auth}
-              onChange={handleChange}
-              aria-label="login switch"
-            />
+          control={<Switch checked={auth} aria-label="login switch" />}
+          label={
+            auth ? "Logout" : <Link to={NAVIGATION_ROUTES.LOGIN}>login</Link>
           }
-          label={auth ? "Logout" : "Login"}
         />
       </FormGroup>
-      <Link to={NAVIGATION_ROUTES.LOGIN}>login</Link>
-      {JSON.stringify(auth)}
 
       {auth && (
         <div>
@@ -80,9 +70,7 @@ export const UserStatus: React.FC = () => {
           >
             <MenuItem onClick={handleClose}>Profile</MenuItem>
             <MenuItem onClick={handleClose}>My account</MenuItem>
-            <MenuItem onClick={handleClose}>
-              {auth ? "Logout" : "Login"}
-            </MenuItem>
+            <MenuItem onClick={logout}>{auth ? "Logout" : "Login"}</MenuItem>
           </Menu>
         </div>
       )}

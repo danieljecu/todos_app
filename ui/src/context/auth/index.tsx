@@ -1,19 +1,24 @@
 import React, { useState, useContext } from "react";
+import { useLocalStorageState } from "../../utils";
+import { useNavigate } from "react-router-dom";
+import { AuthService, TokenService } from "../../services";
 
 // import { login, logout, register } from "services/userService";
 
 const AuthContext = React.createContext<IAuthContext | null>(null);
+interface UserCredentialsFormDataType {
+  email: string;
+  password: string;
+}
 
 interface IAuthContext {
   auth: boolean;
   setAuth: (value: boolean) => void;
   accessToken: string | null;
   setAccessToken: (value: string) => void;
-  // TODO add authentication
-  // isAuthLoading: boolean;
-  // userSession: IUserSession;
-  // updateUserSession: (userSession: IUserSession) => void;
-  // clearUserSession: () => void;
+  logout?: () => void;
+  // handleLogin: (formData: UserCredentialsFormDataType) => void;
+  // handleRegister: (formData: UserCredentialsFormDataType) => void;
 }
 
 const useCurrentUser = () => {
@@ -52,15 +57,32 @@ const initialUser = {
 // }; // clear the token in localStorage and the user data
 
 const AuthProvider: React.FC<React.ReactNode> = ({ children }) => {
-  //init from localStorage
-  const [accessToken, setAccessToken] = useState(() =>
-    localStorage.getItem("token")
-  );
-
   const [auth, setAuth] = useState<boolean>(true);
+  const [accessToken, setAccessToken] = useState(() => {
+    let val = localStorage.getItem("accessToken") || "not set";
+    if (val === "not set") {
+      setAuth(false);
+    }
+    // console.log("set initial context", val);
+    return val;
+  });
+
+  const logout = () => {
+    setAccessToken("");
+    setAuth(false);
+    console.log("logout");
+    // AuthService.logout(initialUser.refreshToken);
+  };
+
   return (
     <AuthContext.Provider
-      value={{ auth, setAuth, accessToken, setAccessToken }}
+      value={{
+        auth,
+        setAuth,
+        accessToken,
+        setAccessToken,
+        logout,
+      }}
     >
       {children}
     </AuthContext.Provider>

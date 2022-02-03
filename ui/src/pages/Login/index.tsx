@@ -9,8 +9,9 @@ import {
   FormGroup,
   CircleButton,
 } from "../../components/lib";
-import { UserService } from "services";
+import { AuthService, TokenService } from "services";
 import { useCurrentUser } from "context/auth";
+import { useNavigate } from "react-router-dom";
 
 interface UserCredentialsFormDataType {
   email: string;
@@ -48,26 +49,37 @@ function LoginForm({ onSubmit, buttonText }: LoginFormProps) {
 export const Login = () => {
   const [openModal, setOpenModal] = React.useState("none");
 
-  const { setAccessToken } = useCurrentUser();
-  function login(formData: UserCredentialsFormDataType) {
+  const { accessToken, setAccessToken, setAuth } = useCurrentUser();
+  let navigate = useNavigate();
+
+  const handleLogin = (formData: UserCredentialsFormDataType) => {
     console.log("login", formData);
-    UserService.login(formData).then((accessToken) => {
-      console.log("login", accessToken);
-      setAccessToken(String(accessToken));
+    AuthService.login(formData).then((response) => {
+      console.log("login acc data", response.data.accessToken);
+
+      TokenService.setAccessToken(response.data.accessToken || "");
+      TokenService.setRefreshToken(response.data.refreshToken || "");
+
+      // setAccessToken(String(response.data.accessToken));
+      setAuth(true);
+      navigate("/");
+      window.location.reload();
     });
-  }
-  function register(formData: UserCredentialsFormDataType) {
+  };
+
+  const handleRegister = (formData: UserCredentialsFormDataType) => {
     console.log("register", formData);
-    UserService.register(formData).then((accessToken) => {
-      console.log("register", accessToken);
-      setAccessToken(String(accessToken));
+    AuthService.register(formData).then((response) => {
+      console.log("register", response.data);
+      // setAccessToken(String(accessToken));
+      navigate("/login");
     });
-  }
+  };
 
   return (
     <>
       <Logo width="80" height="80" />
-      <h1>Bookshelf</h1>
+      <h1>Todos app</h1>
       <Button
         onClick={() => {
           setOpenModal("login");
@@ -93,7 +105,7 @@ export const Login = () => {
             >
               Close
             </CircleButton>
-            <LoginForm onSubmit={login} buttonText="Login" />
+            <LoginForm onSubmit={handleLogin} buttonText="Login" />
           </div>
         </Dialog>
       )}
@@ -107,7 +119,7 @@ export const Login = () => {
             >
               Close
             </CircleButton>
-            <LoginForm onSubmit={register} buttonText="register" />
+            <LoginForm onSubmit={handleRegister} buttonText="register" />
           </div>
         </Dialog>
       )}
