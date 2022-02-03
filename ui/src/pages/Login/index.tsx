@@ -60,6 +60,7 @@ export const Login = () => {
       setAccessToken(String(response.data.accessToken));
       setAuth(true);
       navigate("/");
+      window.location.reload();
     });
     console.log("login result acctok=", accessToken);
   }
