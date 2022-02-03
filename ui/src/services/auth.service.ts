@@ -14,8 +14,9 @@ interface UserCredentials {
 interface IUserSession {
   user: IUserDetails;
   accessToken?: string;
+  refreshToken?: string;
+  // [x: string]: string;
   // expiresIn?: number;
-  // refreshToken?: string;
   // roles?: [];
 }
 
@@ -33,20 +34,19 @@ const register = ({
   email,
   password,
 }: UserCredentials): Promise<AxiosResponse<IUserSession>> => {
-  return axiosInstance
-    .post<IUserSession>("/register", {
-      email,
-      password,
-    })
-    .then((response) => {
-      if (response.data.accessToken) {
-        localStorage.setItem(
-          "accessToken",
-          JSON.stringify(response.data.accessToken)
-        );
-      }
-      return response;
-    });
+  return axiosInstance.post<IUserSession>("/register", {
+    email,
+    password,
+  });
+  // .then((response) => {
+  //   if (response.data.accessToken) {
+  //     localStorage.setItem(
+  //       "accessToken",
+  //       JSON.stringify(response.data.accessToken)
+  //     );
+  //   }
+  // return response;
+  // });
 };
 
 const logout = (refreshToken: string): Promise<AxiosResponse<IUserSession>> => {
@@ -54,8 +54,8 @@ const logout = (refreshToken: string): Promise<AxiosResponse<IUserSession>> => {
   //how do we logout?? on the server side?
   //destroy the session? destroy the cookie? destroy the token?
   //or just clear the session?
-  localStorage.removeItem("token");
-  localStorage.removeItem("user");
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("refreshToken");
   return axiosInstance.post("/logout", refreshToken);
 };
 

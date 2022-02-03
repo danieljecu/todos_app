@@ -9,7 +9,7 @@ import {
   FormGroup,
   CircleButton,
 } from "../../components/lib";
-import { AuthService } from "services";
+import { AuthService, TokenService } from "services";
 import { useCurrentUser } from "context/auth";
 import { useNavigate } from "react-router-dom";
 
@@ -52,26 +52,29 @@ export const Login = () => {
   const { accessToken, setAccessToken, setAuth } = useCurrentUser();
   let navigate = useNavigate();
 
-  function login(formData: UserCredentialsFormDataType) {
+  const handleLogin = (formData: UserCredentialsFormDataType) => {
     console.log("login", formData);
     AuthService.login(formData).then((response) => {
       console.log("login acc data", response.data.accessToken);
-      localStorage.setItem("token", response.data.accessToken || "not set");
-      setAccessToken(String(response.data.accessToken));
+
+      TokenService.setAccessToken(response.data.accessToken || "");
+      TokenService.setRefreshToken(response.data.refreshToken || "");
+
+      // setAccessToken(String(response.data.accessToken));
       setAuth(true);
       navigate("/");
       window.location.reload();
     });
-    console.log("login result acctok=", accessToken);
-  }
-  function register(formData: UserCredentialsFormDataType) {
+  };
+
+  const handleRegister = (formData: UserCredentialsFormDataType) => {
     console.log("register", formData);
     AuthService.register(formData).then((response) => {
       console.log("register", response.data);
       // setAccessToken(String(accessToken));
       navigate("/login");
     });
-  }
+  };
 
   return (
     <>
@@ -102,7 +105,7 @@ export const Login = () => {
             >
               Close
             </CircleButton>
-            <LoginForm onSubmit={login} buttonText="Login" />
+            <LoginForm onSubmit={handleLogin} buttonText="Login" />
           </div>
         </Dialog>
       )}
@@ -116,7 +119,7 @@ export const Login = () => {
             >
               Close
             </CircleButton>
-            <LoginForm onSubmit={register} buttonText="register" />
+            <LoginForm onSubmit={handleRegister} buttonText="register" />
           </div>
         </Dialog>
       )}

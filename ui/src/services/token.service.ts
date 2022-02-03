@@ -1,10 +1,11 @@
 import axiosInstance from "../utils/axiosInstance";
 
-let accessToken = "";
+let accessToken = "",
+  refreshToken = "";
 
 function getUserSession() {
-  const token = localStorage.getItem("token");
-  const refreshToken = localStorage.getItem("refreshToken");
+  const token = getAccessToken();
+  const refreshToken = getRefreshToken();
 
   return {
     accessToken: token,
@@ -13,36 +14,42 @@ function getUserSession() {
   };
 }
 
-export const getAccessToken = () => {
-  accessToken = localStorage.getItem("token") || accessToken;
+const getAccessToken = () => {
+  accessToken = localStorage.getItem("accessToken") || accessToken;
   return accessToken;
 };
 
-export const setAccessToken = (token: string) => {
-  accessToken = token;
-  axiosInstance.interceptors.request.use(
-    (config: any) => {
-      //   const token = localStorage.getItem("token");
-      if (token) {
-        config.headers.authorization = `Bearer ${token}`;
-      }
-      return config;
-    },
-    (error) => {
-      return Promise.reject(error);
-    }
-  );
+const getRefreshToken = () => {
+  return localStorage.getItem("refreshToken");
 };
 
-const getCurrentUser = () => {
-  return JSON.parse(String(localStorage.getItem("user")));
+const setAccessToken = (token: string) => {
+  accessToken = token;
+  localStorage.setItem("accessToken", accessToken);
 };
+const setRefreshToken = (token: string) => {
+  refreshToken = token;
+  localStorage.setItem("refreshToken", refreshToken);
+};
+
+const updateNewAccessToken = (token: string) => {
+  accessToken = token;
+  localStorage.setItem("accessToken", accessToken as string);
+};
+
+const handleLogout = async () => {
+  window.localStorage.removeItem("accessToken");
+  window.localStorage.removeItem("refreshToken");
+}; // clear the token in localStorage and the user data
 
 const TokenService = {
   getUserSession,
   getAccessToken,
+  getRefreshToken,
   setAccessToken,
-  getCurrentUser,
+  setRefreshToken,
+  updateNewAccessToken,
+  handleLogout,
 };
 
 export default TokenService;

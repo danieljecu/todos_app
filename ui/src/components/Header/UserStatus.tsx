@@ -22,10 +22,6 @@ export const UserStatus: React.FC = () => {
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setAuth(event.target.checked);
-  };
-
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -38,13 +34,7 @@ export const UserStatus: React.FC = () => {
     <Box>
       <FormGroup>
         <FormControlLabel
-          control={
-            <Switch
-              checked={auth}
-              // onChange={handleChange}
-              aria-label="login switch"
-            />
-          }
+          control={<Switch checked={auth} aria-label="login switch" />}
           label={
             auth ? "Logout" : <Link to={NAVIGATION_ROUTES.LOGIN}>login</Link>
           }

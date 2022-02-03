@@ -36,8 +36,7 @@ async function refreshToken(req: Request, res: Response) {
   }
 
   const newToken = createAccessToken(jwtPayload);
-  // res.setHeader("token", newToken);
-  res.status(200).send({ accesTocken: newToken });
+  res.status(200).send({ accessToken: newToken });
 
   console.log("refreshToken");
 }
