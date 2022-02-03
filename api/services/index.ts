@@ -1,4 +1,5 @@
 import * as UserService from "./user.service";
+import * as ProjectService from "./project.service";
 
 // More hooks/utils will be added in the future and this could
 // lead to confusing imports if there is a default
