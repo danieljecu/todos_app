@@ -41,15 +41,15 @@ export const UserStatus: React.FC = () => {
           control={
             <Switch
               checked={auth}
-              onChange={handleChange}
+              // onChange={handleChange}
               aria-label="login switch"
             />
           }
-          label={auth ? "Logout" : "Login"}
+          label={
+            auth ? "Logout" : <Link to={NAVIGATION_ROUTES.LOGIN}>login</Link>
+          }
         />
       </FormGroup>
-      <Link to={NAVIGATION_ROUTES.LOGIN}>login</Link>
-      {JSON.stringify(auth)}
 
       {auth && (
         <div>
