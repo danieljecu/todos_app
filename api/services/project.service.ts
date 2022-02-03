@@ -1,4 +1,3 @@
-import { deleteProject } from "../controllers/project";
 import { prisma } from "../utils/db_client";
 
 async function getProjectsWithTasklistIds() {
@@ -48,12 +47,18 @@ async function getProjectById(project_id: string) {
   });
 }
 
-async function createProject(projectName: string) {
+async function createProject(projectName: string, user_id?: number) {
+  const data: any = {
+    name: projectName,
+  };
+  if (user_id) {
+    data.project_users = {
+      create: [{ user_id: user_id }],
+    };
+  }
+
   return await prisma.projects.create({
-    data: {
-      name: projectName,
-      // TODO: maybe pass optionally user_id; but using project_users.create
-    },
+    data: data,
   });
 }
 

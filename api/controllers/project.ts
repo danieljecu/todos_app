@@ -20,7 +20,7 @@ async function getProject(req: Request, res: Response) {
   console.log("getProject");
 
   try {
-    const project = await ProjectService.getProjectById();
+    const project = await ProjectService.getProjectById(project_id);
 
     res.status(200).json(project);
   } catch (db_error) {
