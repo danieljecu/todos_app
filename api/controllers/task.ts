@@ -1,26 +1,13 @@
 import { equal } from "assert";
 import { query, Request, Response } from "express";
 import { prisma } from "./../utils/db_client";
+import { TaskService } from "./../services/";
 
 async function getAllTasks(req: Request, res: Response) {
   const { tasklist } = req.query;
 
   try {
-    const tasks = await prisma.tasks.findMany({
-      select: {
-        id: true,
-        title: true,
-        description: true,
-        due_date: true,
-        created_at: true,
-        comments: true,
-        task_list_id: true,
-        task_status_id: true,
-      },
-      where: {
-        task_list_id: tasklist ? { equals: Number(tasklist) } : null,
-      },
-    });
+    const tasks = await TaskService.getTasksByTasklistId(tasklist as string);
 
     if (tasks && tasks.length > 0) {
       res.status(200).json(tasks);
@@ -38,20 +25,7 @@ async function getTask(req: Request, res: Response) {
   console.log("getTask");
 
   try {
-    const task = await prisma.tasks.findUnique({
-      where: {
-        id: parseInt(task_id),
-      },
-      select: {
-        id: true,
-        title: true,
-        description: true,
-        due_date: true,
-        created_at: true,
-        task_list_id: true,
-        task_status_id: true,
-      },
-    });
+    const task = await TaskService.getTask(task_id);
 
     res.status(200).json(task);
   } catch (db_error) {
@@ -65,16 +39,13 @@ async function createTask(req: Request, res: Response) {
     req.body;
 
   try {
-    const task = await prisma.tasks.create({
-      data: {
-        title: title,
-        description: description,
-        due_date: due_date,
-        created_at: new Date(),
-        task_list_id: task_list_id,
-        task_status_id: task_status_id,
-      },
-    });
+    const task = await TaskService.createTask(
+      title,
+      description,
+      due_date,
+      task_list_id,
+      task_status_id
+    );
 
     res.status(201).json(task);
   } catch (db_error) {
@@ -89,18 +60,15 @@ async function updateTask(req: Request, res: Response) {
 
   try {
     console.log("updateTask");
-    const task = await prisma.tasks.update({
-      where: {
-        id: parseInt(task_id),
-      },
-      data: {
-        title: title,
-        description: description,
-        due_date: due_date,
-        task_list_id: task_list_id,
-        task_status_id: task_status_id,
-      },
-    });
+    const task = await TaskService.updateTaskById(
+      task_id,
+      title,
+      description,
+      due_date,
+      task_list_id,
+      task_status_id
+    );
+
     res.status(204).json(task);
   } catch (db_error) {
     res.status(404).json({ error: "task not found", db_error });
@@ -111,11 +79,7 @@ async function deleteTask(req: Request, res: Response) {
   const { task_id } = req.params;
 
   try {
-    const task = await prisma.tasks.delete({
-      where: {
-        id: parseInt(task_id),
-      },
-    });
+    const task = await TaskService.deleteTaskById(task_id);
 
     console.log("deleteTask");
     res.sendStatus(204);
