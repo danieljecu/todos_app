@@ -10,7 +10,7 @@
     "serve": "cross-env NODE_ENV=development concurrently \"tsc --watch\" \"nodemon -q dist/index.js\"",
     "prestart": "npm run build",
     "start": "node dist/index.js",
-    "test": "jest --coverage",
+    "test": "jest --watchAll --verbose",
     "test:watch": "jest --watch"
   },
   "author": "Daniel Jecu",
