@@ -14,42 +14,31 @@ describe("Project Service", () => {
   describe("get", () => {
     it("Should return an unique project", async () => {
       const project_id: string = "1";
-      const mockReturnValue = {
+      const mockAccount = {
         id: 1,
         name: "Project 1",
         task_lists: [],
       };
+
+      //Mocking prisma
       prismaAsAny.projects = {
-        findUnique: jest.fn().mockReturnValueOnce(mockReturnValue),
+        findUnique: jest.fn().mockReturnValueOnce(mockAccount),
       };
 
       // arrange
       const req = { params: { project_id: 1 } };
-      const res = {
-        status: 200,
-        body: { id: 1, name: "Project 1", task_lists: [] },
-      };
-
-      when(ProjectService.getProjectById)
-        .calledWith(project_id)
-        .mockReturnValueOnce(Promise.resolve(mockReturnValue));
+      const res = { id: 1, name: "Project 1", task_lists: [] };
 
       // assert
       expect(
         await ProjectService.getProjectById(String(req.params.project_id))
-      ).toBe(res); // this would be service testing
-
-      const result = await ProjectService.getProjectById(project_id);
+      ).toStrictEqual(res); // this would be service testing
 
       expect(prisma.projects.findUnique).toHaveBeenCalledTimes(1);
-      // expect(prisma.account.findMany).toHaveBeenCalledWith(
-      //     expect.objectContaining({
-      //         where: {
-      //             tenantId,
-      //             isDeleted: false,
-      //         },
-      //   }));
-      // expect(result).toEqual(mockAccounts);
     });
+  });
+
+  describe("deleteOne", () => {
+    xit("Should return an array of projects", async () => {});
   });
 });
