@@ -83,9 +83,6 @@ describe("/project route Controller", () => {
         await ProjectController.getProject(req as any, res as any);
 
         // assert
-        // expect(
-        //   await ProjectService.getProjectById(String(req.params.project_id))
-        // ).toBe(res); // this would be service testing
 
         // expect(res.body.name).toEqual("Project 1");
 
@@ -94,10 +91,10 @@ describe("/project route Controller", () => {
         expect(ProjectService.getProjectById).toHaveBeenLastCalledWith(
           req.params.project_id
         );
-        // expect(res.status).toHaveBeenCalledTimes(1);
-        // expect(res.status).toHaveBeenCalledWith(200);
-        // expect(res.json).toHaveBeenCalledTimes(1);
-        // expect(res.json).toHaveBeenCalledWith(mockReturnValue);
+        expect(res.status).toHaveBeenCalledTimes(1);
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.json).toHaveBeenCalledTimes(1);
+        expect(res.json).toHaveBeenCalledWith(mockReturnValue);
       });
     });
 
@@ -137,7 +134,7 @@ describe("/project route Controller", () => {
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toHaveBeenCalledTimes(1);
 
-        // expect(res.json).toHaveBeenCalledWith([mockReturnValue]);
+        expect(res.json).toHaveBeenCalledWith(mockReturnValue);
         // expect(res.json).toHaveBeenCalledWith();
       });
 
