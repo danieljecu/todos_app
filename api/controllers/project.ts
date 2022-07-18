@@ -4,13 +4,16 @@ import { ProjectService } from "./../services/";
 
 async function getAllProjects(req: Request, res: Response) {
   console.log("getAllProjects");
-
   // TODO get projects by user_id
-  const projects = await ProjectService.getProjectsWithTasklistIds();
-
-  if (projects?.length > 0) {
-    res.status(200).json(projects);
-  } else {
+  try {
+    const projects = await ProjectService.getProjectsWithTasklistIds();
+    if (projects?.length === 0) {
+      res.status(204).json(projects);
+    }
+    if (projects?.length > 0) {
+      res.status(200).json(projects);
+    }
+  } catch (db_error) {
     res.sendStatus(404);
   }
 }
