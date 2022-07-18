@@ -47,7 +47,7 @@ describe("/project route Controller", () => {
   describe("given user is not logged in", () => {});
   describe("given user is logged in", () => {
     // beforeEach(() => {
-    //   jest.clearAllMocks();
+    //   jest.clearAllMocks(); // this get's called automaticly throug jest.config clearMocks: true
     // });
     describe("getProject", () => {
       it("get the project by project id", async () => {
@@ -135,6 +135,7 @@ describe("/project route Controller", () => {
         expect(res.json).toHaveBeenCalledTimes(1);
 
         expect(res.json).toHaveBeenCalledWith(mockReturnValue);
+
         // expect(res.json).toHaveBeenCalledWith();
       });
 
@@ -155,9 +156,9 @@ describe("/project route Controller", () => {
           task_lists: [],
         };
 
-        // when(ProjectService.getProjectsWithTasklistIds)
-        //   .calledWith()
-        //   .mockReturnValueOnce(Promise.resolve([mockReturnValue]));
+        when(ProjectService.getProjectsWithTasklistIds)
+          .calledWith()
+          .mockReturnValueOnce(Promise.resolve([]));
 
         // await ProjectController.getAllProjects(req, res);
 
@@ -170,14 +171,14 @@ describe("/project route Controller", () => {
         // expect(res.sendStatus).toHaveBeenCalledTimes(1);
         // expect(res.sendStatus).toHaveBeenCalledWith(204);
 
-        const result: any[] = [];
-        jest
-          .spyOn(ProjectService, "getProjectsWithTasklistIds")
-          .mockImplementation((): any => result);
+        // jest
+        //   .spyOn(ProjectService, "getProjectsWithTasklistIds")
+        //   .mockImplementation((): any => []);
 
         await ProjectController.getProject(req, res);
 
-        expect(await ProjectService.getProjectsWithTasklistIds()).toBe(result);
+        //This doesn't call getProjectsWithTasklistIds???  toHaveBeenCalledTimes is 0
+        // expect(await ProjectService.getProjectsWithTasklistIds()).toEqual([]);
         expect(ProjectService.getProjectsWithTasklistIds).toHaveBeenCalledTimes(
           1
         );
@@ -189,42 +190,39 @@ describe("/project route Controller", () => {
         expect(res.json).toHaveBeenCalledTimes(1);
       });
     });
-    xdescribe("createProject", () => {
-      it("should return 200 when created", async () => {
-        const project_id: string = "1";
-        const tenantUserId = 1;
-
-        const body = {
-          id: 1,
+    describe("createProject", () => {
+      it("should return 201 when created", async () => {
+        const user_id: string = "12";
+        const project_name: string = "12";
+        const mockReturnValue = {
+          id: 12,
           name: `Mario's Pizzeria project`,
           task_lists: [],
         };
 
         const req = mockRequest({
-          headers: { project_id, tenantUserId },
-          body,
+          body: { project_name, user_id },
         });
 
         const res = mockResponse();
 
         when(ProjectService.createProject)
-          .calledWith(body.name)
+          .calledWith(project_name, 2)
           .mockReturnValueOnce(
             Promise.resolve({
-              project_id,
-              ...body,
+              ...mockReturnValue,
             })
           );
 
         await ProjectController.createProject(req, res);
 
         expect(ProjectService.createProject).toHaveBeenCalledTimes(1);
-        expect(ProjectService.createProject).toHaveBeenLastCalledWith(
-          project_id,
-          body
-        );
+        expect(ProjectService.createProject).toHaveBeenLastCalledWith([
+          project_name,
+          user_id,
+        ]);
         expect(res.sendStatus).toHaveBeenCalledTimes(1);
-        expect(res.sendStatus).toHaveBeenCalledWith(200);
+        expect(res.sendStatus).toHaveBeenCalledWith(201);
       });
     });
     xdescribe("updateProject", () => {
