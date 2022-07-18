@@ -33,14 +33,6 @@ const mockResponse = () => {
   return res;
 };
 
-describe("calculate", function () {
-  it("add", async () => {
-    let result = ProjectController.Sum(5, 2);
-    console.log("returns a promise with a value", result);
-    expect(await result).toBe(7);
-  });
-});
-
 describe("/project route Controller", () => {
   //TODO: test controller means calling the service and then expect {body AND statusCode}
 
@@ -139,7 +131,7 @@ describe("/project route Controller", () => {
         // expect(res.json).toHaveBeenCalledWith();
       });
 
-      xit("should return 204 no content when there are no projects", async () => {
+      it("should return 204 no content when there are no projects", async () => {
         const project_id = "1";
         const query = {};
 
@@ -214,6 +206,7 @@ describe("/project route Controller", () => {
             })
           );
 
+        // i don't undersand why controller doesn't call the service? // line 202
         await ProjectController.createProject(req, res);
 
         expect(ProjectService.createProject).toHaveBeenCalledTimes(1);

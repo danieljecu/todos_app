@@ -70,15 +70,10 @@ async function deleteProject(req: Request, res: Response) {
   }
 }
 
-async function Sum(a: number, b: number) {
-  return a + b;
-}
-
 export {
   getAllProjects,
   getProject,
   createProject,
   updateProject,
   deleteProject,
-  Sum,
 };
