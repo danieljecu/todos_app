@@ -73,8 +73,8 @@ async function updateProject(project_id: string, projectName: string) {
   });
 }
 
-async function deleteProject(projectId: string) {
-  return await prisma.projects.delete({
+async function deleteProject(projectId: string): Promise<void> {
+  await prisma.projects.delete({
     where: {
       id: parseInt(projectId),
     },

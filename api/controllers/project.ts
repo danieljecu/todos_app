@@ -27,6 +27,7 @@ async function getProject(req: Request, res: Response) {
 
     res.status(200).json(project);
   } catch (db_error) {
+    // THIS MAY not be a db error
     res.status(404).json(db_error);
   }
 }
