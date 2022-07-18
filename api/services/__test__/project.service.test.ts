@@ -14,7 +14,7 @@ describe("Project Service", () => {
   describe("get", () => {
     it("Should return an unique project", async () => {
       const project_id: string = "1";
-      const mockAccount = {
+      const mockProject = {
         id: 1,
         name: "Project 1",
         task_lists: [],
@@ -22,7 +22,7 @@ describe("Project Service", () => {
 
       //Mocking prisma
       prismaAsAny.projects = {
-        findUnique: jest.fn().mockReturnValueOnce(mockAccount),
+        findUnique: jest.fn().mockReturnValueOnce(mockProject),
       };
 
       // arrange
@@ -38,7 +38,97 @@ describe("Project Service", () => {
     });
   });
 
+  describe("createOne", () => {
+    it("Should return a create promise", async () => {
+      const mockProject = {
+        id: 1,
+        name: "Project 1",
+        task_lists: [],
+        user_id: 1,
+      };
+
+      //Mocking prisma
+      prismaAsAny.projects = {
+        create: jest.fn().mockReturnValueOnce(mockProject),
+      };
+      const body = { projectName: "Project 1", user_id: 1 };
+
+      const result = await ProjectService.createProject(
+        body.projectName,
+        body.user_id
+      );
+
+      expect(prisma.projects.create).toHaveBeenCalledTimes(1);
+      expect(prisma.projects.create).toHaveBeenCalledWith(
+        expect.objectContaining({
+          data: {
+            name: body.projectName,
+            project_users: { create: [{ user_id: body.user_id }] },
+          },
+        })
+      );
+      expect(result).toEqual(mockProject);
+    });
+  });
+
   describe("deleteOne", () => {
-    xit("Should return an array of projects", async () => {});
+    it("given a project_id Should return an delete promise", async () => {
+      const project_id: string = "1";
+      // prismaAsAny.user = {
+      //   updateMany: jest.fn().mockReturnValueOnce(mutation),
+      // };
+      const mockReturnValue = { id: project_id, isDeleted: true };
+      prismaAsAny.project = {
+        delete: jest.fn().mockReturnValueOnce(mockReturnValue),
+      };
+
+      const result = await ProjectService.deleteProject(project_id);
+
+      expect(prisma.projects.delete).toHaveBeenCalledTimes(1);
+      expect(prisma.projects.delete).toHaveBeenCalledWith(
+        expect.objectContaining({
+          data: {
+            id: project_id,
+            isDeleted: true,
+          },
+        })
+      );
+      expect(result).toEqual(mockReturnValue);
+    });
+  });
+
+  describe("updateOne", () => {
+    it("Should return a mutation", async () => {
+      const mockProject = {
+        id: 1,
+        name: "Project 1 updated",
+        task_lists: [],
+        user_id: 1,
+      };
+
+      //Mocking prisma
+      prismaAsAny.projects = {
+        update: jest.fn().mockReturnValueOnce(mockProject),
+      };
+      const body = { projectName: "Project 1 updated", project_id: "1" };
+
+      const result = await ProjectService.updateProject(
+        body.project_id,
+        body.projectName
+      );
+
+      expect(prisma.projects.update).toHaveBeenCalledTimes(1);
+      expect(prisma.projects.update).toHaveBeenCalledWith(
+        expect.objectContaining({
+          data: {
+            name: body.projectName,
+          },
+          where: {
+            id: body.project_id,
+          },
+        })
+      );
+      expect(result).toEqual(mockProject);
+    });
   });
 });
