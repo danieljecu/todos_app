@@ -1,0 +1,41 @@
+name: Deploy API
+
+on:
+  push:
+    branches:
+      - main
+      - cloudformation
+    paths:
+      - "api/**"
+
+defaults:
+  run:
+    working-directory: ./api
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🛎 Checkout
+        uses: actions/checkout@v2
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+          aws-region: "eu-west-1"
+      - name: Install AWS Lightsail Client
+        run: |
+          curl "https://s3.us-west-2.amazonaws.com/lightsailctl/latest/linux-amd64/lightsailctl" -o "lightsailctl"
+          sudo mv "lightsailctl" "/usr/local/bin/lightsailctl"
+          sudo chmod +x /usr/local/bin/lightsailctl
+      - name: Build and push image to Lightsail
+        id: build-image
+        run: |
+          docker build --build-arg API_DB_URL="${{ secrets.DEV_API_DB_URL }}" --build-arg API_HOST="${{ secrets.DEV_API_HOST }}" -t footpal-api:latest .
+          aws lightsail push-container-image --region eu-west-1 --service-name ${{ secrets.DEV_API_NAME }} --label footpal-api --image footpal-api:latest
+      - name: Deploy Service
+        run: |
+          aws lightsail get-container-images --service-name ${{ secrets.DEV_API_NAME }} | jq --raw-output ".containerImages[0].image" > image.txt
+          jq --arg image $(cat image.txt) '.containers.app.image = $image' container.template.json > container.json
+          aws lightsail create-container-service-deployment --service-name ${{ secrets.DEV_API_NAME }} --cli-input-json file://$(pwd)/container.json
