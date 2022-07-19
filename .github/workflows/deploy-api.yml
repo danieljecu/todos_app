@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      - cloudformation
+      - aws-deploy
     paths:
       - "api/**"
 
