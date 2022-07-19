@@ -8,8 +8,9 @@ on:
     paths:
       - "migrations/**"
 
-    run:
-      working-directory: ./migrations
+defaults:
+  run:
+    working-directory: ./migrations
 
 jobs:
   migrate:
