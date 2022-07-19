@@ -4,13 +4,13 @@ on:
   push:
     branches:
       - main
-      - cloudformation
+      - aws-deploy
     paths:
-      - "Migrations/**"
+      - "migrations/**"
 
-  #defaults:
-  #  run:
-  # working-directory: ./Migrations
+  defaults:
+    run:
+      working-directory: ./migrations
 
 jobs:
   migrate:
