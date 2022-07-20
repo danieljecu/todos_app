@@ -154,17 +154,6 @@ describe("/project route Controller", () => {
           .calledWith()
           .mockReturnValueOnce(Promise.resolve([]));
 
-        // await ProjectController.getAllProjects(req, res);
-
-        // expect(ProjectService.getProjectsWithTasklistIds).toHaveBeenCalledTimes(
-        //   1
-        // );
-        // expect(
-        //   ProjectService.getProjectsWithTasklistIds
-        // ).toHaveBeenLastCalledWith();
-        // expect(res.sendStatus).toHaveBeenCalledTimes(1);
-        // expect(res.sendStatus).toHaveBeenCalledWith(204);
-
         // jest
         //   .spyOn(ProjectService, "getProjectsWithTasklistIds")
         //   .mockImplementation((): any => []);
