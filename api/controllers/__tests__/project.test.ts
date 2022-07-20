@@ -131,7 +131,7 @@ describe("/project route Controller", () => {
         expect(res.status).toHaveBeenCalledTimes(1);
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toHaveBeenCalledTimes(1);
-        expect(res.json).toHaveBeenCalledWith([mockReturnValue]);
+        expect(res.json).toHaveBeenCalledWith(result);
       });
 
       it("should return 204 no content when there are no projects", async () => {
