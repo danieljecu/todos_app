@@ -118,25 +118,20 @@ describe("/project route Controller", () => {
 
         await ProjectController.getAllProjects(req, res);
 
-        // expect(
-        //   await ProjectService.getProjectsWithTasklistIds()
-        // ).toHaveBeenCalledTimes(1);
         expect(ProjectService.getProjectsWithTasklistIds).toHaveBeenCalledTimes(
           1
         );
-        expect(await ProjectService.getProjectsWithTasklistIds()).toEqual(
-          result
-        );
-        expect(ProjectService.getProjectsWithTasklistIds).toHaveBeenCalledTimes(
-          2
-        );
-        // expect(res.status).toHaveBeenCalledTimes(1);
-        // expect(res.status).toHaveBeenCalledWith(200);
-        // expect(res.json).toHaveBeenCalledTimes(1);
-
-        // expect(res.json).toHaveBeenCalledWith(mockReturnValue);
-
-        // expect(res.json).toHaveBeenCalledWith();
+        //   await ProjectService.getProjectsWithTasklistIds()
+        // expect(await ProjectService.getProjectsWithTasklistIds()).toEqual(
+        //   result
+        // );
+        // expect(ProjectService.getProjectsWithTasklistIds).toHaveBeenCalledTimes(
+        //   2
+        // );
+        expect(res.status).toHaveBeenCalledTimes(1);
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.json).toHaveBeenCalledTimes(1);
+        expect(res.json).toHaveBeenCalledWith([mockReturnValue]);
       });
 
       it("should return 204 no content when there are no projects", async () => {
