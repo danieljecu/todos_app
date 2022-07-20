@@ -5,8 +5,8 @@ on:
     branches:
       - main
       - aws-deploy
-    paths:
-      - "migrations/**"
+    # paths:
+    #   - "migrations/**"
 
 # database-1.cls13dgoatol.eu-west-2.rds.amazonaws.com
 jobs:
