@@ -8,10 +8,11 @@ on:
     paths:
       - "migrations/**"
 
-defaults:
-  run:
-    working-directory: ./migrations
+# defaults:
+#   run:
+#     working-directory: ./migrations
 
+# database-1.cls13dgoatol.eu-west-2.rds.amazonaws.com
 jobs:
   migrate:
     runs-on: ubuntu-latest
