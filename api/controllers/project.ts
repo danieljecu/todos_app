@@ -14,6 +14,7 @@ async function getAllProjects(req: Request, res: Response) {
       res.status(200).json(projects);
     }
   } catch (db_error) {
+    console.log(db_error);
     res.sendStatus(404);
   }
 }

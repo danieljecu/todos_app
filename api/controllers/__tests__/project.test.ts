@@ -3,7 +3,8 @@ import { ProjectService } from "../../services";
 import { when } from "jest-when";
 import { Request, Response } from "express";
 
-// jest.mock("../../services");
+// jest.mock("../../services"); //WARNING for the readers, mock the file not the folder
+jest.mock("../../services/project.service");
 
 interface mockRequestArgs {
   body?: any;
@@ -117,13 +118,18 @@ describe("/project route Controller", () => {
 
         await ProjectController.getAllProjects(req, res);
 
-        // expect(await ProjectService.getProjectsWithTasklistIds()).toBe(result);
         // expect(
         //   await ProjectService.getProjectsWithTasklistIds()
         // ).toHaveBeenCalledTimes(1);
-        // expect(ProjectService.getProjectsWithTasklistIds).toHaveBeenCalledTimes(
-        //   1
-        // );
+        expect(ProjectService.getProjectsWithTasklistIds).toHaveBeenCalledTimes(
+          1
+        );
+        expect(await ProjectService.getProjectsWithTasklistIds()).toEqual(
+          result
+        );
+        expect(ProjectService.getProjectsWithTasklistIds).toHaveBeenCalledTimes(
+          2
+        );
         // expect(res.status).toHaveBeenCalledTimes(1);
         // expect(res.status).toHaveBeenCalledWith(200);
         // expect(res.json).toHaveBeenCalledTimes(1);
