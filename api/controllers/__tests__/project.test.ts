@@ -92,7 +92,7 @@ describe("/project route Controller", () => {
       });
     });
 
-    describe.only("getAllProjects", () => {
+    describe("getAllProjects", () => {
       it("should return status 200 and an array of projects", async () => {
         const mockReturnValue = {
           id: 1,
@@ -169,7 +169,7 @@ describe("/project route Controller", () => {
         //   .spyOn(ProjectService, "getProjectsWithTasklistIds")
         //   .mockImplementation((): any => []);
 
-        await ProjectController.getProject(req, res);
+        await ProjectController.getAllProjects(req, res);
 
         //This doesn't call getProjectsWithTasklistIds???  toHaveBeenCalledTimes is 0
         // expect(await ProjectService.getProjectsWithTasklistIds()).toEqual([]);
@@ -186,7 +186,7 @@ describe("/project route Controller", () => {
     });
     describe("createProject", () => {
       it("should return 201 when created", async () => {
-        const user_id: string = "12";
+        const user_id: number = 2;
         const project_name: string = "12";
         const mockReturnValue = {
           id: 12,
@@ -201,7 +201,7 @@ describe("/project route Controller", () => {
         const res = mockResponse();
 
         when(ProjectService.createProject)
-          .calledWith(project_name, 2)
+          .calledWith(project_name, user_id)
           .mockReturnValueOnce(
             Promise.resolve({
               ...mockReturnValue,
@@ -212,10 +212,10 @@ describe("/project route Controller", () => {
         await ProjectController.createProject(req, res);
 
         expect(ProjectService.createProject).toHaveBeenCalledTimes(1);
-        expect(ProjectService.createProject).toHaveBeenLastCalledWith([
+        expect(ProjectService.createProject).toHaveBeenLastCalledWith(
           project_name,
-          user_id,
-        ]);
+          user_id
+        );
         expect(res.sendStatus).toHaveBeenCalledTimes(1);
         expect(res.sendStatus).toHaveBeenCalledWith(201);
       });
