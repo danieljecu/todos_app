@@ -40,33 +40,4 @@ async function createNewUser({
   });
 }
 
-async function clearUserRefreshToken(userId: number) {
-  //TODO why is not working?
-
-  return await prisma.users.update({
-    where: {
-      id: userId,
-    },
-    data: {
-      // refreshToken: null,
-    },
-  });
-}
-async function setUserRefreshToken(userId: number, refreshToken: string) {
-  return await prisma.users.update({
-    where: {
-      id: userId,
-    },
-    data: {
-      // refreshToken: refreshToken,
-    },
-  });
-}
-
-export {
-  getUserById,
-  getUserByEmail,
-  createNewUser,
-  clearUserRefreshToken,
-  setUserRefreshToken,
-};
+export { getUserById, getUserByEmail, createNewUser };

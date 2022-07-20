@@ -7,7 +7,7 @@ import {
   REFRESH_TOKEN_SECRET,
   expiresIn,
 } from "../middlewares/checkJwt";
-import { UserService } from "./../services";
+import { UserService, AuthService } from "./../services";
 
 // Note: we dont need to chec if (expiresIn<= now) because we verify the token
 // [ ] we can use cookies to store the token
@@ -74,6 +74,7 @@ async function login(req: Request, res: Response) {
       password,
       userByEmail.password!
     );
+
     if (!passwordsMatchCheck) {
       return res
         .status(401)
@@ -83,7 +84,7 @@ async function login(req: Request, res: Response) {
     if (passwordsMatchCheck) {
       // returns or gives the user a token(access token, refresh token)
       res.status(200).json({
-        user: { ...userByEmail, password: undefined },
+        user: userByEmail, //{ ...userByEmail, password: undefined },
         succes: true,
         accessToken: createAccessToken(<User>userByEmail),
         refreshToken: createRefreshToken(<User>userByEmail),
@@ -130,7 +131,7 @@ interface User {
 
 export const createAccessToken = (user: User) => {
   return jwt.sign({ id: user.id, email: user.email }, ACCESS_TOKEN_SECRET, {
-    expiresIn, //"15m",
+    expiresIn: "15m",
   });
 };
 
