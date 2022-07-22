@@ -33,9 +33,15 @@ jobs:
         id: build-image
         run: |
           docker build --build-arg DATABASE_URL="${{ secrets.DATABASE_URL }}"  -t todos_app_api:latest .
-          aws lightsail push-container-image --service-name "container-service-1" --label todos_app_api --image todos_app_api
+          aws lightsail push-container-image --service-name "container-service-1" --label todos_app_api --image todas-app-api
+        env:
+          API_HOST: ${{ secrets.API_HOST }}
+      - name: lightsailctl create instance
+          lightsailctl deploy --instance-name todos_app_api --region eu-central-1 --image-name todos_app_api:latest --force
       - name: Deploy Service
         run: |
           aws lightsail get-container-images --service-name "container-service-1" | jq --raw-output ".containerImages[0].image" > image.txt
           jq --arg image $(cat image.txt) '.containers.app.image = $image' container.template.json > container.json
           aws lightsail create-container-service-deployment --service-name "container-service-1" --cli-input-json file://$(pwd)/container.json
+    # aws lightsail create-image --name todos_app_api --instance-name todos_app_api --region eu-central-1
+    # aws lightsail publish-image --name todos_app_api --region eu-central-1
