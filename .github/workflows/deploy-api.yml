@@ -8,9 +8,9 @@ on:
     paths:
       - "api/**"
 
-defaults:
-  run:
-    working-directory: ./api
+# defaults:
+#   run:
+#     working-directory: ./api
 
 jobs:
   deploy:
