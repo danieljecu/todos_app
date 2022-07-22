@@ -33,7 +33,6 @@ jobs:
         id: build-image
         run: |
           docker build --build-arg DATABASE_URL="${{ secrets.DATABASE_URL }}"  -t todos_app_api:latest .
-          # aws lightsail push-container-image --region eu-central-1 --service-name ${{ secrets.API_NAME }} --label todos_app_api --image todos_app_api:latest
           aws lightsail push-container-image --region eu-central-1 --service-name container-service-1 --label todos_app_api --image todos_app_api
       - name: Deploy Service
         run: |
