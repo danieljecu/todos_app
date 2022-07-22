@@ -1,8 +1,12 @@
 import axios, { AxiosRequestHeaders, AxiosRequestConfig } from "axios";
 import { TokenService } from "../services";
 
+// function getApiUrl() {
+//   return process.env.API_HOST || "localhost:3000";
+// }
+
 const axiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || "http://localhost:3000/",
+  baseURL: process.env.API_HOST || "http://localhost:3000/",
 });
 
 axiosInstance.interceptors.request.use(
