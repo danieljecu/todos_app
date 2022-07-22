@@ -7,7 +7,8 @@
         "NODE_ENV": "production"
       },
       "ports": {
-        "3001": "HTTP"
+        "3001": "HTTP",
+        "3000": "HTTP"
       }
     }
   },
