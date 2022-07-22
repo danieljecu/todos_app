@@ -5,8 +5,8 @@ on:
     branches:
       - main
       - aws-deploy
-    # paths:
-    #   - "api/**"
+    paths:
+      - "api/**"
 
 # defaults:
 #   run:
