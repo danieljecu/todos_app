@@ -28,4 +28,4 @@ services:
     depends_on:
       - flyway
 volumes:
-  db: 
+  db:
