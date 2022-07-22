@@ -40,7 +40,7 @@
     "@types/jsonwebtoken": "^8.5.8",
     "@types/node": "^16.11.21",
     "concurrently": "^5.3.0",
-    "nodemon": "^2.0.15",
+    "nodemon": "^2.0.19",
     "prisma": "^3.6.0",
     "ts-node": "^10.4.0"
   }
