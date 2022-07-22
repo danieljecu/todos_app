@@ -36,6 +36,6 @@ jobs:
           aws lightsail push-container-image --service-name container-service-1 --label todos_app_api --image todos_app_api
       - name: Deploy Service
         run: |
-          aws lightsail get-container-images --service-name ${{ secrets.API_NAME }} | jq --raw-output ".containerImages[0].image" > image.txt
+          aws lightsail get-container-images --service-name container-service-1 | jq --raw-output ".containerImages[0].image" > image.txt
           jq --arg image $(cat image.txt) '.containers.app.image = $image' container.template.json > container.json
           aws lightsail create-container-service-deployment --service-name ${{ secrets.API_NAME }} --cli-input-json file://$(pwd)/container.json
