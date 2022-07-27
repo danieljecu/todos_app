@@ -18,14 +18,14 @@ app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+const swaggerDocument = YAML.load("./basic-api-doc.yml");
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 app.use("/", AuthRouter);
 app.all("*", verifyToken);
 app.use("/user", UserRouter);
 app.use("/project", ProjectRouter);
 // will use /tasklist always under the project
 app.use("/task", TaskRouter);
-
-const swaggerDocument = YAML.load("./basic-api-doc.yml");
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.listen(PORT, () => console.log(`Running on ${PORT} ⚡`));
