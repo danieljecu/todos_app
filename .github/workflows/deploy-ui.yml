@@ -33,5 +33,6 @@ jobs:
         run: npm run build
         env:
           REACT_APP_API_HOST: ${{ secrets.API_HOST }}
+          CI: false
       - name: updated app to s3
         run: aws s3 sync ./build s3://jecu.eu
