@@ -32,6 +32,6 @@ jobs:
         id: build-ui
         run: npm run build
         env:
-          API_HOST: ${{ secrets.API_HOST }}
+          REACT_APP_API_HOST: ${{ secrets.API_HOST }}
       - name: updated app to s3
         run: aws s3 sync ./build s3://jecu.eu
