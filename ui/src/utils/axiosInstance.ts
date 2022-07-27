@@ -1,3 +1,4 @@
+//@es-lint-disable-next-line no-unused-vars
 import axios, { AxiosRequestHeaders, AxiosRequestConfig } from "axios";
 import { TokenService } from "../services";
 
@@ -12,7 +13,10 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (config: any) => {
     //if accestoken is expired, refresh it
-    const { accessToken, refreshToken } = TokenService.getUserSession();
+    const {
+      accessToken,
+      //refreshToken
+    } = TokenService.getUserSession();
 
     if (accessToken) {
       config.headers.authorization = `Bearer ${accessToken}`;

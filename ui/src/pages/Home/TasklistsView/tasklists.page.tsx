@@ -8,8 +8,13 @@ import { useParams } from "react-router-dom";
 
 export const TasklistsView: React.FC<{}> = ({}) => {
   const { projectId, id } = useParams();
-  const { project, setProject, addTask, addTasklist, removeTasklistById } =
-    useProjectTasklists(Number(projectId));
+  const {
+    project,
+    //setProject,
+    addTask,
+    addTasklist,
+    removeTasklistById,
+  } = useProjectTasklists(Number(projectId));
 
   if (!project) {
     return (
