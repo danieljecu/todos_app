@@ -1,14 +1,15 @@
 import React from "react";
 import { useProjectTasklists } from "./hooks";
 import { TasklistCard, CreateTasklistCard } from "./components/";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+// import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 
 export const TasklistsView: React.FC<{}> = ({}) => {
   const { projectId, id } = useParams();
-  const { project, setProject, addTask, addTasklist, removeTasklistById } = useProjectTasklists(Number(projectId)); 
+  const { project, setProject, addTask, addTasklist, removeTasklistById } =
+    useProjectTasklists(Number(projectId));
 
   if (!project) {
     return (

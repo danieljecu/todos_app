@@ -6,7 +6,7 @@ import { TokenService } from "../services";
 // }
 
 const axiosInstance = axios.create({
-  baseURL: process.env.API_HOST || "http://localhost:3000/",
+  baseURL: process.env.REACT_APP_API_HOST || "http://localhost:3000/",
 });
 
 axiosInstance.interceptors.request.use(
