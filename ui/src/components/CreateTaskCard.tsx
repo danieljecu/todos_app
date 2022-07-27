@@ -1,15 +1,15 @@
 import React from "react";
-import { Link as ReactLink } from "react-router-dom";
+// import { Link as ReactLink } from "react-router-dom";
 
 import { ITaskDetails } from "interfaces/tasks";
 import { useParams } from "react-router-dom";
 
 import {
   TaskContainer,
-  CardCreateTitle,
+  // CardCreateTitle,
   CardTitle,
   CardBody,
-  CardBodyItem,
+  // CardBodyItem,
 } from "./styled";
 
 import { STATUSES } from "constants/taskStatuses";
