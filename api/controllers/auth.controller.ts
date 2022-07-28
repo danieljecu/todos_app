@@ -148,4 +148,9 @@ export const createRefreshToken = (user: User) => {
   );
 };
 
-export { refreshToken, login, logout, createUser };
+async function getHealth(req: Request, res: Response) {
+  console.log("test get helath");
+  res.sendStatus(200);
+}
+
+export { getHealth, refreshToken, login, logout, createUser };

@@ -1,4 +1,5 @@
 import {
+  getHealth,
   createUser,
   login,
   refreshToken,
@@ -7,9 +8,10 @@ import {
 import { NextFunction, Router, Response, Request } from "express";
 import { check, param, body, validationResult } from "express-validator";
 import generalValidate from "./generalValidate";
-import { verifyToken } from "../middlewares/checkJwt";
 
 const AuthRouter = Router();
+
+AuthRouter.get("/health", generalValidate, getHealth);
 
 AuthRouter.post("/refresh", generalValidate, refreshToken);
 

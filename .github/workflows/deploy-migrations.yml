@@ -1,0 +1,22 @@
+name: Deploy Migrations
+
+on:
+  push:
+    branches:
+      - main
+      - aws-deploy
+    # paths:
+    #   - "migrations/**"
+
+# database-1.cls13dgoatol.eu-west-2.rds.amazonaws.com
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: download flyway
+        run: wget https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/7.8.2/flyway-commandline-7.8.2-linux-x64.tar.gz
+      - name: extract and link flyway
+        run: tar -xvf flyway-commandline-7.8.2-linux-x64.tar.gz && sudo ln -s `pwd`/flyway-7.8.2/flyway /usr/local/bin
+      - name: migrate main
+        run: flyway -url=jdbc:postgresql://database-1.cls13dgoatol.eu-west-2.rds.amazonaws.com:5432/ -user=${{ secrets.DEV_DB_USER }} -password=${{ secrets.DEV_DB_PASSWORD }} -locations=filesystem:./migrations/* -outOfOrder=true migrate

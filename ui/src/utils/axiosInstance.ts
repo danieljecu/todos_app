@@ -1,14 +1,22 @@
+//@es-lint-disable-next-line no-unused-vars
 import axios, { AxiosRequestHeaders, AxiosRequestConfig } from "axios";
 import { TokenService } from "../services";
 
+// function getApiUrl() {
+//   return process.env.API_HOST || "localhost:3000";
+// }
+
 const axiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || "http://localhost:3000/",
+  baseURL: process.env.REACT_APP_API_HOST || "http://localhost:3000/",
 });
 
 axiosInstance.interceptors.request.use(
   (config: any) => {
     //if accestoken is expired, refresh it
-    const { accessToken, refreshToken } = TokenService.getUserSession();
+    const {
+      accessToken,
+      //refreshToken
+    } = TokenService.getUserSession();
 
     if (accessToken) {
       config.headers.authorization = `Bearer ${accessToken}`;
