@@ -1,26 +1,20 @@
 import { Request, Response } from "express";
 import { prisma } from "./../utils/db_client";
+import { ProjectService } from "./../services/";
 
 async function getAllProjects(req: Request, res: Response) {
   console.log("getAllProjects");
-
   // TODO get projects by user_id
-  const projects = await prisma.projects.findMany({
-    select: {
-      id: true,
-      name: true,
-      task_lists: {
-        select: {
-          id: true,
-          name: true,
-          project_id: true,
-        },
-      },
-    },
-  });
-  if (projects?.length > 0) {
-    res.status(200).json(projects);
-  } else {
+  try {
+    const projects = await ProjectService.getProjectsWithTasklistIds();
+    if (projects?.length === 0) {
+      res.status(204).json(projects);
+    }
+    if (projects?.length > 0) {
+      res.status(200).json(projects);
+    }
+  } catch (db_error) {
+    console.log(db_error);
     res.sendStatus(404);
   }
 }
@@ -30,36 +24,11 @@ async function getProject(req: Request, res: Response) {
   console.log("getProject");
 
   try {
-    const project = await prisma.projects.findUnique({
-      where: {
-        id: parseInt(project_id),
-      },
-      select: {
-        id: true,
-        name: true,
-        task_lists: {
-          select: {
-            id: true,
-            name: true,
-            project_id: true,
-            tasks: {
-              select: {
-                id: true,
-                title: true,
-                description: true,
-                due_date: true,
-                created_at: true,
-                comments: true,
-                task_list_id: true,
-                task_status_id: true,
-              },
-            },
-          },
-        },
-      },
-    });
+    const project = await ProjectService.getProjectById(project_id);
+
     res.status(200).json(project);
   } catch (db_error) {
+    // THIS MAY not be a db error
     res.status(404).json(db_error);
   }
 }
@@ -69,12 +38,8 @@ async function createProject(req: Request, res: Response) {
   const { name } = req.body;
 
   try {
-    const project = await prisma.projects.create({
-      data: {
-        name: name,
-        // TODO: maybe pass optionally user_id; but using project_users.create
-      },
-    });
+    const project = await ProjectService.createProject(name);
+
     res.status(201).json(project);
   } catch (db_error) {
     res.status(404).json(db_error);
@@ -87,14 +52,7 @@ async function updateProject(req: Request, res: Response) {
   console.log("updateProject");
 
   try {
-    const project = await prisma.projects.update({
-      where: {
-        id: parseInt(project_id),
-      },
-      data: {
-        name: name,
-      },
-    });
+    const project = await ProjectService.updateProject(project_id, name);
     res.status(204).json(project);
   } catch (db_error) {
     res.status(400).json({ error: "project not found", db_error });
@@ -106,11 +64,7 @@ async function deleteProject(req: Request, res: Response) {
   console.log("deleteProject");
 
   try {
-    const project = await prisma.projects.delete({
-      where: {
-        id: parseInt(project_id),
-      },
-    });
+    const project = await ProjectService.deleteProject(project_id);
     console.log("project deleted", project);
     res.sendStatus(204);
   } catch (db_error) {

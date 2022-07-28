@@ -35,7 +35,9 @@ const deleteTasklist = async (
   tasklistId: number | string
 ): Promise<ITasklistDetails> => {
   return (
-    await axiosInstance.delete<ITasklistDetails>(`project/${projectId}/tasklist/${tasklistId}`)
+    await axiosInstance.delete<ITasklistDetails>(
+      `project/${projectId}/tasklist/${tasklistId}`
+    )
   ).data;
 };
 
@@ -53,10 +55,10 @@ const updateTasklist = async (
 };
 
 const TasklistService = {
-  getTasklistsByProjectId,
+  // getTasklistsByProjectId,
   createTasklist,
   deleteTasklist,
-  updateTasklist
+  // updateTasklist
 };
 
 export default TasklistService;

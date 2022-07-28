@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
-// import styled from 'styled-components';
 
-export const  HeaderBar = styled.nav`
+export const HeaderBar = styled.nav`
   background-color: #282c34;
   display: flex;
   flex-direction: column;

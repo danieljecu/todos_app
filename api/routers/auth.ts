@@ -4,7 +4,7 @@ import {
   login,
   refreshToken,
   logout,
-} from "../controllers/auth";
+} from "../controllers/auth.controller";
 import { NextFunction, Router, Response, Request } from "express";
 import { check, param, body, validationResult } from "express-validator";
 import generalValidate from "./generalValidate";

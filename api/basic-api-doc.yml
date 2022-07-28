@@ -7,7 +7,6 @@ servers:
   - url: http://localhost:3000/
     description: Dev server (uses live data)
 paths:
-
   /user:
     get:
       tags:
@@ -15,13 +14,13 @@ paths:
       summary: Returns a list of users.
       description: Optional extended description in CommonMark or HTML.
       responses:
-        '200':    # status code
+        200: # status code
           description: A JSON array of user names
           content:
             application/json:
-              schema: 
+              schema:
                 type: array
-                items: 
+                items:
                   type: string
     post:
       tags:
@@ -55,7 +54,7 @@ paths:
           required: true
           description: Numeric ID of the user to get
       responses:
-        '200':
+        200:
           description: A JSON object of the user
           content:
             application/json:
@@ -66,7 +65,7 @@ paths:
                     type: string
                   id:
                     type: integer
-        '404':
+        404:
           description: User not found
     put:
       tags:
@@ -99,7 +98,7 @@ paths:
           description: User not found.
         400:
           description: invalid input
-      
+
     delete:
       tags:
         - user
@@ -129,7 +128,6 @@ paths:
           description: User not found.
         400:
           description: invalid id
-
 
   /project:
     get:
@@ -237,9 +235,6 @@ paths:
           description: Project not found.
         400:
           description: invalid id
-        
-      
-
 
   /project/{project_id}/tasklist:
     get:
@@ -331,8 +326,6 @@ paths:
                   project_id:
                     type: integer
 
-    
-
   /project/{project_id}/tasklist/{tasklist_id}:
     get:
       tags:
@@ -340,21 +333,21 @@ paths:
       summary: Returns a list of all tasklists in projects
       description: Optional extended description in CommonMark or HTML.
       parameters:
-      - in: path
-        name: project_id
-      - in: path
-        name: tasklist_id
-        schema:
-          properties:
-            project_id:
-              type: integer
-              format: int32
-              required: true
-            tasklist_id:
-              type: integer
-              format: int32
-              required: true
-          description: Numeric ID of tasklist and project
+        - in: path
+          name: project_id
+        - in: path
+          name: tasklist_id
+          schema:
+            properties:
+              project_id:
+                type: integer
+                format: int32
+                required: true
+              tasklist_id:
+                type: integer
+                format: int32
+                required: true
+            description: Numeric ID of tasklist and project
 
       responses:
         200:
@@ -364,7 +357,7 @@ paths:
               schema:
                 properties:
                   project_id:
-                      type: integer
+                    type: integer
                   tasklist_id:
                     type: integer
                   title:
@@ -375,28 +368,28 @@ paths:
           description: Invalid input
         404:
           description: Tasklist not found
-                  
+
     put:
       tags:
         - tasklist
       summary: Update a specific tasklist Entry in a the project with {project_id}
       description: Optional extended description in CommonMark or HTML.
       parameters:
-      - in: path
-        name: project_id
-      - in: path
-        name: tasklist_id
-        schema:
-          properties:
-            project_id:
-              type: integer
-              format: int32
-              required: true
-            tasklist_id:
-              type: integer
-              format: int32
-              required: true
-          description: Numeric ID of tasklist and project
+        - in: path
+          name: project_id
+        - in: path
+          name: tasklist_id
+          schema:
+            properties:
+              project_id:
+                type: integer
+                format: int32
+                required: true
+              tasklist_id:
+                type: integer
+                format: int32
+                required: true
+            description: Numeric ID of tasklist and project
       requestBody:
         content:
           application/json:
@@ -421,21 +414,21 @@ paths:
       summary: Delete a tasklist Entry
       description: Optional extended description in CommonMark or HTML.
       parameters:
-      - in: path
-        name: project_id
-      - in: path
-        name: tasklist_id
-        schema:
-          properties:
-            project_id:
-              type: integer
-              format: int32
-              required: true
-            tasklist_id:
-              type: integer
-              format: int32
-              required: true
-          description: Numeric ID of tasklist and project
+        - in: path
+          name: project_id
+        - in: path
+          name: tasklist_id
+          schema:
+            properties:
+              project_id:
+                type: integer
+                format: int32
+                required: true
+              tasklist_id:
+                type: integer
+                format: int32
+                required: true
+            description: Numeric ID of tasklist and project
       requestBody:
       content:
         application/json:
@@ -458,7 +451,6 @@ paths:
           description: Tasklist not found.
         400:
           description: Invalid input
-
 
   /task:
     get:
@@ -507,7 +499,7 @@ paths:
                   type: string
                 due_date:
                   type: string
-                
+
       responses:
         201:
           description: Successfully added a task entry.
@@ -520,15 +512,15 @@ paths:
       summary: Returns a task by task_id
       description: Optional extended description in CommonMark or HTML.
       parameters:
-      - in: path
-        name: task_id
-        schema:
-          properties:
-            task_id:
-              type: integer
-              format: int32
-              required: true
-          description: Numeric ID of task
+        - in: path
+          name: task_id
+          schema:
+            properties:
+              task_id:
+                type: integer
+                format: int32
+                required: true
+            description: Numeric ID of task
       responses:
         200:
           description: Success
@@ -554,73 +546,73 @@ paths:
                 due_date:
                   type: string
     put:
-        tags:
-          - task
-        summary: Update a specific tasklist Entry in a the task with {task_id}
-        description: Optional extended description in CommonMark or HTML.
-        parameters:
-          - in: path
-            name: task_id
+      tags:
+        - task
+      summary: Update a specific tasklist Entry in a the task with {task_id}
+      description: Optional extended description in CommonMark or HTML.
+      parameters:
+        - in: path
+          name: task_id
+          schema:
+            properties:
+              task_id:
+                type: integer
+                format: int32
+                required: true
+            description: Numeric ID of task
+      requestBody:
+        content:
+          application/json:
             schema:
+              type: object
+              required:
+                - name
+                - description
               properties:
-                task_id:
+                name:
                   type: integer
                   format: int32
-                  required: true
-              description: Numeric ID of task
-        requestBody:
+                description:
+                  type: string
+      responses:
+        201:
+          description: Successfully updated a tasklist entry.
           content:
             application/json:
               schema:
-                type: object
-                required:
-                  - name
-                  - description
                 properties:
                   name:
                     type: integer
                     format: int32
                   description:
                     type: string
-        responses:
-          201:
-            description: Successfully updated a tasklist entry.
-            content:
-              application/json:
-                schema:
-                  properties:
-                    name:
-                      type: integer
-                      format: int32
-                    description:
-                      type: string
-                    tasklist_id:
-                      type: integer
-                      format: int32
-                    project_id:
-                      type: integer
-                      format: int32
-                    created_at:
-                      type: string
-                    updated_at:
-                      type: string
-                    due_date:
-                      type: string
+                  tasklist_id:
+                    type: integer
+                    format: int32
+                  project_id:
+                    type: integer
+                    format: int32
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  due_date:
+                    type: string
     delete:
       tags:
         - task
       summary: Delete a task Entry
       description: Optional extended description in CommonMark or HTML.
       parameters:
-      - in: path
-        name: task_id
-        schema:
-          properties:
-            task_id:
-              type: integer
-              format: int32
-              required: true
-          description: Numeric ID of task
+        - in: path
+          name: task_id
+          schema:
+            properties:
+              task_id:
+                type: integer
+                format: int32
+                required: true
+            description: Numeric ID of task
       requestBody:
       content:
         application/json:
@@ -639,8 +631,6 @@ paths:
           description: Task not found.
         400:
           description: Invalid input
-
-
 
   /tasklist:
     get:
@@ -704,7 +694,6 @@ paths:
                     type: string
                   description:
                     type: string
-
 
   /tasklist/{tasklist_id}:
     get:
@@ -799,4 +788,3 @@ paths:
           description: Tasklist not found.
         400:
           description: Invalid input
-
