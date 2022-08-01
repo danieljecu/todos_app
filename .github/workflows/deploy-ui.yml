@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - aws-deploy
+      - ui-improve-look-and-feel
 
 defaults:
   run:
