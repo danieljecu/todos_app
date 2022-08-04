@@ -1,5 +1,6 @@
 //@es-lint-disable-next-line no-unused-vars
 import axios, { AxiosRequestHeaders, AxiosRequestConfig } from "axios";
+import { NAVIGATION_ROUTES } from "constants/navigation";
 import { TokenService } from "../services";
 
 // function getApiUrl() {
@@ -8,6 +9,9 @@ import { TokenService } from "../services";
 
 const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_API_HOST || "http://localhost:3000/",
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
 axiosInstance.interceptors.request.use(
@@ -16,7 +20,7 @@ axiosInstance.interceptors.request.use(
     const {
       accessToken,
       //refreshToken
-    } = TokenService.getUserSession();
+    } = TokenService.getUserSession(); //This can be getAccessToken()
 
     if (accessToken) {
       config.headers.authorization = `Bearer ${accessToken}`;
@@ -36,13 +40,12 @@ axiosInstance.interceptors.response.use(
     console.log("org,:", originalConfig);
 
     if (err.response && err.response.status === 401) {
-      const refreshUrl = "/refresh";
       const refreshToken = TokenService.getRefreshToken();
 
       // this should check if the URL is not the refresh and if the refresh token exists it should try get a new access token
-      if (originalConfig.url !== refreshUrl && refreshToken) {
+      if (originalConfig.url !== NAVIGATION_ROUTES.REFRESH && refreshToken) {
         try {
-          const rs = await axiosInstance.post("/refresh", {
+          const rs = await axiosInstance.post(NAVIGATION_ROUTES.REFRESH, {
             refreshToken: TokenService.getRefreshToken(),
           });
 
