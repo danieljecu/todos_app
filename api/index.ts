@@ -22,10 +22,9 @@ const swaggerDocument = YAML.load("./basic-api-doc.yml");
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use("/", AuthRouter);
-app.all("*", verifyToken);
-app.use("/user", UserRouter);
-app.use("/project", ProjectRouter);
+app.use("/user", UserRouter, verifyToken);
+app.use("/project", ProjectRouter, verifyToken);
 // will use /tasklist always under the project
-app.use("/task", TaskRouter);
+app.use("/task", TaskRouter, verifyToken);
 
 app.listen(PORT, () => console.log(`Running on ${PORT} ⚡`));
