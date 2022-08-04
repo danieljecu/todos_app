@@ -42,6 +42,7 @@ const handleLogout = async () => {
   window.localStorage.removeItem("refreshToken");
 }; // clear the token in localStorage and the user data
 
+// This tocken service is used to handle the token in the app, to not think about localStorage
 const TokenService = {
   getUserSession,
   getAccessToken,
