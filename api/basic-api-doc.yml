@@ -48,7 +48,7 @@ paths:
       summary: Get a user by ID
       parameters:
         - in: path
-          name: userId
+          name: user_id
           schema:
             type: integer
           required: true
@@ -65,6 +65,10 @@ paths:
                     type: string
                   id:
                     type: integer
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
         404:
           description: User not found
     put:
