@@ -7,9 +7,10 @@ import { NAVIGATION_ROUTES } from "../constants/navigation";
 import { TasklistsView } from "../pages/Home/TasklistsView";
 import { TasksView } from "../pages/Home/TasksView";
 
-const AppRouter: React.FC = () => (
+const AuthenticatedAppRouter: React.FC = () => (
   <BrowserRouter>
     <Header />
+    {/* <Layout> */}
     <Routes>
       <Route path={NAVIGATION_ROUTES.HOME} element={<Home />} />
       <Route
@@ -21,7 +22,8 @@ const AppRouter: React.FC = () => (
       <Route path="/tasklist/:tasklistId" element={<TasksView />} />
       <Route path="/tasklist/:tasklistId/task/:id" element={<TasksView />} />
     </Routes>
+    {/* </Layout> */}
   </BrowserRouter>
 );
 
-export default AppRouter;
+export default AuthenticatedAppRouter;
