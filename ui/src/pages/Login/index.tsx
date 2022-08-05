@@ -1,3 +1,5 @@
+import { css } from "@emotion/css";
+
 import "@reach/dialog/styles.css";
 import React from "react";
 import { Dialog } from "@reach/dialog";
@@ -18,13 +20,17 @@ interface LoginFormProps {
   buttonText: string;
 }
 function LoginForm({ onSubmit, buttonText }: LoginFormProps) {
+  const [isLoading, setIsLoading] = React.useState(false);
+
   function handleSubmit(event: any): void {
+    setIsLoading(true);
     event.preventDefault();
     const [email, password] = event.target.elements;
     onSubmit({
       email: email.value,
       password: password.value,
     });
+    setIsLoading(false);
   }
   return (
     <form onSubmit={handleSubmit}>
@@ -39,7 +45,7 @@ function LoginForm({ onSubmit, buttonText }: LoginFormProps) {
       <Button variant="contained" type="submit">
         {buttonText}
       </Button>
-      <Spinner />
+      {isLoading ? <Spinner style={{ marginLeft: 5 }} /> : null}
     </form>
   );
 }
@@ -52,6 +58,7 @@ export const Login = () => {
 
   const handleLogin = (formData: UserCredentialsFormDataType) => {
     console.log("login", formData);
+
     AuthService.login(formData).then((response) => {
       console.log("login acc data", response.data.accessToken);
 
