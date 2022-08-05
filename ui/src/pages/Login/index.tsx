@@ -2,16 +2,12 @@ import "@reach/dialog/styles.css";
 import React from "react";
 import { Dialog } from "@reach/dialog";
 import { Logo } from "../../components/logo";
-import {
-  Button,
-  Input,
-  Spinner,
-  FormGroup,
-  CircleButton,
-} from "../../components/lib";
+import { Input, Spinner, FormGroup, CircleButton } from "../../components/lib";
 import { AuthService, TokenService } from "services";
 import { useCurrentUser } from "context/auth";
 import { useNavigate } from "react-router-dom";
+import { display } from "@mui/system";
+import Button from "@mui/material/Button";
 
 interface UserCredentialsFormDataType {
   email: string;
@@ -33,14 +29,16 @@ function LoginForm({ onSubmit, buttonText }: LoginFormProps) {
   return (
     <form onSubmit={handleSubmit}>
       <FormGroup>
-        <label htmlFor="email">email</label>
+        <label htmlFor="email">Email</label>
         <Input id="email" type="text" />
       </FormGroup>
       <FormGroup>
         <label htmlFor="password">Password</label>
         <Input id="password" type="password" />
       </FormGroup>
-      <Button type="submit">{buttonText}</Button>
+      <Button variant="contained" type="submit">
+        {buttonText}
+      </Button>
       <Spinner />
     </form>
   );
@@ -77,24 +75,35 @@ export const Login = () => {
   };
 
   return (
-    <>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "column",
+        gap: "0.75rem",
+      }}
+    >
       <Logo width="80" height="80" />
       <h1>Todos app</h1>
-      <Button
-        onClick={() => {
-          setOpenModal("login");
-        }}
-      >
-        Login
-      </Button>
-      <Button
-        onClick={() => {
-          setOpenModal("register");
-        }}
-      >
-        Register
-      </Button>
-
+      <div style={{ display: "flex", flexDirection: "row", gap: "12px" }}>
+        <Button
+          variant="contained"
+          onClick={() => {
+            setOpenModal("login");
+          }}
+        >
+          Login
+        </Button>
+        <Button
+          variant="outlined"
+          onClick={() => {
+            setOpenModal("register");
+          }}
+        >
+          Register
+        </Button>
+      </div>
       {openModal === "login" && (
         <Dialog aria-label="login form" isOpen={openModal === "login"}>
           <div>
@@ -123,6 +132,6 @@ export const Login = () => {
           </div>
         </Dialog>
       )}
-    </>
+    </div>
   );
 };

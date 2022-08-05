@@ -42,6 +42,7 @@ const Input = styled.input({
   border: `1px solid ${colors.gray10}`,
   background: colors.gray,
   padding: "8px 12px",
+  marginBottom: "10px",
 });
 
 const FormGroup = styled.div({
@@ -51,7 +52,7 @@ const FormGroup = styled.div({
 
 const CircleButton = styled.button({
   borderRadius: "30px",
-  padding: "0",
+  padding: "5px",
   width: "40px",
   height: "40px",
   lineHeight: "1",

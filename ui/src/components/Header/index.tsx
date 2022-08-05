@@ -135,14 +135,14 @@ const Header: React.FC = () => {
     <header>
       <HeaderBar>TodoApp</HeaderBar>
       <NewResponsiveHeader />
-      <Nav>
+      {/* <Nav>
         <Link to={NAVIGATION_ROUTES.HOME}>
           <h1>Home</h1>
         </Link>
         <BreadCrumbs />
         <SearchBar />
         <UserStatus />
-      </Nav>
+      </Nav> */}
     </header>
   );
 };

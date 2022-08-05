@@ -9,7 +9,10 @@ import { NAVIGATION_ROUTES } from "../constants/navigation";
 
 const UnautenticatedAuthRouter: React.FC = () => (
   <BrowserRouter>
-    <Header /> Not Loged In
+    <Header />
+    <p style={{ display: "flex", justifyContent: "center" }}>
+      Not Loged In Yet
+    </p>
     <Routes>
       <Route path={NAVIGATION_ROUTES.LOGIN} element={<Login />} />
     </Routes>
