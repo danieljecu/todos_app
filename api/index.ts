@@ -8,6 +8,7 @@ import { UserRouter, ProjectRouter, TaskRouter, AuthRouter } from "./routers";
 import cors from "cors";
 import { verifyToken } from "./middlewares/checkJwt";
 import Logger from "./utils/logger";
+import morganMiddleware from './middlewares/morganMiddleware'
 
 
 dotenv.config();
@@ -15,6 +16,7 @@ dotenv.config();
 const PORT = process.env.PORT || 3000;
 const app: Express = express();
 
+app.use(morganMiddleware);
 app.use(cors());
 app.use(helmet());
 app.use(bodyParser.json());
