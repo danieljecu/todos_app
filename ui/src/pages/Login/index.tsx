@@ -1,17 +1,15 @@
+import { css } from "@emotion/css";
+
 import "@reach/dialog/styles.css";
 import React from "react";
 import { Dialog } from "@reach/dialog";
 import { Logo } from "../../components/logo";
-import {
-  Button,
-  Input,
-  Spinner,
-  FormGroup,
-  CircleButton,
-} from "../../components/lib";
+import { Input, Spinner, FormGroup, CircleButton } from "../../components/lib";
 import { AuthService, TokenService } from "services";
 import { useCurrentUser } from "context/auth";
 import { useNavigate } from "react-router-dom";
+import { display } from "@mui/system";
+import Button from "@mui/material/Button";
 
 interface UserCredentialsFormDataType {
   email: string;
@@ -22,26 +20,32 @@ interface LoginFormProps {
   buttonText: string;
 }
 function LoginForm({ onSubmit, buttonText }: LoginFormProps) {
+  const [isLoading, setIsLoading] = React.useState(false);
+
   function handleSubmit(event: any): void {
+    setIsLoading(true);
     event.preventDefault();
     const [email, password] = event.target.elements;
     onSubmit({
       email: email.value,
       password: password.value,
     });
+    setIsLoading(false);
   }
   return (
     <form onSubmit={handleSubmit}>
       <FormGroup>
-        <label htmlFor="email">email</label>
+        <label htmlFor="email">Email</label>
         <Input id="email" type="text" />
       </FormGroup>
       <FormGroup>
         <label htmlFor="password">Password</label>
         <Input id="password" type="password" />
       </FormGroup>
-      <Button type="submit">{buttonText}</Button>
-      <Spinner />
+      <Button variant="contained" type="submit">
+        {buttonText}
+      </Button>
+      {isLoading ? <Spinner style={{ marginLeft: 5 }} /> : null}
     </form>
   );
 }
@@ -54,6 +58,7 @@ export const Login = () => {
 
   const handleLogin = (formData: UserCredentialsFormDataType) => {
     console.log("login", formData);
+
     AuthService.login(formData).then((response) => {
       console.log("login acc data", response.data.accessToken);
 
@@ -77,24 +82,35 @@ export const Login = () => {
   };
 
   return (
-    <>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "column",
+        gap: "0.75rem",
+      }}
+    >
       <Logo width="80" height="80" />
       <h1>Todos app</h1>
-      <Button
-        onClick={() => {
-          setOpenModal("login");
-        }}
-      >
-        Login
-      </Button>
-      <Button
-        onClick={() => {
-          setOpenModal("register");
-        }}
-      >
-        Register
-      </Button>
-
+      <div style={{ display: "flex", flexDirection: "row", gap: "12px" }}>
+        <Button
+          variant="contained"
+          onClick={() => {
+            setOpenModal("login");
+          }}
+        >
+          Login
+        </Button>
+        <Button
+          variant="outlined"
+          onClick={() => {
+            setOpenModal("register");
+          }}
+        >
+          Register
+        </Button>
+      </div>
       {openModal === "login" && (
         <Dialog aria-label="login form" isOpen={openModal === "login"}>
           <div>
@@ -123,6 +139,6 @@ export const Login = () => {
           </div>
         </Dialog>
       )}
-    </>
+    </div>
   );
 };

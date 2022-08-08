@@ -14,6 +14,7 @@ import Menu from "@mui/material/Menu";
 
 import { Link } from "react-router-dom";
 import { NAVIGATION_ROUTES } from "../../constants/navigation";
+import Button from "@mui/material/Button";
 
 import { useCurrentUser } from "../../context/auth";
 
@@ -29,17 +30,15 @@ export const UserStatus: React.FC = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  console.log(auth);
 
   return (
     <Box>
-      <FormGroup>
-        <FormControlLabel
-          control={<Switch checked={auth} aria-label="login switch" />}
-          label={
-            auth ? "Logout" : <Link to={NAVIGATION_ROUTES.LOGIN}>login</Link>
-          }
-        />
-      </FormGroup>
+      {!auth && (
+        <Button component={Link} color="inherit" to={NAVIGATION_ROUTES.LOGIN}>
+          {auth} Login
+        </Button>
+      )}
 
       {auth && (
         <div>

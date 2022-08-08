@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      - aws-deploy
+      - ui-improve-look-and-feel
     # paths:
     #   - "api/**"
 

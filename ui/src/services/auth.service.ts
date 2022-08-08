@@ -1,6 +1,8 @@
 import { AxiosResponse } from "axios";
 import axiosInstance from "../utils/axiosInstance";
 import { IUserDetails } from "../interfaces";
+import { NAVIGATION_ROUTES } from "constants/navigation";
+import { TokenService } from "services";
 
 const getUsers = (): Promise<AxiosResponse<IUserDetails[]>> => {
   return axiosInstance.get<IUserDetails[]>("/user");
@@ -28,6 +30,21 @@ const login = ({
     email,
     password,
   });
+
+  // .then((response) => {
+  //   if (response.data.accessToken) {
+  //     localStorage.setItem(
+  //       "accessToken",
+  //       JSON.stringify(response.data.accessToken)
+  //     );
+  //   }
+  // if (response.data.refreshToken) {
+  //   localStorage.setItem(
+  //     "refreshToken",
+  //     JSON.stringify(response.data.refreshToken)
+  //   );
+  // return response;
+  // });
 };
 
 const register = ({
@@ -49,20 +66,22 @@ const register = ({
   // });
 };
 
-const logout = (refreshToken: string): Promise<AxiosResponse<IUserSession>> => {
+const logout = (
+  refreshToken?: string
+): Promise<AxiosResponse<IUserSession>> => {
   //TODO:
   //how do we logout?? on the server side?
-  //destroy the session? destroy the cookie? destroy the token?
-  //or just clear the session?
-  localStorage.removeItem("accessToken");
-  localStorage.removeItem("refreshToken");
-  return axiosInstance.post("/logout", refreshToken);
+  //to log out means to invalidate the token
+  //or ONLY remove token on the client
+
+  TokenService.handleLogout();
+  return axiosInstance.post(NAVIGATION_ROUTES.LOGOUT);
 };
 
 const refreshToken = (
   refreshToken: string
 ): Promise<AxiosResponse<IUserSession>> => {
-  return axiosInstance.post("/refresh", refreshToken);
+  return axiosInstance.post(NAVIGATION_ROUTES.REFRESH, refreshToken);
 };
 
 const AuthService = {

@@ -1,8 +1,12 @@
 import React from "react";
 import { useCurrentUser } from "./context/auth";
 
-const AuthRouter = React.lazy(() => import("./routers/authentication.router"));
-const AppRouter = React.lazy(() => import("./routers/app.router"));
+const UnauthenticatedApp = React.lazy(
+  () => import("./routers/unauthenticated.router")
+);
+const AuthenticatedApp = React.lazy(
+  () => import("./routers/authenticated.router")
+);
 
 // import RouterBreadcrumbs from "components/Header/ProjectsNav";
 // import dummyProjects from "dummydata/dummy";
@@ -11,10 +15,11 @@ function App() {
   const { auth } = useCurrentUser();
 
   if (!auth) {
-    return <AuthRouter />;
+    // !user :this can be the actual user or null
+    return <UnauthenticatedApp />;
   }
 
-  return <AppRouter />;
+  return <AuthenticatedApp />;
 }
 
 export default App;

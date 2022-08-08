@@ -71,7 +71,7 @@ const AuthProvider: React.FC<React.ReactNode> = ({ children }) => {
     setAccessToken("");
     setAuth(false);
     console.log("logout");
-    // AuthService.logout(initialUser.refreshToken);
+    AuthService.logout(); // calls tokenService to remove user data from localStorage
   };
 
   return (
