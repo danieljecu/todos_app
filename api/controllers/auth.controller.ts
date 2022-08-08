@@ -80,6 +80,7 @@ async function login(req: Request, res: Response) {
     );
 
     if (!passwordsMatchCheck) {
+      Logger.info("login pass not match,")
       return res
         .status(401)
         .json({ errors: [{ msg: "Unauthorised, Password is incorrect" }] });
@@ -93,8 +94,10 @@ async function login(req: Request, res: Response) {
         accessToken: createAccessToken(<User>userByEmail),
         refreshToken: createRefreshToken(<User>userByEmail),
       });
+      Logger.info("login pass if passwordsMatchCheck,")
     }
   } catch (db_error) {
+    Logger.error("login logger", db_error);
     res.status(500).json(db_error);
   }
 }
