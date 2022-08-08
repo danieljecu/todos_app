@@ -9,6 +9,9 @@ import {
 } from "../middlewares/checkJwt";
 import { UserService, AuthService } from "./../services";
 
+import Logger from "../utils/logger";
+
+
 // Note: we dont need to chec if (expiresIn<= now) because we verify the token
 // [ ] we can use cookies to store the token
 async function refreshToken(req: Request, res: Response) {
@@ -59,7 +62,8 @@ async function logout(req: Request, res: Response) {
 
 async function login(req: Request, res: Response) {
   // input: login recive an email and password
-  console.log("login");
+  Logger.warn("login logger");
+  
   try {
     // Ger user by email
     const { email, password } = req.body;
