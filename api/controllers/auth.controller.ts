@@ -9,12 +9,15 @@ import {
 } from "../middlewares/checkJwt";
 import { UserService, AuthService } from "./../services";
 
+import Logger from "../utils/logger";
+
+
 // Note: we dont need to chec if (expiresIn<= now) because we verify the token
 // [ ] we can use cookies to store the token
 async function refreshToken(req: Request, res: Response) {
   const { refreshToken } = req.body;
 
-  console.log("refreshToken ", refreshToken);
+  Logger.info("refreshToken ", refreshToken);
   const token = req.headers.authorization?.split(" ")[1];
 
   let jwtPayload;
@@ -38,11 +41,11 @@ async function refreshToken(req: Request, res: Response) {
   const newToken = createAccessToken(jwtPayload);
   res.status(200).send({ accessToken: newToken });
 
-  console.log("refreshToken");
+  Logger.http("refreshToken");
 }
 
 async function logout(req: Request, res: Response) {
-  console.log("logout");
+  Logger.http("logout");
   try {
     const token = req.headers.authorization?.split(" ")[1];
     const jwtPayload = <any>jwt.verify(String(token), ACCESS_TOKEN_SECRET);
@@ -59,7 +62,8 @@ async function logout(req: Request, res: Response) {
 
 async function login(req: Request, res: Response) {
   // input: login recive an email and password
-  console.log("login");
+  Logger.warn("login logger");
+  
   try {
     // Ger user by email
     const { email, password } = req.body;
@@ -96,7 +100,7 @@ async function login(req: Request, res: Response) {
 }
 
 async function createUser(req: Request, res: Response) {
-  console.log("createUser");
+  Logger.http("createUser");
   try {
     const { username, email, password } = req.body;
     const hashPassword = await bcrypt.hash(password, 10);
@@ -149,7 +153,7 @@ export const createRefreshToken = (user: User) => {
 };
 
 async function getHealth(req: Request, res: Response) {
-  console.log("test get helath");
+  Logger.http("test get helath");
   res.sendStatus(200);
 }
 
