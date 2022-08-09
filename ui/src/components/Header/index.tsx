@@ -1,5 +1,3 @@
-import { css } from "@emotion/css";
-
 import { Link } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import UserStatus from "./UserStatus";
@@ -37,14 +35,7 @@ const NewResponsiveHeader: React.FC = () => {
 
   return (
     <AppBar position="static" color="primary">
-      <Container
-        maxWidth="xl"
-        // className={css`
-        //   display: flex;
-        //   flex-direction: row;
-        //   justify-content: space-around;
-        // `}
-      >
+      <Container maxWidth="xl">
         <Toolbar disableGutters>
           <IconButton
             size="large"
@@ -73,7 +64,7 @@ const NewResponsiveHeader: React.FC = () => {
             Todos
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {["Products", "Pricing", "Blog"].map((page) => (
+            {["Projects", "Blog"].map((page) => (
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
@@ -113,7 +104,7 @@ const NewResponsiveHeader: React.FC = () => {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {["Products", "Pricing", "Blog"].map((page) => (
+              {["Projects", "Blog"].map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
@@ -135,14 +126,6 @@ const Header: React.FC = () => {
     <header>
       <HeaderBar>TodoApp</HeaderBar>
       <NewResponsiveHeader />
-      {/* <Nav>
-        <Link to={NAVIGATION_ROUTES.HOME}>
-          <h1>Home</h1>
-        </Link>
-        <BreadCrumbs />
-        <SearchBar />
-        <UserStatus />
-      </Nav> */}
     </header>
   );
 };
