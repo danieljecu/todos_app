@@ -19,4 +19,4 @@ jobs:
       - name: extract and link flyway
         run: tar -xvf flyway-commandline-7.8.2-linux-x64.tar.gz && sudo ln -s `pwd`/flyway-7.8.2/flyway /usr/local/bin
       - name: migrate main
-        run: flyway -url=jdbc:postgresql://database-1.cls13dgoatol.eu-west-2.rds.amazonaws.com:5432/postgres?schema=public -user=${{ secrets.DEV_DB_USER }} -password=${{ secrets.DEV_DB_PASSWORD }} -locations=filesystem:"./migrations/*" -outOfOrder=true migrate
+        run: flyway -url=jdbc:postgresql://database-1.cls13dgoatol.eu-west-2.rds.amazonaws.com:5432/todo?schema=public -user=${{ secrets.DEV_DB_USER }} -password=${{ secrets.DEV_DB_PASSWORD }} -locations=filesystem:"./migrations/*" -outOfOrder=true migrate
