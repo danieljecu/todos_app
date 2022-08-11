@@ -62,6 +62,7 @@ const TokenService = {
   setRefreshToken,
   updateNewAccessToken,
   handleLogout,
+  setUser,
 };
 
 export default TokenService;
