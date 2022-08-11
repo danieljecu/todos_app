@@ -7,14 +7,14 @@ import { TokenService } from "../services";
 //   return process.env.API_HOST || "localhost:3000";
 // }
 
-const axiosInstance = axios.create({
+const client = axios.create({
   baseURL: process.env.REACT_APP_API_HOST || "http://localhost:3000/",
   headers: {
     "Content-Type": "application/json",
   },
 });
 
-axiosInstance.interceptors.request.use(
+client.interceptors.request.use(
   (config: any) => {
     //if accestoken is expired, refresh it
     const {
@@ -33,7 +33,7 @@ axiosInstance.interceptors.request.use(
   }
 );
 
-axiosInstance.interceptors.response.use(
+client.interceptors.response.use(
   (response) => response,
   async (err) => {
     const originalConfig = err.config;
@@ -45,7 +45,7 @@ axiosInstance.interceptors.response.use(
       // this should check if the URL is not the refresh and if the refresh token exists it should try get a new access token
       if (originalConfig.url !== NAVIGATION_ROUTES.REFRESH && refreshToken) {
         try {
-          const rs = await axiosInstance.post(NAVIGATION_ROUTES.REFRESH, {
+          const rs = await client.post(NAVIGATION_ROUTES.REFRESH, {
             refreshToken: TokenService.getRefreshToken(),
           });
 
@@ -56,7 +56,7 @@ axiosInstance.interceptors.response.use(
           console.log("updateNewAccessToken", accessToken);
           TokenService.setAccessToken(accessToken);
 
-          return axiosInstance(originalConfig);
+          return client(originalConfig);
         } catch (_error) {
           console.log("remove refresh token expired");
           TokenService.handleLogout();
@@ -69,4 +69,4 @@ axiosInstance.interceptors.response.use(
   }
 );
 
-export default axiosInstance;
+export default client;

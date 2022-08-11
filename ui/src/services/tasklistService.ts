@@ -1,4 +1,4 @@
-import axiosInstance from "../utils/axiosInstance";
+import client from "../utils/api-client";
 
 import { ITasklistDetails } from "../interfaces";
 
@@ -8,14 +8,14 @@ const getTasklistsByProjectId = async (
   console.log(projectId);
   if (projectId !== undefined || projectId !== null) {
     return (
-      await axiosInstance.get<ITasklistDetails[]>(
+      await client.get<ITasklistDetails[]>(
         "/project/" + projectId + "/tasklist"
       )
     ).data;
   }
   return [];
-  //return axiosInstance.get<ITasklistDetails[]>('/tasklist');
-  //return axiosInstance.get<ITasklistDetails[]>(`/tasklist?projectId=${projectId}`);
+  //return client.get<ITasklistDetails[]>('/tasklist');
+  //return client.get<ITasklistDetails[]>(`/tasklist?projectId=${projectId}`);
 };
 
 const createTasklist = async (
@@ -23,7 +23,7 @@ const createTasklist = async (
   tasklist: ITasklistDetails
 ): Promise<ITasklistDetails> => {
   return (
-    await axiosInstance.post<ITasklistDetails>(
+    await client.post<ITasklistDetails>(
       `project/${projectId}/tasklist`,
       tasklist
     )
@@ -35,7 +35,7 @@ const deleteTasklist = async (
   tasklistId: number | string
 ): Promise<ITasklistDetails> => {
   return (
-    await axiosInstance.delete<ITasklistDetails>(
+    await client.delete<ITasklistDetails>(
       `project/${projectId}/tasklist/${tasklistId}`
     )
   ).data;
@@ -47,7 +47,7 @@ const updateTasklist = async (
   tasklist: ITasklistDetails
 ): Promise<ITasklistDetails> => {
   return (
-    await axiosInstance.put<ITasklistDetails>(
+    await client.put<ITasklistDetails>(
       `project/${projectId}/tasklist/${tasklistId}`,
       tasklist
     )

@@ -1,8 +1,8 @@
 import * as React from "react";
 
 function useLocalStorageState(
-  key,
-  defaultValue = "",
+  key: string,
+  defaultValue: boolean | number | object | Function | string = "",
   { serialize = JSON.stringify, deserialize = JSON.parse } = {}
 ) {
   const [state, setState] = React.useState(() => {

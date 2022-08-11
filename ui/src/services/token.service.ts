@@ -1,5 +1,3 @@
-import axiosInstance from "../utils/axiosInstance";
-
 let accessToken = "",
   refreshToken = "";
 

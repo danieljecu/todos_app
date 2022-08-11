@@ -1,11 +1,11 @@
 import { AxiosResponse } from "axios";
-import axiosInstance from "../utils/axiosInstance";
+import client from "../utils/api-client";
 import { IUserDetails } from "../interfaces";
 import { NAVIGATION_ROUTES } from "constants/navigation";
 import { TokenService } from "services";
 
 const getUsers = (): Promise<AxiosResponse<IUserDetails[]>> => {
-  return axiosInstance.get<IUserDetails[]>("/user");
+  return client.get<IUserDetails[]>("/user");
 };
 
 interface UserCredentials {
@@ -26,7 +26,7 @@ const login = ({
   email,
   password,
 }: UserCredentials): Promise<AxiosResponse<IUserSession>> => {
-  return axiosInstance.post<IUserSession>("/login", {
+  return client.post<IUserSession>("/login", {
     email,
     password,
   });
@@ -51,7 +51,7 @@ const register = ({
   email,
   password,
 }: UserCredentials): Promise<AxiosResponse<IUserSession>> => {
-  return axiosInstance.post<IUserSession>("/register", {
+  return client.post<IUserSession>("/register", {
     email,
     password,
   });
@@ -75,13 +75,13 @@ const logout = (
   //or ONLY remove token on the client
 
   TokenService.handleLogout();
-  return axiosInstance.post(NAVIGATION_ROUTES.LOGOUT);
+  return client.post(NAVIGATION_ROUTES.LOGOUT);
 };
 
 const refreshToken = (
   refreshToken: string
 ): Promise<AxiosResponse<IUserSession>> => {
-  return axiosInstance.post(NAVIGATION_ROUTES.REFRESH, refreshToken);
+  return client.post(NAVIGATION_ROUTES.REFRESH, refreshToken);
 };
 
 const AuthService = {
