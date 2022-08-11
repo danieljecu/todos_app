@@ -4,11 +4,12 @@ let accessToken = "",
 function getUserSession() {
   const token = getLocalAccessToken();
   const refreshToken = getLocalRefreshToken();
+  const user = getUser();
 
   return {
     accessToken: token,
     refreshToken: refreshToken,
-    user: { id: undefined, email: "not set" },
+    user: user,
   };
 }
 
@@ -38,10 +39,14 @@ const updateNewAccessToken = (token: string) => {
 const handleLogout = async () => {
   window.localStorage.removeItem("accessToken");
   window.localStorage.removeItem("refreshToken");
+  window.localStorage.removeItem("user");
 }; // clear the token in localStorage and the user data
 
 const getUser = () => {
-  return JSON.parse(localStorage.getItem("user"));
+  return JSON.parse(
+    window.localStorage.getItem("user") ||
+      JSON.stringify({ id: undefined, email: "not set" })
+  );
 };
 
 const setUser = (user) => {
