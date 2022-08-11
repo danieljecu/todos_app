@@ -3,12 +3,8 @@ import axios, { AxiosRequestHeaders, AxiosRequestConfig } from "axios";
 import { NAVIGATION_ROUTES } from "constants/navigation";
 import { TokenService } from "../services";
 
-function getApiUrl() {
-  return process.env.REACT_APP_API_HOST || "localhost:3000";
-}
-
 const client = axios.create({
-  baseURL: getApiUrl(),
+  baseURL: process.env.REACT_APP_API_HOST || "http://localhost:3000",
   headers: {
     "Content-Type": "application/json",
   },
