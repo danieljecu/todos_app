@@ -3,8 +3,6 @@ import axios, { AxiosRequestHeaders, AxiosRequestConfig } from "axios";
 import { NAVIGATION_ROUTES } from "constants/navigation";
 import { TokenService } from "../services";
 
-// import * as auth from "auth-provider";
-
 function getApiUrl() {
   return process.env.REACT_APP_API_HOST || "localhost:3000";
 }
@@ -19,10 +17,7 @@ const client = axios.create({
 client.interceptors.request.use(
   (config: any) => {
     //if accestoken is expired, refresh it
-    const {
-      accessToken,
-      //refreshToken
-    } = TokenService.getUserSession(); //This can be getAccessToken()
+    const accessToken = TokenService.getLocalAccessToken(); //This can be getAccessToken()
 
     if (accessToken) {
       config.headers.authorization = `Bearer ${accessToken}`;
@@ -42,13 +37,13 @@ client.interceptors.response.use(
     console.log("org,:", originalConfig);
 
     if (err.response && err.response.status === 401) {
-      const refreshToken = TokenService.getRefreshToken();
+      const refreshToken = TokenService.getLocalRefreshToken();
 
       // this should check if the URL is not the refresh and if the refresh token exists it should try get a new access token
       if (originalConfig.url !== NAVIGATION_ROUTES.REFRESH && refreshToken) {
         try {
           const rs = await client.post(NAVIGATION_ROUTES.REFRESH, {
-            refreshToken: TokenService.getRefreshToken(),
+            refreshToken: TokenService.getLocalRefreshToken(),
           });
 
           console.log("response", rs);
