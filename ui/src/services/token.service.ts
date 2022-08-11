@@ -49,7 +49,7 @@ const getUser = () => {
   );
 };
 
-const setUser = (user) => {
+const setUser = (user: any) => {
   //   console.log(JSON.stringify(user));
   localStorage.setItem("user", JSON.stringify(user));
 };
