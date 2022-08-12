@@ -47,6 +47,7 @@ async function logout(req: Request, res: Response) {
   Logger.http("logout");
   try {
     const token = req.headers.authorization?.split(" ")[1];
+
     const jwtPayload = <any>jwt.verify(String(token), ACCESS_TOKEN_SECRET);
     const user = await UserService.getUserById(jwtPayload.id);
     if (!user) {

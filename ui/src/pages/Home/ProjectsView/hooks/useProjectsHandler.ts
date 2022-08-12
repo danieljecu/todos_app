@@ -16,7 +16,7 @@ interface ProjectsHandlerReturnType {
 
 export const useProjectsHandler = (): ProjectsHandlerReturnType => {
   const [projects, setProjects] = useState<IProjectDetails[]>([]);
-  const [error, setError] = useState<string>("test");
+  const [error, setError] = useState<string>("test error");
 
   const retrieveProjects = async () => {
     //TODO get only user projects

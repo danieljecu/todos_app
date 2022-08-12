@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthService, TokenService } from "../../services";
 
 // import { login, logout, register } from "services/userService";
+import { IUserDetails } from "interfaces";
 
 const AuthContext = React.createContext<IAuthContext | null>(null);
 interface UserCredentialsFormDataType {
@@ -12,11 +13,14 @@ interface UserCredentialsFormDataType {
 }
 
 interface IAuthContext {
+  user: any | null;
   auth: boolean;
   setAuth: (value: boolean) => void;
   accessToken: string | null;
   setAccessToken: (value: string) => void;
-  logout?: () => void;
+  logout: () => void;
+  login: (formData: UserCredentialsFormDataType) => void;
+  register: (formData: UserCredentialsFormDataType) => void;
   // handleLogin: (formData: UserCredentialsFormDataType) => void;
   // handleRegister: (formData: UserCredentialsFormDataType) => void;
 }
@@ -39,25 +43,22 @@ const initialUser = {
   refreshToken: "",
 };
 
-// const localStorageKey = "__auth_provider_token__";
-// function handleUserResponse({ accessToken, refreshToken }) {
-//   window.localStorage.setItem(localStorageKey, accessToken);
-// }
+async function getUser() {
+  let userData: IUserDetails | null = null;
 
-// const handleLogin = ({ email, password }) => {
-//   return login({ email, password }).then(({ accessToken, refreshToken }) => {
-//     console.log("accessToken", accessToken);));
-// }; // make a login request
+  const token = await TokenService.getLocalAccessToken();
+  if (token) {
+    userData = await TokenService.getUser();
+  }
+  console.log("user get user", userData);
 
-// const handleRedister = () => {
-//   return register({ username, password }).then(handleUserResponse);
-// }; // register the user
-// const handleLogout = async () => {
-//   window.localStorage.removeItem(localStorageKey);
-// }; // clear the token in localStorage and the user data
+  return userData;
+}
 
-const AuthProvider: React.FC<React.ReactNode> = ({ children }) => {
+const AuthProvider: React.FC = ({ children }) => {
+  const [user, setUser] = React.useState<IUserDetails | null>(null);
   const [auth, setAuth] = useState<boolean>(true);
+  const [error, setError] = useState<string>("test error");
   const [accessToken, setAccessToken] = useState(() => {
     let val = localStorage.getItem("accessToken") || "not set";
     if (val === "not set") {
@@ -67,21 +68,55 @@ const AuthProvider: React.FC<React.ReactNode> = ({ children }) => {
     return val;
   });
 
+  React.useEffect(() => {
+    getUser().then((userData) =>
+      setUser((ps) => {
+        console.log("set user", ps, userData);
+        return userData;
+      })
+    );
+  }, []);
+
+  console.log("user 1", user);
+
+  const handleLogin = async ({
+    email,
+    password,
+  }: UserCredentialsFormDataType) => {
+    AuthService.login({ email, password }).then(({ data }) => {
+      console.log("accessToken", data.accessToken);
+      console.log("refreshToken", data.refreshToken);
+      // console.log("user", data.user);
+
+      setUser(data.user);
+      // console.error("error",err)
+      setAuth(true);
+    });
+    // .then(handleUserResponse);
+  };
+  const handleRegister = async (formData: UserCredentialsFormDataType) =>
+    AuthService.register(formData).then((res) => setUser(res.data?.user));
+  // .then(handleUserResponse);
+
   const logout = () => {
     setAccessToken("");
     setAuth(false);
     console.log("logout");
     AuthService.logout(); // calls tokenService to remove user data from localStorage
+    setUser(null);
   };
 
   return (
     <AuthContext.Provider
       value={{
+        user,
         auth,
         setAuth,
         accessToken,
         setAccessToken,
         logout,
+        login: handleLogin,
+        register: handleRegister,
       }}
     >
       {children}

@@ -7,7 +7,19 @@ import { NAVIGATION_ROUTES } from "../constants/navigation";
 //Unlike the <Switch> API in v5, all <Route path> and <Link to> values under v6's <Routes>
 //element are automatically relative to the parent route that rendered them
 
-const UnautenticatedAuthRouter: React.FC = () => (
+interface UserCredentialsFormDataType {
+  email: string;
+  password: string;
+}
+interface UnauthenticatedAppRouterProps {
+  login: (formData: UserCredentialsFormDataType) => void;
+  register: (formData: UserCredentialsFormDataType) => void;
+}
+
+const UnauthenticatedAppRouter = ({
+  login,
+  register,
+}: UnauthenticatedAppRouterProps) => (
   <BrowserRouter>
     <Header />
     <p style={{ display: "flex", justifyContent: "center" }}>
@@ -19,4 +31,4 @@ const UnautenticatedAuthRouter: React.FC = () => (
   </BrowserRouter>
 );
 
-export default UnautenticatedAuthRouter;
+export default UnauthenticatedAppRouter;
