@@ -19,7 +19,7 @@ import Button from "@mui/material/Button";
 import { useCurrentUser } from "../../context/auth";
 
 export const UserStatus: React.FC = () => {
-  const { auth, setAuth, logout } = useCurrentUser();
+  const { user, logout } = useCurrentUser();
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -30,17 +30,17 @@ export const UserStatus: React.FC = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  console.log(auth);
+  console.log(user);
 
   return (
     <Box>
-      {!auth && (
+      {!user && (
         <Button component={Link} color="inherit" to={NAVIGATION_ROUTES.LOGIN}>
-          {auth} Login
+          {user} Login
         </Button>
       )}
 
-      {auth && (
+      {user && (
         <div>
           <IconButton
             size="large"
@@ -69,7 +69,7 @@ export const UserStatus: React.FC = () => {
           >
             <MenuItem onClick={handleClose}>Profile</MenuItem>
             <MenuItem onClick={handleClose}>My account</MenuItem>
-            <MenuItem onClick={logout}>{auth ? "Logout" : "Login"}</MenuItem>
+            <MenuItem onClick={logout}>{user ? "Logout" : "Login"}</MenuItem>
           </Menu>
         </div>
       )}

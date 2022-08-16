@@ -4,14 +4,11 @@ import { IUserDetails } from "../interfaces";
 import { NAVIGATION_ROUTES } from "constants/navigation";
 import { TokenService } from "services";
 
+///you shouldn't use this directly but use the auth context instead
+
 const getUsers = (): Promise<AxiosResponse<IUserDetails[]>> => {
   return client.get<IUserDetails[]>("/user");
 };
-
-// function handleUserResponse({ user }) {
-//   window.localStorage.setItem(localStorageKey, user.token);
-//   return user;
-// }
 
 interface UserCredentials {
   email: string;
@@ -35,24 +32,6 @@ const login = ({
     email,
     password,
   });
-  // .then((response) => {
-  //   // console.log("login acc data", response.data.accessToken);
-
-  //   // TokenService.setAccessToken(response.data.accessToken || "");
-  //   // TokenService.setRefreshToken(response.data.refreshToken || "");
-
-  //   if (response.data.user) {
-  //     TokenService.setUser(response.data.user || "");
-  //   }
-  //   if (response.data.accessToken) {
-  //     TokenService.setAccessToken(response.data.accessToken || "");
-  //   }
-  //   if (response.data.refreshToken) {
-  //     TokenService.setRefreshToken(response.data.refreshToken || "");
-  //   }
-  //   window.location.reload();
-  //   return response;
-  // });
 };
 
 const register = ({
@@ -63,15 +42,6 @@ const register = ({
     email,
     password,
   });
-  // .then((response) => {
-  //   if (response.data.accessToken) {
-  //     localStorage.setItem(
-  //       "accessToken",
-  //       JSON.stringify(response.data.accessToken)
-  //     );
-  //   }
-  // return response;
-  // });
 };
 
 const logout = (

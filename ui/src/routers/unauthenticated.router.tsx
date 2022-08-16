@@ -3,6 +3,8 @@ import { Login } from "../pages";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header from "../components/Header";
 import { NAVIGATION_ROUTES } from "../constants/navigation";
+import { AxiosResponse } from "axios";
+import { IUserSession } from "interfaces/users";
 
 //Unlike the <Switch> API in v5, all <Route path> and <Link to> values under v6's <Routes>
 //element are automatically relative to the parent route that rendered them
@@ -12,8 +14,12 @@ interface UserCredentialsFormDataType {
   password: string;
 }
 interface UnauthenticatedAppRouterProps {
-  login: (formData: UserCredentialsFormDataType) => void;
-  register: (formData: UserCredentialsFormDataType) => void;
+  login: (
+    formData: UserCredentialsFormDataType
+  ) => Promise<AxiosResponse<IUserSession>>;
+  register: (
+    formData: UserCredentialsFormDataType
+  ) => Promise<AxiosResponse<IUserSession>>;
 }
 
 const UnauthenticatedAppRouter = ({
@@ -26,7 +32,10 @@ const UnauthenticatedAppRouter = ({
       Not Loged In Yet
     </p>
     <Routes>
-      <Route path={NAVIGATION_ROUTES.LOGIN} element={<Login />} />
+      <Route
+        path={NAVIGATION_ROUTES.LOGIN}
+        element={<Login login={login} register={register} />}
+      />
     </Routes>
   </BrowserRouter>
 );

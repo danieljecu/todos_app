@@ -5,11 +5,12 @@ import React from "react";
 import { Dialog } from "@reach/dialog";
 import { Logo } from "../../components/logo";
 import { Input, Spinner, FormGroup, CircleButton } from "../../components/lib";
-import { AuthService, TokenService } from "services";
 import { useCurrentUser } from "context/auth";
 import { useNavigate } from "react-router-dom";
 import { display } from "@mui/system";
 import Button from "@mui/material/Button";
+import { AxiosResponse } from "axios";
+import { IUserSession } from "interfaces/users";
 
 interface UserCredentialsFormDataType {
   email: string;
@@ -50,35 +51,50 @@ function LoginForm({ onSubmit, buttonText }: LoginFormProps) {
   );
 }
 
-export const Login = () => {
-  const [openModal, setOpenModal] = React.useState("none");
+interface LoginPropsInterface {
+  login: (
+    formData: UserCredentialsFormDataType
+  ) => Promise<AxiosResponse<IUserSession>>;
+  register: (
+    formData: UserCredentialsFormDataType
+  ) => Promise<AxiosResponse<IUserSession>>;
+}
 
-  const { accessToken, setAccessToken, setAuth } = useCurrentUser();
+export const Login = ({ login, register }: LoginPropsInterface) => {
+  const [openModal, setOpenModal] = React.useState("none");
+  const [error, setError] = React.useState("");
+
   let navigate = useNavigate();
 
   const handleLogin = (formData: UserCredentialsFormDataType) => {
     console.log("login", formData);
 
-    AuthService.login(formData).then((response) => {
-      console.log("login acc data", response.data.accessToken);
-
-      TokenService.setAccessToken(response.data.accessToken || "");
-      TokenService.setRefreshToken(response.data.refreshToken || "");
-
-      // setAccessToken(String(response.data.accessToken));
-      setAuth(true);
-      navigate("/");
-      window.location.reload();
-    });
+    login(formData)
+      .then((response) => {
+        console.log("login acc data", response.data.accessToken);
+        // window.location.replace("/");
+      })
+      .catch((err) => {
+        console.log("err", err.response);
+        if (err.response.status === 401) {
+          alert(JSON.stringify(err.response.data));
+        }
+      });
   };
 
   const handleRegister = (formData: UserCredentialsFormDataType) => {
     console.log("register", formData);
-    AuthService.register(formData).then((response) => {
-      console.log("register", response.data);
-      // setAccessToken(String(accessToken));
-      navigate("/login");
-    });
+    register(formData)
+      .then((response) => {
+        console.log("register acc data", response.data);
+        return login(formData);
+      })
+      .catch((err) => {
+        console.log("err", err.response);
+        if (err.response.status === 409) {
+          alert(err.response.data.error);
+        }
+      });
   };
 
   return (

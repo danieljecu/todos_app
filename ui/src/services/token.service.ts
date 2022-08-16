@@ -1,3 +1,5 @@
+import { IUserDetails, IUserSession } from "interfaces";
+
 let accessToken = "",
   refreshToken = "";
 
@@ -63,6 +65,7 @@ const TokenService = {
   updateNewAccessToken,
   handleLogout,
   setUser,
+  getUser,
 };
 
 export default TokenService;
