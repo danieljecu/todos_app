@@ -25,9 +25,6 @@ const AuthenticatedAppRouter = ({
       {!user && <div>loading user is null</div>}
       {user?.email || "not email"}
       {user?.first_name || "not firstName"} {user?.last_name || "not lastName"}
-      <button type="button" onClick={() => logout()}>
-        loggout
-      </button>
       <Routes>
         <Route path={NAVIGATION_ROUTES.HOME} element={<Home />} />
         <Route
