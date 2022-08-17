@@ -1,6 +1,5 @@
 import React from "react";
 import { useCurrentUser } from "./context/auth";
-// import AuthenticatedAppRouter from "./routers/authenticated.router";
 
 const AuthenticatedAppRouter = React.lazy(
   () => import("./routers/authenticated.router")
@@ -8,7 +7,6 @@ const AuthenticatedAppRouter = React.lazy(
 const UnauthenticatedAppRouter = React.lazy(
   () => import("./routers/unauthenticated.router")
 );
-// import RouterBreadcrumbs from "components/Header/ProjectsNav";
 // import dummyProjects from "dummydata/dummy";
 
 function App() {
