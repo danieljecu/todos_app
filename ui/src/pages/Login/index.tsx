@@ -68,8 +68,6 @@ export const Login = ({ login, register }: LoginPropsInterface) => {
     login(formData)
       .then((response) => {
         console.log("login acc data", response.data.accessToken);
-        // window.location.replace("/"); i've added a redirect inside router that will trigger redirect /login to home page
-        // Another method is using useNavigate it also needs window.location.reload(); to work
       })
       .catch((err) => {
         console.log("err", err.response);

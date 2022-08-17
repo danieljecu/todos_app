@@ -1,5 +1,5 @@
 import { Home } from "pages";
-import Header from "components/Header";
+import Header from "components/layout/navigation/header-bar";
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Navigate } from "react-router-dom";
@@ -22,6 +22,7 @@ const AuthenticatedAppRouter = ({
   return (
     <BrowserRouter>
       <Header />
+
       <Routes>
         <Route path={NAVIGATION_ROUTES.HOME} element={<Home />} />
         <Route

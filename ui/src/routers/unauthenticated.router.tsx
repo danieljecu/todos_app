@@ -1,7 +1,7 @@
 import React from "react";
 import { Login } from "../pages";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Header from "../components/Header";
+import Header from "../components/layout/navigation/header-bar";
 import { NAVIGATION_ROUTES } from "../constants/navigation";
 import { AxiosResponse } from "axios";
 import { IUserSession } from "interfaces/users";

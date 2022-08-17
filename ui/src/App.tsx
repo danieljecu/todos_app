@@ -15,7 +15,6 @@ function App() {
   const auth = useCurrentUser(); //{ auth, accessToken, logout, login, register }
 
   if (!auth.user) {
-    // !user :this can be the actual user or null
     return (
       <UnauthenticatedAppRouter login={auth.login} register={auth.register} />
     );
