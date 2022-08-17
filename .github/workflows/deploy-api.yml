@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - ui-improve-look-and-feel
+      - add-logger
     # paths:
     #   - "api/**"
 

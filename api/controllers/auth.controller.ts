@@ -11,7 +11,6 @@ import { UserService, AuthService } from "./../services";
 
 import Logger from "../utils/logger";
 
-
 // Note: we dont need to chec if (expiresIn<= now) because we verify the token
 // [ ] we can use cookies to store the token
 async function refreshToken(req: Request, res: Response) {
@@ -48,6 +47,7 @@ async function logout(req: Request, res: Response) {
   Logger.http("logout");
   try {
     const token = req.headers.authorization?.split(" ")[1];
+
     const jwtPayload = <any>jwt.verify(String(token), ACCESS_TOKEN_SECRET);
     const user = await UserService.getUserById(jwtPayload.id);
     if (!user) {
@@ -63,7 +63,7 @@ async function logout(req: Request, res: Response) {
 async function login(req: Request, res: Response) {
   // input: login recive an email and password
   Logger.warn("login logger");
-  
+
   try {
     // Ger user by email
     const { email, password } = req.body;
@@ -80,6 +80,7 @@ async function login(req: Request, res: Response) {
     );
 
     if (!passwordsMatchCheck) {
+      Logger.info("login pass not match,");
       return res
         .status(401)
         .json({ errors: [{ msg: "Unauthorised, Password is incorrect" }] });
@@ -93,8 +94,10 @@ async function login(req: Request, res: Response) {
         accessToken: createAccessToken(<User>userByEmail),
         refreshToken: createRefreshToken(<User>userByEmail),
       });
+      Logger.info("login pass if passwordsMatchCheck,");
     }
   } catch (db_error) {
+    Logger.error("login logger", db_error);
     res.status(500).json(db_error);
   }
 }

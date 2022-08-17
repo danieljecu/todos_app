@@ -1,25 +1,26 @@
-import axiosInstance from "../utils/axiosInstance";
+import { IUserDetails, IUserSession } from "interfaces";
 
 let accessToken = "",
   refreshToken = "";
 
 function getUserSession() {
-  const token = getAccessToken();
-  const refreshToken = getRefreshToken();
+  const token = getLocalAccessToken();
+  const refreshToken = getLocalRefreshToken();
+  const user = getUser();
 
   return {
     accessToken: token,
     refreshToken: refreshToken,
-    user: { id: undefined, email: "not set" },
+    user: user,
   };
 }
 
-const getAccessToken = () => {
+const getLocalAccessToken = () => {
   accessToken = localStorage.getItem("accessToken") || accessToken;
   return accessToken;
 };
 
-const getRefreshToken = () => {
+const getLocalRefreshToken = () => {
   return localStorage.getItem("refreshToken");
 };
 
@@ -40,17 +41,31 @@ const updateNewAccessToken = (token: string) => {
 const handleLogout = async () => {
   window.localStorage.removeItem("accessToken");
   window.localStorage.removeItem("refreshToken");
+  window.localStorage.removeItem("user");
 }; // clear the token in localStorage and the user data
 
+const getUser = () => {
+  return JSON.parse(
+    window.localStorage.getItem("user") ||
+      JSON.stringify({ id: undefined, email: "not set" })
+  );
+};
+
+const setUser = (user: any) => {
+  //   console.log(JSON.stringify(user));
+  localStorage.setItem("user", JSON.stringify(user));
+};
 // This tocken service is used to handle the token in the app, to not think about localStorage
 const TokenService = {
   getUserSession,
-  getAccessToken,
-  getRefreshToken,
+  getLocalAccessToken,
+  getLocalRefreshToken,
   setAccessToken,
   setRefreshToken,
   updateNewAccessToken,
   handleLogout,
+  setUser,
+  getUser,
 };
 
 export default TokenService;

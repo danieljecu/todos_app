@@ -1,11 +1,13 @@
 import { AxiosResponse } from "axios";
-import axiosInstance from "../utils/axiosInstance";
+import client from "../utils/api-client";
 import { IUserDetails } from "../interfaces";
 import { NAVIGATION_ROUTES } from "constants/navigation";
 import { TokenService } from "services";
 
+///you shouldn't use this directly but use the auth context instead
+
 const getUsers = (): Promise<AxiosResponse<IUserDetails[]>> => {
-  return axiosInstance.get<IUserDetails[]>("/user");
+  return client.get<IUserDetails[]>("/user");
 };
 
 interface UserCredentials {
@@ -26,44 +28,20 @@ const login = ({
   email,
   password,
 }: UserCredentials): Promise<AxiosResponse<IUserSession>> => {
-  return axiosInstance.post<IUserSession>("/login", {
+  return client.post<IUserSession>("/login", {
     email,
     password,
   });
-
-  // .then((response) => {
-  //   if (response.data.accessToken) {
-  //     localStorage.setItem(
-  //       "accessToken",
-  //       JSON.stringify(response.data.accessToken)
-  //     );
-  //   }
-  // if (response.data.refreshToken) {
-  //   localStorage.setItem(
-  //     "refreshToken",
-  //     JSON.stringify(response.data.refreshToken)
-  //   );
-  // return response;
-  // });
 };
 
 const register = ({
   email,
   password,
 }: UserCredentials): Promise<AxiosResponse<IUserSession>> => {
-  return axiosInstance.post<IUserSession>("/register", {
+  return client.post<IUserSession>("/register", {
     email,
     password,
   });
-  // .then((response) => {
-  //   if (response.data.accessToken) {
-  //     localStorage.setItem(
-  //       "accessToken",
-  //       JSON.stringify(response.data.accessToken)
-  //     );
-  //   }
-  // return response;
-  // });
 };
 
 const logout = (
@@ -75,13 +53,13 @@ const logout = (
   //or ONLY remove token on the client
 
   TokenService.handleLogout();
-  return axiosInstance.post(NAVIGATION_ROUTES.LOGOUT);
+  return client.post(NAVIGATION_ROUTES.LOGOUT);
 };
 
 const refreshToken = (
   refreshToken: string
 ): Promise<AxiosResponse<IUserSession>> => {
-  return axiosInstance.post(NAVIGATION_ROUTES.REFRESH, refreshToken);
+  return client.post(NAVIGATION_ROUTES.REFRESH, refreshToken);
 };
 
 const AuthService = {

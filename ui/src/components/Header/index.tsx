@@ -37,15 +37,6 @@ const NewResponsiveHeader: React.FC = () => {
     <AppBar position="static" color="primary">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
-          >
-            <MenuIcon />
-          </IconButton>
           <Typography
             variant="h6"
             noWrap
@@ -63,7 +54,7 @@ const NewResponsiveHeader: React.FC = () => {
           >
             Todos
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, mr: 1 }}>
             {["Projects", "Blog"].map((page) => (
               <Button
                 key={page}

@@ -1,35 +1,44 @@
 import { AxiosResponse } from "axios";
-import axiosInstance from "../utils/axiosInstance";
+import client from "../utils/api-client";
 
 import { ITaskDetails } from "../interfaces";
 
 const getTasks = (): Promise<AxiosResponse<ITaskDetails[]>> => {
-  return axiosInstance.get<ITaskDetails[]>("/task");
+  return client.get<ITaskDetails[]>("/task");
 };
 
-const getTasksByTasklistId = (tasklistId: number): Promise<AxiosResponse<ITaskDetails[]>> => {
-  return axiosInstance.get<ITaskDetails[]>(`/task?tasklist=${tasklistId}`);
+const getTasksByTasklistId = (
+  tasklistId: number
+): Promise<AxiosResponse<ITaskDetails[]>> => {
+  return client.get<ITaskDetails[]>(`/task?tasklist=${tasklistId}`);
 };
 
-const createTask = (tasklistId: number, body: ITaskDetails): Promise<AxiosResponse<ITaskDetails>> => {
-  return axiosInstance.post<ITaskDetails>(`/task?tasklist=${tasklistId}`, body);
+const createTask = (
+  tasklistId: number,
+  body: ITaskDetails
+): Promise<AxiosResponse<ITaskDetails>> => {
+  return client.post<ITaskDetails>(`/task?tasklist=${tasklistId}`, body);
 };
 
-const deleteTaskById = (taskId: number): Promise<AxiosResponse<ITaskDetails>> => {
-  return axiosInstance.delete<ITaskDetails>(`/task/${taskId}`);
+const deleteTaskById = (
+  taskId: number
+): Promise<AxiosResponse<ITaskDetails>> => {
+  return client.delete<ITaskDetails>(`/task/${taskId}`);
 };
 
-const updateTaskById = (taskId: number, body: ITaskDetails): Promise<AxiosResponse<ITaskDetails>> => {
-  return axiosInstance.put<ITaskDetails>(`/task/${taskId}`, body);
+const updateTaskById = (
+  taskId: number,
+  body: ITaskDetails
+): Promise<AxiosResponse<ITaskDetails>> => {
+  return client.put<ITaskDetails>(`/task/${taskId}`, body);
 };
-
 
 const TaskService = {
   getTasksByTasklistId,
   getTasks,
   createTask,
   deleteTaskById,
-  updateTaskById
+  updateTaskById,
 };
 
 export default TaskService;
