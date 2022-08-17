@@ -36,12 +36,15 @@ export const UserStatus: React.FC = () => {
     <Box>
       {!user && (
         <Button component={Link} color="inherit" to={NAVIGATION_ROUTES.LOGIN}>
-          {user} Login
+          Login
         </Button>
       )}
 
       {user && (
         <div>
+          <div style={{ float: "right" }}>
+            <p>{user?.email || "not email"}</p>
+          </div>
           <IconButton
             size="large"
             aria-label="account of current user"

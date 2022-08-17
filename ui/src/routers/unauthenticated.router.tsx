@@ -29,9 +29,14 @@ const UnauthenticatedAppRouter = ({
   <BrowserRouter>
     <Header />
     <p style={{ display: "flex", justifyContent: "center" }}>
-      Not Loged In Yet
+      Not Loged In Yet ? - homepage is in construction :), but you can login or
+      register
     </p>
     <Routes>
+      <Route
+        path={NAVIGATION_ROUTES.HOME}
+        element={<Login login={login} register={register} />}
+      />
       <Route
         path={NAVIGATION_ROUTES.LOGIN}
         element={<Login login={login} register={register} />}

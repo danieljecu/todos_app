@@ -20,7 +20,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 
-const NewResponsiveHeader: React.FC = () => {
+const NewResponsiveHeader = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -112,7 +112,7 @@ const NewResponsiveHeader: React.FC = () => {
   );
 };
 
-const Header: React.FC = () => {
+const Header = () => {
   return (
     <header>
       <HeaderBar>TodoApp</HeaderBar>

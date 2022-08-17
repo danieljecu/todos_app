@@ -22,9 +22,6 @@ const AuthenticatedAppRouter = ({
   return (
     <BrowserRouter>
       <Header />
-      {!user && <div>loading user is null</div>}
-      {user?.email || "not email"}
-      {user?.first_name || "not firstName"} {user?.last_name || "not lastName"}
       <Routes>
         <Route path={NAVIGATION_ROUTES.HOME} element={<Home />} />
         <Route
