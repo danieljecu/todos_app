@@ -1,10 +1,7 @@
 import React, { useState, useContext } from "react";
-import { useLocalStorageState } from "../../utils";
-import { useNavigate } from "react-router-dom";
+// import { useLocalStorageState } from "../../utils";
 import { AuthService, TokenService } from "../../services";
 import { AxiosResponse } from "axios";
-
-// import { login, logout, register } from "services/userService";
 import { IUserDetails } from "interfaces";
 import { IUserSession } from "interfaces/users";
 
@@ -63,25 +60,26 @@ async function getUser() {
 }
 
 const AuthProvider: React.FC = ({ children }) => {
+  // const [user, setUser] = useLocalStorageState<IUserDetails | null>(
+  //   "user",
+  //   null
+  // );
   const [user, setUser] = React.useState<IUserDetails | null>(null);
   const [error, setError] = useState<string>("test error");
   const [accessToken, setAccessToken] = useState(() => {
     let val = localStorage.getItem("accessToken") || "not set";
     if (val === "not set") {
-      setUser(null);
+      // setUser(null);
     }
     // console.log("set initial context", val);
     return val;
   });
 
   React.useEffect(() => {
-    getUser().then((userData) =>
-      setUser((ps) => {
-        console.log("set user", ps, userData);
-        return userData;
-      })
-    );
-  }, []);
+    getUser().then((userData) => {
+      setUser(userData);
+    });
+  }, [setUser]);
 
   const handleLogin = async ({
     email,
