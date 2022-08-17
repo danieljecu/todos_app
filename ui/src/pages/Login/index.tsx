@@ -5,8 +5,6 @@ import React from "react";
 import { Dialog } from "@reach/dialog";
 import { Logo } from "../../components/logo";
 import { Input, Spinner, FormGroup, CircleButton } from "../../components/lib";
-import { useCurrentUser } from "context/auth";
-import { useNavigate } from "react-router-dom";
 import { display } from "@mui/system";
 import Button from "@mui/material/Button";
 import { AxiosResponse } from "axios";
@@ -64,15 +62,14 @@ export const Login = ({ login, register }: LoginPropsInterface) => {
   const [openModal, setOpenModal] = React.useState("none");
   const [error, setError] = React.useState("");
 
-  let navigate = useNavigate();
-
   const handleLogin = (formData: UserCredentialsFormDataType) => {
     console.log("login", formData);
 
     login(formData)
       .then((response) => {
         console.log("login acc data", response.data.accessToken);
-        // window.location.replace("/");
+        // window.location.replace("/"); i've added a redirect inside router that will trigger redirect /login to home page
+        // Another method is using useNavigate it also needs window.location.reload(); to work
       })
       .catch((err) => {
         console.log("err", err.response);

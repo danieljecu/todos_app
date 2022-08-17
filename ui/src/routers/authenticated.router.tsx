@@ -2,6 +2,8 @@ import { Home } from "pages";
 import Header from "components/Header";
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Navigate } from "react-router-dom";
+
 import { NAVIGATION_ROUTES } from "../constants/navigation";
 
 import { TasklistsView } from "../pages/Home/TasklistsView";
@@ -28,7 +30,10 @@ const AuthenticatedAppRouter = ({
       </button>
       <Routes>
         <Route path={NAVIGATION_ROUTES.HOME} element={<Home />} />
-        <Route path={NAVIGATION_ROUTES.LOGIN} element={<Home />} />
+        <Route
+          path={NAVIGATION_ROUTES.LOGIN}
+          element={<Navigate to={NAVIGATION_ROUTES.HOME} />}
+        />
         <Route
           path="/project/:projectId/tasklist/:id"
           element={<TasklistsView />}
