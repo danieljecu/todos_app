@@ -54,8 +54,8 @@ const NewResponsiveHeader: React.FC = () => {
           >
             Todos
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, mr: 1 }}>
-            {["Projects", "Blog"].map((page) => (
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+            {["Products", "Pricing", "Blog"].map((page) => (
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
