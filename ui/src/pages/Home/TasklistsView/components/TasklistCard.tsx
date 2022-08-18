@@ -37,11 +37,11 @@ export const TasklistCard: React.FC<TasklistCardProps> = ({
             underline={"none"}
             color="black"
           >
-            {name} List
+            {`${tasklistId}. ${name} List `}
           </Link>
           <button onClick={() => removeTasklistById(tasklistId)}>Remove</button>
-
         </CardTitle>
+
         <CardBody>
           {tasks?.map(
             ({
@@ -69,7 +69,10 @@ export const TasklistCard: React.FC<TasklistCardProps> = ({
             )
           )}
         </CardBody>
-        <CreateTaskCard addTask={addTask} />
+        <CreateTaskCard
+          //task_list_idtr
+          addTask={addTask}
+        />
       </TasklistCardContainer>
 
       {/* <GenericCard

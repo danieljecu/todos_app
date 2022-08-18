@@ -17,6 +17,7 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import { Grid } from "@mui/material";
 
 export const TasksView: React.FC<{}> = () => {
   const { tasklistId } = useParams();
@@ -24,20 +25,20 @@ export const TasksView: React.FC<{}> = () => {
     Number(tasklistId)
   );
 
+  console.log("tasks", tasks);
   return (
     <TasksContainer>
-      <CardTitle>
-        <Link
-          to={`/tasklist/${tasklistId}`}
-          component={ReactLink}
-          underline={"none"}
-          color="black"
-        >
-          {tasklistId} List
-        </Link>
-      </CardTitle>
-
       <CardBody>
+        <CardTitle>
+          <Link
+            to={`/tasklist/${tasklistId}`}
+            component={ReactLink}
+            underline={"none"}
+            color="black"
+          >
+            List id: #{tasklistId} Tasklist name??
+          </Link>
+        </CardTitle>
         <CreateTaskCard addTask={addTask} />
         {tasks &&
           tasks.map((task: any) => (
@@ -56,24 +57,26 @@ export const TasksView: React.FC<{}> = () => {
               />
             </CardBodyItem>
           ))}
+
         {!tasks && <>This tasklist({tasklistId}) has no content</>}
       </CardBody>
 
-      <Card sx={{ maxWidth: 345 }}>
+      {/* <Card sx={{ maxWidth: 400 }}>
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            Lizard
-          </Typography>
+          <CardActions>
+            <Typography gutterBottom variant="h5" component="div">
+              Lizard
+            </Typography>
+            <Button size="small">Share</Button>
+            <Button size="small">Learn More</Button>
+          </CardActions>
+
           <Typography variant="body2" color="text.secondary">
             Lizards are a widespread group of squamate reptiles, with over 6,000
             species, ranging across all continents except Antarctica
           </Typography>
         </CardContent>
-        <CardActions>
-          <Button size="small">Share</Button>
-          <Button size="small">Learn More</Button>
-        </CardActions>
-      </Card>
+      </Card> */}
     </TasksContainer>
   );
 };
@@ -95,7 +98,7 @@ const TasksContainer = styled.div`
 `;
 
 const CardTitle = styled.div`
-  background-color: #00d3ff;
+  background-color: white;
   padding: 0.33rem 0 0.33rem 1rem;
   border-bottom: 1px solid;
 `;

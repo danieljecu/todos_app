@@ -15,7 +15,12 @@ interface UserCredentialsFormDataType {
   password: string;
 }
 interface LoginFormProps {
-  onSubmit: (formData: { email: string; password: string }) => void;
+  onSubmit: (formData: {
+    firstName?: string;
+    lastName?: string;
+    email: string;
+    password: string;
+  }) => void;
   buttonText: string;
 }
 function LoginForm({ onSubmit, buttonText }: LoginFormProps) {

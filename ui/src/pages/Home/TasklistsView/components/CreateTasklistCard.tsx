@@ -47,7 +47,6 @@ export const CreateTasklistCard: React.FC<TasklistCardProps> = ({
         />
         <button onClick={handleCreate}>Add Tasklist</button>
       </CardTitle>
-      This new Tasklist will be added by default to current project id
     </TasklistCardContainer>
   );
 };
