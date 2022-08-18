@@ -24,7 +24,7 @@ const TaskContainer = styled.div`
 
 const CardTitle = styled.div`
   /* background-color: #00d3ff; */
-  padding: 0.33rem 0 0.33rem 1rem;
+  padding: 0.33rem 1rem 0.33rem 1rem;
   border-bottom: 1px solid;
 `;
 const CardCreateTitle = styled.div`
@@ -37,6 +37,7 @@ const CardCreateTitle = styled.div`
 
 const CardBody = styled.div`
   display: flex;
+  padding: 0.33rem 1rem 0.33rem 1rem;
   flex-direction: column;
 `;
 const CardBodyItem = styled.div`
