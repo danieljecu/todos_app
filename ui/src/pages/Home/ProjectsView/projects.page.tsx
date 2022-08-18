@@ -21,18 +21,12 @@ export const ProjectsPage: React.FC<{}> = ({}) => {
     error,
   } = useProjectsHandler();
 
-  if (!projects?.length && error) {
-    return (
-      <>
-        <div>{error}</div>
-      </>
-    );
-  }
   if (!projects?.length) {
     return (
-      <>
-        <CreateProject />
-      </>
+      <ProjectPageContainer>
+        <CreateProject addProject={addProject} />
+        {error && <div>{JSON.stringify(error)}</div>}
+      </ProjectPageContainer>
     );
   }
 
