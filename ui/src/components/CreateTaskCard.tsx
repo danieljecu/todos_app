@@ -1,6 +1,6 @@
 import React from "react";
 // import { Link as ReactLink } from "react-router-dom";
-import { Input, NativeSelect } from "@mui/material";
+import { Input, NativeSelect, TextField } from "@mui/material";
 
 import { ITaskDetails } from "interfaces/tasks";
 import { useParams } from "react-router-dom";
@@ -65,11 +65,13 @@ export const CreateTaskCard: React.FC<CreateTaskCardProps> = ({ addTask }) => {
             display: "flex",
             flexDirection: "row",
             justifyContent: "space-between",
+            gap: "10px",
             // padding: "0.33rem 0 0.33rem 1rem",
             height: "2rem",
           }}
         >
           <Input
+            sx={{ flexGrow: 1 }}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               console.log(e.target.value);
               setTask((prevState) => ({ ...prevState, title: e.target.value }));
@@ -99,8 +101,10 @@ export const CreateTaskCard: React.FC<CreateTaskCardProps> = ({ addTask }) => {
           placeholder="Input task name"
         /> */}
 
-        <Input
-          type={"text"}
+        <TextField
+          variant="standard"
+          multiline
+          maxRows={4}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             console.log(e.target.value);
             setTask((prevState) => ({
@@ -109,7 +113,7 @@ export const CreateTaskCard: React.FC<CreateTaskCardProps> = ({ addTask }) => {
             }));
           }}
           value={task.description}
-          placeholder="Input description"
+          label="Input description"
         />
 
         <InputLabel>

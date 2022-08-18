@@ -68,7 +68,7 @@ export const TasklistsView: React.FC<{}> = ({}) => {
 const TasklistContainer = styled.div`
   padding-top: 2rem;
   display: flex;
-  border: 1px solid #070404;
+  /* border: 1px solid #070404; */
   flex-wrap: wrap;
   flex-direction: row;
   align-items: flex-start;
@@ -77,7 +77,7 @@ const TasklistContainer = styled.div`
 
 const CardTitle = styled.div`
   background-color: white;
-  padding: 0.33rem 0 0.33rem 1rem;
+  padding: 0.33rem 1rem 0.33rem 1rem;
   border-bottom: 1px solid;
 `;
 

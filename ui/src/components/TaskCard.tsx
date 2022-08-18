@@ -8,11 +8,8 @@ import { TaskStatusEnum, STATUSES } from "constants/taskStatuses";
 import Button from "@mui/material/Button";
 import CardActions from "@mui/material/CardActions";
 import { Delete, Build, Save } from "@mui/icons-material";
+import { Paper, Card } from "@mui/material";
 
-import Accordion from "@mui/material/Accordion";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Typography from "@mui/material/Typography";
 
 interface TaskProps {
@@ -77,7 +74,17 @@ export const ViewTaskCard = ({
   setEditMode,
 }: ViewTaskCardProps) => {
   return (
-    <TaskContainer>
+    <Card
+      elevation={3}
+      style={{
+        width: "30vmax",
+        border: "2px solid #aaa3a3",
+        borderRadius: "4px",
+        margin: "0.5rem 0.2rem",
+        overflow: "hidden",
+      }}
+    >
+      {/* <TaskContainer> */}
       <CardTitle
         style={{
           display: "flex",
@@ -99,16 +106,17 @@ export const ViewTaskCard = ({
       </CardTitle>
       <CardBody>
         <CardBodyItem>
-          <>
-            <p>description: {description}</p>
-          </>
+          <Typography variant="body2" color="text.secondary">
+            {description || "No description"}
+          </Typography>
+
           {/* <label htmlFor="description">Description</label>
           <Input id="description" value={description} /> */}
         </CardBodyItem>
       </CardBody>
       <CardActions>
         <Button
-          // sx={{ background: "red" }}
+          sx={{ color: "red" }}
           className="btn btn-danger btn-sm float-end mt-3 mx-2"
           onClick={() => removeTaskById(taskId)}
         >
@@ -116,8 +124,8 @@ export const ViewTaskCard = ({
           Dell-✘
         </Button>
         <Button
-          // sx={{ background: "yellow" }}
-          variant="contained"
+          // sx={{ color: "yellow" }}
+          // variant="contained"
           startIcon={<Build fontSize="small" />}
           size="small"
           className="btn btn-warning btn-sm  float-end pl-5  mt-3"
@@ -125,10 +133,11 @@ export const ViewTaskCard = ({
             setEditMode(true);
           }}
         >
-          "Edit"
+          Edit
         </Button>
       </CardActions>
-    </TaskContainer>
+      {/* </TaskContainer> */}
+    </Card>
   );
 };
 
@@ -185,6 +194,8 @@ const EditTaskCard = ({
     <CardBody>
       <>
         <TextField
+          multiline
+          maxRows={4}
           variant="standard"
           label="Input description"
           value={newTask.description}
@@ -202,7 +213,7 @@ const EditTaskCard = ({
 {due_date&& <p>due_date: {due_date}</p>} */}
       <CardActions disableSpacing>
         <Button
-          // sx={{ background: "red" }}
+          sx={{ color: "red" }}
           className="btn btn-danger btn-sm float-end mt-3 mx-2"
           onClick={() => removeTaskById(taskId)}
         >

@@ -42,19 +42,19 @@ export const UserStatus: React.FC = () => {
 
       {user && (
         <div>
-          <div style={{ float: "right" }}>
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleMenu}
+              color="inherit"
+            >
+              <AccountCircle />
+            </IconButton>
             <p>{user?.email || "not email"}</p>
           </div>
-          <IconButton
-            size="large"
-            aria-label="account of current user"
-            aria-controls="menu-appbar"
-            aria-haspopup="true"
-            onClick={handleMenu}
-            color="inherit"
-          >
-            <AccountCircle />
-          </IconButton>
           <Menu
             id="menu-appbar"
             anchorEl={anchorEl}
@@ -72,7 +72,7 @@ export const UserStatus: React.FC = () => {
           >
             <MenuItem onClick={handleClose}>Profile</MenuItem>
             <MenuItem onClick={handleClose}>My account</MenuItem>
-            <MenuItem onClick={logout}>{user ? "Logout" : "Login"}</MenuItem>
+            <MenuItem onClick={logout}>Logout</MenuItem>
           </Menu>
         </div>
       )}

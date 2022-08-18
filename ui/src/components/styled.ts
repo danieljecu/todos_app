@@ -18,7 +18,7 @@ const TaskContainer = styled.div`
   width: 30vmax;
   border: 2px solid #aaa3a3;
   border-radius: 4px;
-  margin: 1.5rem 0.5rem 1.5rem 0.5rem;
+  margin: 0.5rem 0.2rem;
   overflow: hidden;
 `;
 
@@ -41,7 +41,7 @@ const CardBody = styled.div`
   flex-direction: column;
 `;
 const CardBodyItem = styled.div`
-  margin: 0.3rem 0 0.3rem 0.3rem;
+  margin: 0.1rem;
 `;
 
 export {

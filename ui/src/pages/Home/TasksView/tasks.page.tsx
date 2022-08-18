@@ -12,7 +12,7 @@ import { IProjectDetails, ITaskDetails } from "interfaces";
 import { Link as ReactLink } from "react-router-dom";
 import Link from "@mui/material/Link";
 
-import Card from "@mui/material/Card";
+import Box from "@mui/material/Box";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
@@ -58,25 +58,12 @@ export const TasksView: React.FC<{}> = () => {
             </CardBodyItem>
           ))}
 
-        {!tasks && <>This tasklist({tasklistId}) has no content</>}
+        {!tasks && (
+          <Box sx={{ marginTop: "30px" }}>
+            This tasklist({tasklistId}) has no content
+          </Box>
+        )}
       </CardBody>
-
-      {/* <Card sx={{ maxWidth: 400 }}>
-        <CardContent>
-          <CardActions>
-            <Typography gutterBottom variant="h5" component="div">
-              Lizard
-            </Typography>
-            <Button size="small">Share</Button>
-            <Button size="small">Learn More</Button>
-          </CardActions>
-
-          <Typography variant="body2" color="text.secondary">
-            Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica
-          </Typography>
-        </CardContent>
-      </Card> */}
     </TasksContainer>
   );
 };
@@ -85,7 +72,7 @@ const CardBody = styled.div`
   flex-direction: column;
 `;
 const CardBodyItem = styled.div`
-  margin: 0.3rem 0 0.3rem 0.3rem;
+  margin: 0.1rem;
 `;
 
 const TasksContainer = styled.div`
