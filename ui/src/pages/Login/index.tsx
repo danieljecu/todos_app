@@ -5,6 +5,7 @@ import React from "react";
 import { Dialog } from "@reach/dialog";
 import { Logo } from "../../components/logo";
 import { Input, Spinner, FormGroup, CircleButton } from "../../components/lib";
+import { TextField } from "@mui/material";
 import { display } from "@mui/system";
 import Button from "@mui/material/Button";
 import { AxiosResponse } from "axios";
@@ -23,7 +24,7 @@ interface LoginFormProps {
   }) => void;
   buttonText: string;
 }
-function LoginForm({ onSubmit, buttonText }: LoginFormProps) {
+const LoginForm = ({ onSubmit, buttonText }: LoginFormProps) => {
   const [isLoading, setIsLoading] = React.useState(false);
 
   function handleSubmit(event: any): void {
@@ -39,20 +40,26 @@ function LoginForm({ onSubmit, buttonText }: LoginFormProps) {
   return (
     <form onSubmit={handleSubmit}>
       <FormGroup>
-        <label htmlFor="email">Email</label>
-        <Input id="email" type="text" />
-      </FormGroup>
-      <FormGroup>
-        <label htmlFor="password">Password</label>
-        <Input id="password" type="password" />
+        {/* <label htmlFor="email">Email</label> */}
+        <TextField variant="filled" label={"Email"} id="email" type="text" />
+
+        {/* <label htmlFor="password">Password</label> */}
+        <TextField
+          style={{ marginBottom: "10px" }}
+          variant="filled"
+          label={"Password"}
+          id="password"
+          type="password"
+        />
       </FormGroup>
       <Button variant="contained" type="submit">
         {buttonText}
       </Button>
+
       {isLoading ? <Spinner style={{ marginLeft: 5 }} /> : null}
     </form>
   );
-}
+};
 
 interface LoginPropsInterface {
   login: (
@@ -128,23 +135,30 @@ export const Login = ({ login, register }: LoginPropsInterface) => {
         </Button>
       </div>
       {openModal === "login" && (
-        <Dialog aria-label="login form" isOpen={openModal === "login"}>
-          <div>
-            <CircleButton
-              onClick={() => {
-                setOpenModal("none");
-              }}
-            >
-              Close
-            </CircleButton>
-            <LoginForm onSubmit={handleLogin} buttonText="Login" />
-          </div>
+        <Dialog
+          style={{ borderRadius: "4px" }}
+          aria-label="login form"
+          isOpen={openModal === "login"}
+        >
+          <CircleButton
+            onClick={() => {
+              setOpenModal("none");
+            }}
+          >
+            Close
+          </CircleButton>
+          <LoginForm onSubmit={handleLogin} buttonText="Login" />
         </Dialog>
       )}
       {openModal === "register" && (
-        <Dialog aria-label="register form" isOpen={openModal === "register"}>
+        <Dialog
+          style={{ borderRadius: "4px" }}
+          aria-label="register form"
+          isOpen={openModal === "register"}
+        >
           <div>
             <CircleButton
+              style={{ display: "flex", justifyContent: "flex-end" }}
               onClick={() => {
                 setOpenModal("none");
               }}

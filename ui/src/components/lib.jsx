@@ -47,6 +47,7 @@ const Input = styled.input({
 
 const FormGroup = styled.div({
   display: "flex",
+  gap: "10px",
   flexDirection: "column",
 });
 
@@ -63,6 +64,7 @@ const CircleButton = styled.button({
   color: colors.text,
   border: `1px solid ${colors.gray10}`,
   cursor: "pointer",
+  marginBottom: "10px",
 });
 
 const Dialog = styled(ReachDialog)({
