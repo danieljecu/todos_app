@@ -76,7 +76,9 @@ export const Login = ({ login, register }: LoginPropsInterface) => {
 
   const handleLogin = (formData: UserCredentialsFormDataType) => {
     console.log("login", formData);
-    const loginToastId = toast.loading("Please wait...");
+    const loginToastId = toast.loading("Please wait...", {
+      closeButton: true,
+    });
 
     login(formData)
       .then((response) => {
@@ -103,7 +105,9 @@ export const Login = ({ login, register }: LoginPropsInterface) => {
   };
 
   const handleRegister = (formData: UserCredentialsFormDataType) => {
-    const registerToastId = toast.loading("Please wait...");
+    const registerToastId = toast.loading("Please wait...", {
+      closeButton: true,
+    });
 
     register(formData)
       .then((response) => {
