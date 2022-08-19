@@ -12,13 +12,11 @@ const UnauthenticatedAppRouter = React.lazy(
 function App() {
   const auth = useCurrentUser(); //{ auth, accessToken, logout, login, register }
 
-  if (!auth.user) {
-    return (
-      <UnauthenticatedAppRouter login={auth.login} register={auth.register} />
-    );
-  }
-
-  return <AuthenticatedAppRouter user={auth.user} logout={auth.logout} />;
+  return !auth.user ? (
+    <UnauthenticatedAppRouter login={auth.login} register={auth.register} />
+  ) : (
+    <AuthenticatedAppRouter user={auth.user} logout={auth.logout} />
+  );
 }
 
 export default App;
