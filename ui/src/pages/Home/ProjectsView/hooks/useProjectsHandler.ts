@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { IProjectDetails } from "interfaces";
-import dummyProjects from "../../../../dummydata/dummy";
 import { DropResult, ResponderProvided } from "react-beautiful-dnd";
 import { ProjectService } from "services";
+import { toast } from "react-toastify";
 
 interface ProjectsHandlerReturnType {
   projects: IProjectDetails[];
@@ -19,21 +19,23 @@ export const useProjectsHandler = (): ProjectsHandlerReturnType => {
   const [error, setError] = useState<string>("test error");
 
   const retrieveProjects = async () => {
-    //TODO get only user projects
+    //TODO get only user's projects
     try {
       const projectsResponse = await ProjectService.getProjects();
       setProjects(projectsResponse.data);
-    } catch (error) {
+    } catch (err) {
+      // if (e instanceof Error) {
       // setError(error);
       setError("401 (Unauthorized) to retrieve projects");
-      console.log("err", error);
+      console.error(err);
+      alert("error trying to retrieveProjects " + err);
     }
   };
 
   console.log("projects", projects);
   useEffect(() => {
     retrieveProjects();
-  }, [error, setError]);
+  }, [retrieveProjects, setError, error]);
 
   const onDragEnd = (result: DropResult, provided: ResponderProvided) => {
     const { source, destination } = result;
