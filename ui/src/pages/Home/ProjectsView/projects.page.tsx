@@ -7,7 +7,7 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { Link as ReactLink } from "react-router-dom";
 import Link from "@mui/material/Link";
 
-import styled from "styled-components";
+import styled from "@emotion/styled";
 import { ITasklistDetails } from "interfaces";
 import { SideBar } from "./components/SideBar";
 

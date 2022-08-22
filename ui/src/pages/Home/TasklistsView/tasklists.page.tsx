@@ -3,7 +3,7 @@ import { useProjectTasklists } from "./hooks";
 import { TasklistCard, CreateTasklistCard } from "./components/";
 // import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
-import styled from "styled-components";
+import styled from "@emotion/styled";
 import { useParams } from "react-router-dom";
 import { Link as ReactLink } from "react-router-dom";
 
@@ -68,7 +68,6 @@ export const TasklistsView: React.FC<{}> = ({}) => {
 const TasklistContainer = styled.div`
   padding-top: 2rem;
   display: flex;
-  /* border: 1px solid #070404; */
   flex-wrap: wrap;
   flex-direction: row;
   align-items: flex-start;

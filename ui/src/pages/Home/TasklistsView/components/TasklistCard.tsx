@@ -1,7 +1,6 @@
 import React from "react";
 import { Link as ReactLink } from "react-router-dom";
 import Link from "@mui/material/Link";
-import styled from "styled-components";
 import { TaskCard } from "components/TaskCard";
 import { GenericCard } from "components/GenericCard";
 import { CreateTaskCard } from "components/CreateTaskCard";

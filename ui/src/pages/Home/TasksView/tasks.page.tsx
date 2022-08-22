@@ -6,7 +6,7 @@ import { TaskCard } from "components/TaskCard";
 
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
-import styled from "styled-components";
+import styled from "@emotion/styled";
 import { useParams } from "react-router-dom";
 import { IProjectDetails, ITaskDetails } from "interfaces";
 import { Link as ReactLink } from "react-router-dom";
@@ -76,6 +76,7 @@ const CardBodyItem = styled.div`
 `;
 
 const TasksContainer = styled.div`
+  /* max-height: 600px; */
   padding-top: 2rem;
   display: flex;
   flex-wrap: wrap;
