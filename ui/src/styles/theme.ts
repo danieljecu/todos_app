@@ -56,7 +56,7 @@ const palette: PaletteOptions = {
   warning,
   success,
   info,
-  // text,
+  text,
 };
 
 const Theme = { colors, palette };
