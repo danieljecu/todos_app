@@ -77,7 +77,6 @@ export const ViewTaskCard = ({
     <Card
       elevation={3}
       style={{
-        width: "30vmax",
         border: "2px solid #aaa3a3",
         borderRadius: "4px",
         margin: "0.5rem 0.2rem",
@@ -158,6 +157,7 @@ const EditTaskCard = ({
     <CardTitle
       style={{
         display: "flex",
+        maxWidth: "300px",
         flexDirection: "row",
         justifyContent: "space-between",
       }}
