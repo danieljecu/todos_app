@@ -1,6 +1,7 @@
 import { PaletteColorOptions } from "@mui/material";
 import { PaletteOptions } from "@mui/material/styles";
 import { IPropsColor } from "interfaces";
+import { TypeText } from "@mui/material/styles/createPalette";
 
 const colors: IPropsColor = {
   navy: "#013d54",
@@ -44,10 +45,10 @@ const info: PaletteColorOptions = {
   main: colors.navy,
   contrastText: colors.greyCool,
 };
-// const text: Partial<TypeText> = {
-//   primary: colors.greyCool,
-//   secondary: colors.greyCharcoal,
-// };
+const text: Partial<TypeText> = {
+  primary: colors.greyCool,
+  secondary: colors.greyCharcoal,
+};
 
 const palette: PaletteOptions = {
   primary,

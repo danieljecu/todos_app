@@ -5,7 +5,8 @@
       "@components": ["./src/components"],
       "@interfaces": ["./src/interfaces"],
       "@pages": ["./src/pages"],
-      "@dummydata": ["./src/dummydata"]
+      "@dummydata": ["./src/dummydata"],
+      "@styles": ["./src/styles"]
     }
   }
 }

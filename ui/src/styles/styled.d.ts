@@ -1,6 +1,6 @@
-import { TypeText } from '@mui/material/styles';
+import { TypeText } from "@mui/material/styles/createPalette";
 
-declare module '@mui/material/styles/createPalette' {
+declare module "@mui/material/styles/createPalette" {
   interface PaletteOptions {
     primary?: PaletteColorOptions;
     secondary?: PaletteColorOptions;
@@ -12,7 +12,7 @@ declare module '@mui/material/styles/createPalette' {
   }
 }
 
-declare module '@mui/material/styles/createMuiTheme' {
+declare module "@mui/material/styles/createMuiTheme" {
   interface DeprecatedThemeOptions {
     themeName?: string;
     palette?: PaletteOptions;

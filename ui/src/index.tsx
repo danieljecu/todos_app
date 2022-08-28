@@ -8,11 +8,17 @@ import { AuthProvider } from "./context/auth";
 import "react-toastify/dist/ReactToastify.min.css";
 import { ToastContainer } from "react-toastify";
 
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import Theme from "styles/theme";
+const theme = createTheme(Theme);
+
 ReactDOM.render(
   <React.StrictMode>
     <Suspense fallback={<div>Loading... </div>}>
       <AuthProvider>
-        <App />
+        <ThemeProvider theme={theme}>
+          <App />
+        </ThemeProvider>
         <ToastContainer />
       </AuthProvider>
     </Suspense>
