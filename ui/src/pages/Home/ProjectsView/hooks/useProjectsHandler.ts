@@ -32,10 +32,11 @@ export const useProjectsHandler = (): ProjectsHandlerReturnType => {
     }
   };
 
-  console.log("projects", projects);
   useEffect(() => {
     retrieveProjects();
-  }, [retrieveProjects, setError, error]);
+  }, []);
+
+  console.log("projects", projects);
 
   const onDragEnd = (result: DropResult, provided: ResponderProvided) => {
     const { source, destination } = result;
