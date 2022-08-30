@@ -10,56 +10,12 @@ import { Link as ReactLink } from "react-router-dom";
 import Link from "@mui/material/Link";
 
 import Box from "@mui/material/Box";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import { Grid } from "@mui/material";
+
 import initialData from "./components/initialData";
 
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { TaskStatusEnum, STATUSES } from "constants/taskStatuses";
 import { DropResult, ResponderProvided } from "react-beautiful-dnd";
-
-const ColumnContainer = styled.div`
-  margin: 8px;
-  border: 1px solid lightgrey;
-  background-color: white;
-  border-radius: 2px;
-  width: 220px;
-
-  display: flex;
-  flex-direction: column;
-`;
-
-interface StyledDivProps {
-  isDragging?: boolean;
-}
-const TaskContainer = styled.div<StyledDivProps>`
-  border: 1px solid lightgrey;
-  padding: 8px;
-  margin-bottom: 8px;
-
-  background-color: ${(props) => (props.isDragging ? "lightgreen" : "white")};
-
-  &:focus {
-    outline: none;
-    border-color: red;
-  }
-`;
-
-const Title = styled.h3`
-  padding: 8px;
-`;
-/* background-color: ${(props) =>
-    props.isDraggingOver ? "skyblue" : "inherit"}; */
-const TaskList = styled.div`
-  padding: 8px;
-  transition: background-color 0.2s ease;
-
-  flex-grow: 1;
-  min-height: 100px;
-`;
 
 export const TasksView: React.FC<{}> = () => {
   const { tasklistId } = useParams();
@@ -80,7 +36,7 @@ export const TasksView: React.FC<{}> = () => {
     const items = Array.from(tasks);
     const [reorderedItem] = items.splice(source.index, 1);
     // items. splice(result. destination. index, 0 reorderedItem)
-    // updateCharacters (items) ;
+    // update (items) ;
 
     updateTaskById(draggableId, {
       ...reorderedItem,
@@ -107,7 +63,7 @@ export const TasksView: React.FC<{}> = () => {
           <Droppable droppableId={String(TaskStatusEnum.NotStarted)}>
             {(provided) => (
               <TaskList {...provided.droppableProps} ref={provided.innerRef}>
-                <Title>not started</Title>
+                <Title>Not started</Title>
                 {tasks &&
                   tasks
                     .filter(
@@ -153,8 +109,7 @@ export const TasksView: React.FC<{}> = () => {
           <Droppable droppableId={String(TaskStatusEnum.InProgress)}>
             {(provided) => (
               <TaskList {...provided.droppableProps} ref={provided.innerRef}>
-                <Title>in progress</Title>
-
+                <Title>In Progress</Title>
                 {tasks &&
                   tasks
                     .filter(
@@ -238,25 +193,57 @@ export const TasksView: React.FC<{}> = () => {
           </Droppable>
         </ColumnContainer>
 
-        {/* <CardBody> */}
-        {/* {tasks && tasks.map(task:any)=>( <Column
-                    key={column.id}
-                    column={column}
-                    tasks={tasks}
-                    isDropDisabled={isDropDisabled}
-                    index={index}
-                  />) */}
-
-        {/* {!tasks && (
-          <Box sx={{ marginTop: "30px" }}>
-            This tasklist({tasklistId}) has no content
-          </Box>
-        )} */}
-        {/* </CardBody> */}
+        <CardBody>
+          {!tasks && (
+            <Box sx={{ marginTop: "30px" }}>
+              This tasklist({tasklistId}) has no content
+            </Box>
+          )}
+        </CardBody>
       </ColumnsRowContainer>
     </DragDropContext>
   );
 };
+
+const ColumnContainer = styled.div`
+  margin: 8px;
+  border: 1px solid lightgrey;
+  background-color: white;
+  border-radius: 2px;
+  width: 220px;
+
+  display: flex;
+  flex-direction: column;
+`;
+
+interface StyledDivProps {
+  isDragging?: boolean;
+}
+const TaskContainer = styled.div<StyledDivProps>`
+  border: 1px solid lightgrey;
+  padding: 8px;
+  margin-bottom: 8px;
+
+  background-color: ${(props) => (props.isDragging ? "lightgreen" : "white")};
+
+  &:focus {
+    outline: none;
+    border-color: red;
+  }
+`;
+
+const Title = styled.h3`
+  padding: 8px;
+`;
+
+const TaskList = styled.div`
+  padding: 8px;
+  transition: background-color 0.2s ease;
+
+  flex-grow: 1;
+  min-height: 100px;
+`;
+
 const CardBody = styled.div`
   display: flex;
   flex-direction: column;

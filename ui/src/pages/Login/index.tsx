@@ -4,7 +4,7 @@ import "@reach/dialog/styles.css";
 import React from "react";
 import { Dialog } from "@reach/dialog";
 import { Logo } from "../../components/logo";
-import { Input, Spinner, FormGroup, CircleButton } from "../../components/lib";
+import { Spinner, FormGroup, CircleButton } from "../../components/lib";
 import { TextField } from "@mui/material";
 import { display } from "@mui/system";
 import Button from "@mui/material/Button";

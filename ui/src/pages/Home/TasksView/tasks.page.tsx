@@ -4,8 +4,6 @@ import { CreateTaskCard } from "pages/Home/components/CreateTaskCard";
 import { CreateTasklistCard } from "pages/Home/TasklistsView/components/CreateTasklistCard";
 import { TaskCard } from "pages/Home/components/TaskCard";
 
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-
 import styled from "@emotion/styled";
 import { useParams } from "react-router-dom";
 import { IProjectDetails, ITaskDetails } from "interfaces";
@@ -13,11 +11,6 @@ import { Link as ReactLink } from "react-router-dom";
 import Link from "@mui/material/Link";
 
 import Box from "@mui/material/Box";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import { Grid } from "@mui/material";
 
 export const TasksView: React.FC<{}> = () => {
   const { tasklistId } = useParams();
