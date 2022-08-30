@@ -1,6 +1,6 @@
 import React from "react";
 import { useProjectsHandler } from "./hooks";
-import { GenericCard } from "components/GenericCard";
+import { GenericCard } from "pages/Home/components/GenericCard";
 import { ProjectCard, CreateProject } from "./components";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 

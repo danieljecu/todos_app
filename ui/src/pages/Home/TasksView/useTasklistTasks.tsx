@@ -15,7 +15,7 @@ export const useTasklistTasks = (tasklistId: number) => {
   };
 
   useEffect(() => {
-    retrieveTasklist().catch(console.log);
+    retrieveTasklist().catch(console.error);
   }, []);
 
   const addTask = (newTask: ITaskDetails) => {

@@ -28,32 +28,42 @@ export const TasklistsView: React.FC<{}> = ({}) => {
     );
   }
 
+  let Container = styled.div`
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 3fr));
+    gap: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    overflow: scroll;
+  `;
+  let Box = styled.div`
+    border: 3px solid #666;
+    background-color: #ddd;
+    border-radius: 0.5em;
+    padding: 10px;
+    height: 500px;
+    overflow-y: scroll;
+    cursor: move;
+  `;
+
   console.log("proj", JSON.stringify(project));
   return (
-    <TasklistContainer>
-      <CardBody>
-        <CardTitle>
-          {/* <Link
-            to={`/tasklist/${tasklistId}`}
-            component={ReactLink}
-            underline={"none"}
-            color="black"
-          > */}
-          Project #{project.id} {project.name}
-          {/* </Link> */}
-        </CardTitle>
-        <CreateTasklistCard
-          //adds inside
-          //project id
-          addTasklist={addTasklist}
-        />
+    <div>
+      <CreateTasklistCard
+        //adds inside
+        //project id
+        addTasklist={addTasklist}
+      />
+      <Container>
         {/* {project?.task_lists?.map((task_list) => (
           <p>
             {task_list.id} {task_list.name}
           </p>
         ))} */}
         {project?.task_lists?.map((task_list) => (
+          // <Box>
           <TasklistCard
+            // styles={{ "overflow-y": "scroll" }}
             key={task_list.id}
             id={task_list.id}
             name={task_list.name}
@@ -61,9 +71,10 @@ export const TasklistsView: React.FC<{}> = ({}) => {
             removeTasklistById={removeTasklistById}
             addTask={addTask}
           />
+          // </Box>
         ))}
-      </CardBody>
-    </TasklistContainer>
+      </Container>
+    </div>
   );
 };
 

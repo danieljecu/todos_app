@@ -1,8 +1,8 @@
 import React from "react";
 import { useTasklistTasks } from "./useTasklistTasks";
-import { CreateTaskCard } from "components/CreateTaskCard";
+import { CreateTaskCard } from "pages/Home/components/CreateTaskCard";
 import { CreateTasklistCard } from "pages/Home/TasklistsView/components/CreateTasklistCard";
-import { TaskCard } from "components/TaskCard";
+import { TaskCard } from "pages/Home/components/TaskCard";
 
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 

@@ -1,9 +1,9 @@
 import React from "react";
 import { Link as ReactLink } from "react-router-dom";
 import Link from "@mui/material/Link";
-import { TaskCard } from "components/TaskCard";
-import { GenericCard } from "components/GenericCard";
-import { CreateTaskCard } from "components/CreateTaskCard";
+import { TaskCard } from "pages/Home/components/TaskCard";
+import { GenericCard } from "pages/Home/components/GenericCard";
+import { CreateTaskCard } from "pages/Home/components/CreateTaskCard";
 import { Delete } from "@mui/icons-material";
 import Button from "@mui/material/Button";
 
@@ -77,10 +77,10 @@ export const TasklistCard: React.FC<TasklistCardProps> = ({
             )
           )}
         </CardBody>
-        <CreateTaskCard
+        {/* <CreateTaskCard
           //task_list_idtr
           addTask={addTask}
-        />
+        /> */}
       </TasklistCardContainer>
 
       {/* <GenericCard
