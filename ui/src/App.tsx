@@ -1,21 +1,17 @@
 import React from "react";
 import { useCurrentUser } from "./context/auth";
 
-const AuthenticatedAppRouter = React.lazy(
-  () => import("./routers/authenticated.router")
-);
-const UnauthenticatedAppRouter = React.lazy(
-  () => import("./routers/unauthenticated.router")
-);
+const ProtectedRouter = React.lazy(() => import("./routers/protected.router"));
+const PublicRouter = React.lazy(() => import("./routers/public.router"));
 // import dummyProjects from "dummydata/dummy";
 
 function App() {
   const auth = useCurrentUser(); //{ auth, accessToken, logout, login, register }
 
   return !auth.user ? (
-    <UnauthenticatedAppRouter login={auth.login} register={auth.register} />
+    <PublicRouter login={auth.login} register={auth.register} />
   ) : (
-    <AuthenticatedAppRouter user={auth.user} logout={auth.logout} />
+    <ProtectedRouter user={auth.user} logout={auth.logout} />
   );
 }
 

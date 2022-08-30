@@ -10,14 +10,11 @@ import { TasksView } from "../pages/Home/TasksView";
 
 import { IUserDetails } from "interfaces";
 
-interface AuthenticatedAppRouterProps {
+interface ProtectedRouterProps {
   user: IUserDetails;
   logout: () => void;
 }
-const AuthenticatedAppRouter = ({
-  user,
-  logout,
-}: AuthenticatedAppRouterProps) => {
+const ProtectedRouter = ({ user, logout }: ProtectedRouterProps) => {
   return (
     <BrowserRouter>
       <Header />
@@ -41,4 +38,4 @@ const AuthenticatedAppRouter = ({
   );
 };
 
-export default AuthenticatedAppRouter;
+export default ProtectedRouter;

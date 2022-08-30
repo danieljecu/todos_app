@@ -13,7 +13,7 @@ interface UserCredentialsFormDataType {
   email: string;
   password: string;
 }
-interface UnauthenticatedAppRouterProps {
+interface PublicRouterProps {
   login: (
     formData: UserCredentialsFormDataType
   ) => Promise<AxiosResponse<IUserSession>>;
@@ -22,10 +22,7 @@ interface UnauthenticatedAppRouterProps {
   ) => Promise<AxiosResponse<IUserSession>>;
 }
 
-const UnauthenticatedAppRouter = ({
-  login,
-  register,
-}: UnauthenticatedAppRouterProps) => (
+const PublicRouter = ({ login, register }: PublicRouterProps) => (
   <BrowserRouter>
     <Header />
     <p style={{ display: "flex", justifyContent: "center" }}>
@@ -45,4 +42,4 @@ const UnauthenticatedAppRouter = ({
   </BrowserRouter>
 );
 
-export default UnauthenticatedAppRouter;
+export default PublicRouter;
