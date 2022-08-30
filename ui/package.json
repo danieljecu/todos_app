@@ -67,6 +67,7 @@
   },
   "devDependencies": {
     "craco-alias": "^3.0.1",
-    "jest": "^29.0.1"
+    "jest": "^29.0.1",
+    "msw": "^0.45.0"
   }
 }

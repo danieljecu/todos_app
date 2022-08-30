@@ -1,10 +1,11 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import App from "./App";
+import { AppProvider } from "./providers/app-provider";
 
+// it renders the unauthenticated page
 // test register
-// test login
-
+// test login -> it renders the authenticated page
 // test create a project_id
 // test create a tasklist
 // test create a task
@@ -16,8 +17,12 @@ import App from "./App";
 // delete a project_id
 
 test("renders learn react link", () => {
-  render(<App />);
+  render(
+    <AppProvider>
+      <App />
+    </AppProvider>
+  );
 
-  const linkElement = screen.getByText(/learn react/i);
+  const linkElement = screen.getByText(/TodoApp/i);
   expect(linkElement).toBeInTheDocument();
 });
