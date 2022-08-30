@@ -23,20 +23,19 @@ const TasklistCardContainer = styled.div`
 //https://codesandbox.io/s/9z2md?file=/src/App.tsx
 // const CardTitle = styled.div(
 
+/* background-color: ${({ theme }) => `${theme.pallete.primary}`}; */
 const CardTitle = styled.div`
-  background-color: ${({ theme }) => `${theme.pallete.primary}`};
-
   padding: 0.33rem 1rem 0.33rem 1rem;
   border-bottom: 1px solid;
 `;
 
-const StyledTextField = styled("div")(
-  ({ theme }) => `
-  margin: ${theme.spacing(1)};
-  background-color: ${theme.palette.primary.main};
-  /* ... */
-`
-);
+// const StyledTextField = styled("div")(
+//   ({ theme }) => `
+//   margin: ${theme.spacing(1)};
+//   background-color: ${theme.palette.primary.main};
+//   /* ... */
+// `
+// );
 const CardCreateTitle = styled.div`
   display: flex;
   flex-direction: column;
