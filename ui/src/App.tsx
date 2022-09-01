@@ -1,5 +1,5 @@
 import React from "react";
-import { useCurrentUser } from "./context/auth";
+import { useCurrentUser } from "./contexts/auth";
 
 const ProtectedRouter = React.lazy(() => import("./routers/protected.router"));
 const PublicRouter = React.lazy(() => import("./routers/public.router"));
