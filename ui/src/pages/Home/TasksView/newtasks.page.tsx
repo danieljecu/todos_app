@@ -2,6 +2,7 @@ import React from "react";
 import { useTasklistTasks } from "./useTasklistTasks";
 import { CreateTaskCard } from "pages/Home/components/CreateTaskCard";
 import { SimpleTaskCard } from "./components/SimpleTaskCard";
+import { TaskCard } from "pages/Home/components/NewTaskCard";
 
 import styled from "@emotion/styled/macro";
 import { useParams } from "react-router-dom";
@@ -45,19 +46,33 @@ export const TasksView: React.FC<{}> = () => {
     return;
   };
   console.log(state);
+
+  const CreateTaskContainer = styled.div`
+    min-width: 600px;
+    padding-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  `;
+
   return (
     <DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
-      <CardTitle>
-        <Link
-          to={`/tasklist/${tasklistId}`}
-          component={ReactLink}
-          underline={"none"}
-          color="black"
-        >
-          List id: #{tasklistId} Tasklist name??
-        </Link>
-      </CardTitle>
-      <CreateTaskCard addTask={addTask} />
+      <CreateTaskContainer>
+        <CardTitle>
+          <Link
+            to={`/tasklist/${tasklistId}`}
+            component={ReactLink}
+            underline={"none"}
+            color="black"
+          >
+            List id: #{tasklistId} Tasklist name??
+          </Link>
+        </CardTitle>
+        <CreateTaskCard addTask={addTask} />
+      </CreateTaskContainer>
+
       <ColumnsRowContainer>
         <ColumnContainer>
           <Droppable droppableId={String(TaskStatusEnum.NotStarted)}>
@@ -83,8 +98,7 @@ export const TasksView: React.FC<{}> = () => {
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
                           >
-                            <SimpleTaskCard
-                              // key={task.id}
+                            <TaskCard
                               id={task.id}
                               title={task.title}
                               description={task.description}
@@ -92,8 +106,8 @@ export const TasksView: React.FC<{}> = () => {
                               task_status_id={task.task_status_id}
                               // due_date={task.due_date} //problem
                               // created_at={task.created_at} //problem
-                              // updateTaskById={updateTaskById}
-                              // removeTaskById={removeTaskById}
+                              updateTaskById={updateTaskById}
+                              removeTaskById={removeTaskById}
                             />
                           </TaskContainer>
                         )}
@@ -128,7 +142,7 @@ export const TasksView: React.FC<{}> = () => {
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
                           >
-                            <SimpleTaskCard
+                            <TaskCard
                               key={task.id}
                               id={task.id}
                               title={task.title}
@@ -137,8 +151,8 @@ export const TasksView: React.FC<{}> = () => {
                               task_status_id={task.task_status_id}
                               // due_date={task.due_date} //problem
                               // created_at={task.created_at} //problem
-                              // updateTaskById={updateTaskById}
-                              // removeTaskById={removeTaskById}
+                              updateTaskById={updateTaskById}
+                              removeTaskById={removeTaskById}
                             />
                           </TaskContainer>
                         )}
@@ -180,8 +194,8 @@ export const TasksView: React.FC<{}> = () => {
                               task_status_id={task.task_status_id}
                               // due_date={task.due_date} //problem
                               // created_at={task.created_at} //problem
-                              // updateTaskById={updateTaskById}
-                              // removeTaskById={removeTaskById}
+                              updateTaskById={updateTaskById}
+                              removeTaskById={removeTaskById}
                             />
                           </TaskContainer>
                         )}
@@ -206,14 +220,14 @@ export const TasksView: React.FC<{}> = () => {
 };
 
 const ColumnContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-width: 400px;
+  max-width: 600px;
   margin: 8px;
   border: 1px solid lightgrey;
   background-color: white;
   border-radius: 2px;
-  width: 220px;
-
-  display: flex;
-  flex-direction: column;
 `;
 
 interface StyledDivProps {
@@ -247,9 +261,6 @@ const TaskList = styled.div`
 const CardBody = styled.div`
   display: flex;
   flex-direction: column;
-`;
-const CardBodyItem = styled.div`
-  margin: 0.1rem;
 `;
 
 const ColumnsRowContainer = styled.div`
