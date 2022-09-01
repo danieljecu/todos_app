@@ -4,4 +4,10 @@ module.exports = {
   testEnvironment: "node",
   // testEnvironment: "jsdom",
   // clearMocks: true,
+  // globals: {
+  //   "ts-jest": {
+  //     tsconfig: "./tsconfig.jest.json",
+  //   },
+  // },
+  // setupFilesAfterEnv: ["./jest.setup.ts"],
 };
