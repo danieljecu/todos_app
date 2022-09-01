@@ -5,8 +5,11 @@
       "@components": ["./src/components"],
       "@interfaces": ["./src/interfaces"],
       "@pages": ["./src/pages"],
-      "@dummydata": ["./src/dummydata"],
-      "@styles": ["./src/styles"]
+      "@dummydata": ["./src/test/dummydata"],
+      "@styles": ["./src/styles"],
+      "@services": ["./src/services"],
+      "@utils": ["./src/utils"],
+      "@test-utils": ["./src/test-utils"]
     }
   }
 }

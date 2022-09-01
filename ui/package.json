@@ -69,5 +69,25 @@
     "craco-alias": "^3.0.1",
     "jest": "^29.0.1",
     "msw": "^0.45.0"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{tsx}",
+      "!src/**/*.d.ts",
+      "!<rootDir>/node_modules/"
+    ],
+    "moduleNameMapper": {
+      "^@assets(.*)$": "<rootDir>/src/assets$1",
+      "^@components(.*)$": "<rootDir>/src/components$1",
+      "^@constants(.*)$": "<rootDir>/src/constants$1",
+      "^@enums(.*)$": "<rootDir>/src/enums$1",
+      "^@contexts(.*)$": "<rootDir>/src/contexts$1",
+      "^@interfaces(.*)$": "<rootDir>/src/interfaces$1",
+      "^@pages(.*)$": "<rootDir>/src/pages$1",
+      "^@services(.*)$": "<rootDir>/src/services$1",
+      "^@styles(.*)$": "<rootDir>/src/styles$1",
+      "^@utils(.*)$": "<rootDir>/src/utils$1",
+      "^@test-utils(.*)$": "<rootDir>/src/test-utils$1"
+    }
   }
 }
