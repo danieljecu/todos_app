@@ -250,7 +250,7 @@ interface ITaskType {
   task_status_id: number;
 }
 
-export const TaskCard: React.FC<TaskProps> = ({
+export const NewTaskCard: React.FC<TaskProps> = ({
   id: taskId,
   title,
   description,

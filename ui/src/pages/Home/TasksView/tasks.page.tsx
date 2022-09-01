@@ -2,7 +2,8 @@ import React from "react";
 import { useTasklistTasks } from "./useTasklistTasks";
 import { CreateTaskCard } from "pages/Home/components/CreateTaskCard";
 import { SimpleTaskCard } from "./components/SimpleTaskCard";
-import { TaskCard } from "pages/Home/components/NewTaskCard";
+import { TaskCard } from "pages/Home/components/TaskCard";
+import { NewTaskCard } from "pages/Home/components/NewTaskCard";
 
 import styled from "@emotion/styled/macro";
 import { useParams } from "react-router-dom";
