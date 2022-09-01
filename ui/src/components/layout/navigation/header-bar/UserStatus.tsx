@@ -16,7 +16,7 @@ import { Link } from "react-router-dom";
 import { NAVIGATION_ROUTES } from "constants/navigation";
 import Button from "@mui/material/Button";
 
-import { useCurrentUser } from "context/auth";
+import { useCurrentUser } from "contexts/auth";
 
 export const UserStatus: React.FC = () => {
   const { user, logout } = useCurrentUser();
