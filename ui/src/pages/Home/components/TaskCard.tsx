@@ -120,7 +120,7 @@ export const ViewTaskCard = ({
           onClick={() => removeTaskById(taskId)}
         >
           <Delete fontSize="small" />
-          Dell-✘
+          Del-✘
         </Button>
         <Button
           // sx={{ color: "yellow" }}
@@ -218,7 +218,7 @@ const EditTaskCard = ({
           onClick={() => removeTaskById(taskId)}
         >
           <Delete fontSize="small" />
-          Dell-✘
+          Del-✘
         </Button>
         <Button
           // sx={{ background: "yellow" }}

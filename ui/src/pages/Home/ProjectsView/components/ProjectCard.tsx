@@ -72,7 +72,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
             onClick={() => removeProjectById(projectId)}
           >
             <Delete fontSize="small" />
-            Dell-✘
+            Del-✘
           </Button>
           <Button
             onClick={() => {
