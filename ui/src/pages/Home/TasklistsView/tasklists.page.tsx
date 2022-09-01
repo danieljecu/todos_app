@@ -1,11 +1,12 @@
 import React from "react";
 import { useProjectTasklists } from "./hooks";
-import { TasklistCard, CreateTasklistCard } from "./components/";
+import { TasklistCard, CreateTasklistCard } from "./components";
 // import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 import styled from "@emotion/styled";
 import { useParams } from "react-router-dom";
 import { Link as ReactLink } from "react-router-dom";
+import { SideBar } from "../ProjectsView/components/SideBar";
 
 export const TasklistsView: React.FC<{}> = ({}) => {
   const { projectId, id } = useParams();
@@ -28,30 +29,42 @@ export const TasklistsView: React.FC<{}> = ({}) => {
     );
   }
 
-  console.log("proj", JSON.stringify(project));
+  const CreateTasklistsContainer = styled.div`
+    padding-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-evenly;
+  `;
+
+  let Container = styled.div`
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 3fr));
+    gap: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    overflow: auto;
+  `;
+
   return (
-    <TasklistContainer>
-      <CardBody>
-        <CardTitle>
-          {/* <Link
-            to={`/tasklist/${tasklistId}`}
-            component={ReactLink}
-            underline={"none"}
-            color="black"
-          > */}
-          Project #{project.id} {project.name}
-          {/* </Link> */}
-        </CardTitle>
+    <div>
+      <CreateTasklistsContainer>
         <CreateTasklistCard
           //adds inside
           //project id
           addTasklist={addTasklist}
         />
-        {/* {project?.task_lists?.map((task_list) => (
-          <p>
-            {task_list.id} {task_list.name}
-          </p>
-        ))} */}
+      </CreateTasklistsContainer>
+      <Container>
+        {/* sidebar is meant to show the context, like breadcrumb */}
+        {/* <SideBar> 
+          {project?.task_lists?.map((task_list) => (
+            <p>
+              {task_list.id} {task_list.name}
+            </p>
+          ))}
+        </SideBar> */}
         {project?.task_lists?.map((task_list) => (
           <TasklistCard
             key={task_list.id}
@@ -62,27 +75,7 @@ export const TasklistsView: React.FC<{}> = ({}) => {
             addTask={addTask}
           />
         ))}
-      </CardBody>
-    </TasklistContainer>
+      </Container>
+    </div>
   );
 };
-
-const TasklistContainer = styled.div`
-  padding-top: 2rem;
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: space-evenly;
-`;
-
-const CardTitle = styled.div`
-  background-color: white;
-  padding: 0.33rem 1rem 0.33rem 1rem;
-  border-bottom: 1px solid;
-`;
-
-const CardBody = styled.div`
-  display: flex;
-  flex-direction: column;
-`;

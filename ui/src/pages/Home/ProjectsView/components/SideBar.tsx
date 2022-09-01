@@ -1,9 +1,10 @@
 import styled from "@emotion/styled";
 import React from "react";
 
-export const SideBar = () => (
+export const SideBar = (props: any) => (
   <SideBarView>
     <Menu>
+      {props.children}
       <ALink>Link 1</ALink>
       <ALink>Link 2</ALink>
       <ALink>Link 3</ALink>
