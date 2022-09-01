@@ -2,6 +2,8 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import App from "./App";
 import { AppProvider } from "./providers/app-provider";
+import { rest } from "msw";
+import { server } from "test/mocks/server";
 
 // it renders the unauthenticated page
 // test register
@@ -15,6 +17,10 @@ import { AppProvider } from "./providers/app-provider";
 // delete a task
 // delete a tasklist
 // delete a project_id
+
+beforeAll(() => server.listen());
+afterEach(() => server.resetHandlers());
+afterAll(() => server.close());
 
 test("renders learn react link", () => {
   render(
