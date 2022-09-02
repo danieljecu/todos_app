@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ITaskDetails } from "interfaces";
 import { TaskService } from "services";
+import { toast } from "react-toastify";
 
 export const useTasklistTasks = (tasklistId: number) => {
   const [tasks, setTasks] = useState<any[]>([]);
@@ -21,19 +22,46 @@ export const useTasklistTasks = (tasklistId: number) => {
   const addTask = (newTask: ITaskDetails) => {
     TaskService.createTask(tasklistId, newTask)
       .then(retrieveTasklist)
-      .catch(console.log);
+      .catch(console.error);
   };
 
   const removeTaskById = (taskId: number) => {
+    const ToastId = toast.loading("Please wait...", {
+      closeButton: true,
+    });
+
     TaskService.deleteTaskById(taskId)
       .then(retrieveTasklist)
-      .catch(console.log);
+      .then((response) => {
+        toast.update(ToastId, {
+          render: `Deleted ${JSON.stringify(response)}`,
+          type: "success",
+          autoClose: 3000,
+          isLoading: false,
+          closeButton: true,
+          icon: "🟢",
+        });
+      })
+      .catch(console.error);
   };
 
   const updateTaskById = (taskId: number, task: ITaskDetails) => {
+    const ToastId = toast.loading("Please wait...", {
+      closeButton: true,
+    });
     TaskService.updateTaskById(taskId, task)
       .then(retrieveTasklist)
-      .catch(console.log);
+      .catch((err) => {
+        toast.update(ToastId, {
+          render: "Something went wrong",
+          type: "error",
+          isLoading: false,
+          autoClose: 3000,
+        });
+        // if (err.response.status === 401) {
+        //   toast.warn(JSON.stringify(err.response.data));
+        // }
+      });
 
     // setTasks((prevState) =>
     //   prevState.map((t) => (t.id === task.id ? task : t))
