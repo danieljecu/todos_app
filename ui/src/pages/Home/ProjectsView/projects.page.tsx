@@ -1,13 +1,13 @@
 import React from "react";
 import { useProjectsHandler } from "./hooks";
-import { GenericCard } from "components/GenericCard";
+import { GenericCard } from "pages/Home/components/GenericCard";
 import { ProjectCard, CreateProject } from "./components";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 import { Link as ReactLink } from "react-router-dom";
 import Link from "@mui/material/Link";
 
-import styled from "styled-components";
+import styled from "@emotion/styled";
 import { ITasklistDetails } from "interfaces";
 import { SideBar } from "./components/SideBar";
 
@@ -21,18 +21,12 @@ export const ProjectsPage: React.FC<{}> = ({}) => {
     error,
   } = useProjectsHandler();
 
-  if (!projects?.length && error) {
-    return (
-      <>
-        <div>{error}</div>
-      </>
-    );
-  }
   if (!projects?.length) {
     return (
-      <>
-        <CreateProject />
-      </>
+      <ProjectPageContainer>
+        <CreateProject addProject={addProject} />
+        {error && <div>{JSON.stringify(error)}</div>}
+      </ProjectPageContainer>
     );
   }
 

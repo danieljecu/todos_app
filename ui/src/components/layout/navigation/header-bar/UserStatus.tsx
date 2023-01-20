@@ -13,10 +13,10 @@ import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 
 import { Link } from "react-router-dom";
-import { NAVIGATION_ROUTES } from "../../constants/navigation";
+import { NAVIGATION_ROUTES } from "constants/navigation";
 import Button from "@mui/material/Button";
 
-import { useCurrentUser } from "../../context/auth";
+import { useCurrentUser } from "contexts/auth";
 
 export const UserStatus: React.FC = () => {
   const { user, logout } = useCurrentUser();
@@ -36,22 +36,25 @@ export const UserStatus: React.FC = () => {
     <Box>
       {!user && (
         <Button component={Link} color="inherit" to={NAVIGATION_ROUTES.LOGIN}>
-          {user} Login
+          Login
         </Button>
       )}
 
       {user && (
         <div>
-          <IconButton
-            size="large"
-            aria-label="account of current user"
-            aria-controls="menu-appbar"
-            aria-haspopup="true"
-            onClick={handleMenu}
-            color="inherit"
-          >
-            <AccountCircle />
-          </IconButton>
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleMenu}
+              color="inherit"
+            >
+              <AccountCircle />
+            </IconButton>
+            <p>{user?.email || "not email"}</p>
+          </div>
           <Menu
             id="menu-appbar"
             anchorEl={anchorEl}
@@ -69,7 +72,7 @@ export const UserStatus: React.FC = () => {
           >
             <MenuItem onClick={handleClose}>Profile</MenuItem>
             <MenuItem onClick={handleClose}>My account</MenuItem>
-            <MenuItem onClick={logout}>{user ? "Logout" : "Login"}</MenuItem>
+            <MenuItem onClick={logout}>Logout</MenuItem>
           </Menu>
         </div>
       )}

@@ -1,16 +1,15 @@
-import React, { Suspense } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
+
 import App from "./App";
-import { AuthProvider } from "./context/auth";
+import { AppProvider } from "providers/app-provider";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Suspense fallback={<div>Loading... </div>}>
-      <AuthProvider>
-        <App />
-      </AuthProvider>
-    </Suspense>
+    <AppProvider>
+      <App />
+    </AppProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

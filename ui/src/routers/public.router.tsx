@@ -1,7 +1,7 @@
 import React from "react";
 import { Login } from "../pages";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Header from "../components/Header";
+import Header from "../components/layout/navigation/header-bar";
 import { NAVIGATION_ROUTES } from "../constants/navigation";
 import { AxiosResponse } from "axios";
 import { IUserSession } from "interfaces/users";
@@ -13,7 +13,7 @@ interface UserCredentialsFormDataType {
   email: string;
   password: string;
 }
-interface UnauthenticatedAppRouterProps {
+interface PublicRouterProps {
   login: (
     formData: UserCredentialsFormDataType
   ) => Promise<AxiosResponse<IUserSession>>;
@@ -22,16 +22,18 @@ interface UnauthenticatedAppRouterProps {
   ) => Promise<AxiosResponse<IUserSession>>;
 }
 
-const UnauthenticatedAppRouter = ({
-  login,
-  register,
-}: UnauthenticatedAppRouterProps) => (
+const PublicRouter = ({ login, register }: PublicRouterProps) => (
   <BrowserRouter>
     <Header />
     <p style={{ display: "flex", justifyContent: "center" }}>
-      Not Loged In Yet
+      Not Loged In Yet ? - homepage is in construction :), but you can login or
+      register
     </p>
     <Routes>
+      <Route
+        path={NAVIGATION_ROUTES.HOME}
+        element={<Login login={login} register={register} />}
+      />
       <Route
         path={NAVIGATION_ROUTES.LOGIN}
         element={<Login login={login} register={register} />}
@@ -40,4 +42,4 @@ const UnauthenticatedAppRouter = ({
   </BrowserRouter>
 );
 
-export default UnauthenticatedAppRouter;
+export default PublicRouter;

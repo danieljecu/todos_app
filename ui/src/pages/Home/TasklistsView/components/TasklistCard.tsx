@@ -1,10 +1,11 @@
 import React from "react";
 import { Link as ReactLink } from "react-router-dom";
 import Link from "@mui/material/Link";
-import styled from "styled-components";
-import { TaskCard } from "components/TaskCard";
-import { GenericCard } from "components/GenericCard";
-import { CreateTaskCard } from "components/CreateTaskCard";
+import { TaskCard } from "pages/Home/components/TaskCard";
+import { GenericCard } from "pages/Home/components/GenericCard";
+import { CreateTaskCard } from "pages/Home/components/CreateTaskCard";
+import { Delete } from "@mui/icons-material";
+import Button from "@mui/material/Button";
 
 import {
   TasklistCardContainer,
@@ -37,11 +38,18 @@ export const TasklistCard: React.FC<TasklistCardProps> = ({
             underline={"none"}
             color="black"
           >
-            {name} List
+            {`${tasklistId}. ${name} List `}
           </Link>
-          <button onClick={() => removeTasklistById(tasklistId)}>Remove</button>
 
+          <Button
+            sx={{ color: "red" }}
+            className="btn btn-danger btn-sm float-end mt-3 mx-2"
+            onClick={() => removeTasklistById(tasklistId)}
+          >
+            <Delete fontSize="small" />
+          </Button>
         </CardTitle>
+
         <CardBody>
           {tasks?.map(
             ({
@@ -69,7 +77,10 @@ export const TasklistCard: React.FC<TasklistCardProps> = ({
             )
           )}
         </CardBody>
-        <CreateTaskCard addTask={addTask} />
+        {/* <CreateTaskCard
+          //task_list_idtr
+          addTask={addTask}
+        /> */}
       </TasklistCardContainer>
 
       {/* <GenericCard

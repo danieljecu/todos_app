@@ -8,7 +8,7 @@
     "@emotion/css": "^11.10.0",
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
-    "@mui/icons-material": "latest",
+    "@mui/icons-material": "^5.8.4",
     "@mui/material": "latest",
     "@mui/styled-engine-sc": "latest",
     "@reach/dialog": "^0.16.2",
@@ -33,9 +33,11 @@
     "react-icons": "^4.3.1",
     "react-router-dom": "^6.2.1",
     "react-scripts": "5.0.0",
-    "styled-components": "^5.3.3",
+    "react-toastify": "^9.0.8",
+    "styled-components": "^5.3.5",
     "typescript": "^4.5.4",
-    "web-vitals": "^2.1.2"
+    "web-vitals": "^2.1.2",
+    "ts-jest": "28.0.0"
   },
   "alias": {
     "@mui/styled-engine": "@mui/styled-engine-sc"
@@ -43,7 +45,7 @@
   "scripts": {
     "start": "craco start",
     "build": "craco build",
-    "test": "craco test",
+    "test": "jest",
     "deploy": "aws s3 sync ./build s3://jecu.eu"
   },
   "eslintConfig": {
@@ -64,6 +66,28 @@
     ]
   },
   "devDependencies": {
-    "craco-alias": "^3.0.1"
+    "craco-alias": "^3.0.1",
+    "jest": "^29.0.1",
+    "msw": "^0.45.0"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{tsx}",
+      "!src/**/*.d.ts",
+      "!<rootDir>/node_modules/"
+    ],
+    "moduleNameMapper": {
+      "^@assets(.*)$": "<rootDir>/src/assets$1",
+      "^@components(.*)$": "<rootDir>/src/components$1",
+      "^@constants(.*)$": "<rootDir>/src/constants$1",
+      "^@enums(.*)$": "<rootDir>/src/enums$1",
+      "^@contexts(.*)$": "<rootDir>/src/contexts$1",
+      "^@interfaces(.*)$": "<rootDir>/src/interfaces$1",
+      "^@pages(.*)$": "<rootDir>/src/pages$1",
+      "^@services(.*)$": "<rootDir>/src/services$1",
+      "^@styles(.*)$": "<rootDir>/src/styles$1",
+      "^@utils(.*)$": "<rootDir>/src/utils$1",
+      "^@test-utils(.*)$": "<rootDir>/src/test-utils$1"
+    }
   }
 }

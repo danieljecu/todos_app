@@ -1,1 +1,1 @@
-export {TasklistsView} from "./tasklists.page"
+export { TasklistsView } from "./tasklists.page";

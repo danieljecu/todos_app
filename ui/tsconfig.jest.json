@@ -3,6 +3,7 @@
     "baseUrl": "./src",
     "paths": {
       "@components": ["./src/components"],
+      "@constants": ["./src/constants"],
       "@interfaces": ["./src/interfaces"],
       "@pages": ["./src/pages"],
       "@dummydata": ["./src/test/dummydata"],

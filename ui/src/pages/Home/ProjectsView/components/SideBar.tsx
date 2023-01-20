@@ -1,14 +1,17 @@
-import styled from "styled-components";
+import styled from "@emotion/styled";
 import React from "react";
 
-export const SideBar = () => <SideBarView>
+export const SideBar = (props: any) => (
+  <SideBarView>
     <Menu>
-        <ALink>Link 1</ALink>
-        <ALink>Link 2</ALink>
-        <ALink>Link 3</ALink>
-        <ALink>Link 4</ALink>
+      {props.children}
+      <ALink>Link 1</ALink>
+      <ALink>Link 2</ALink>
+      <ALink>Link 3</ALink>
+      <ALink>Link 4</ALink>
     </Menu>
-</SideBarView>
+  </SideBarView>
+);
 
 const SideBarView = styled.header`
   float: left;
@@ -21,16 +24,15 @@ const SideBarView = styled.header`
 const Menu = styled.header`
   text-align: center;
   padding-right: 10px;
-  header & div{
+  header & div {
     background-color: #e5e5e5;
     padding: 8px;
     margin-top: 7px;
-    
+
     display: block;
     width: 100%;
     color: black;
   }
-  
 `;
 
 const ALink = styled.div`
