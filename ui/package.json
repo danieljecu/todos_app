@@ -44,7 +44,7 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "deploy": "aws s3 sync ./build s3://jecu.eu"
+    "deploy": "aws s3 sync ./build s3://todos.jecu.eu"
   },
   "eslintConfig": {
     "extends": [
