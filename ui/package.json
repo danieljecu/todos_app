@@ -44,7 +44,8 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "deploy": "craco build && aws s3 sync ./build s3://todos.jecu.eu --delete && aws cloudfront create-invalidation --distribution-id E3RBZNK0YVAUL3 --paths '/*'"
+    "deploy": "craco build && aws s3 sync ./build s3://todos.jecu.eu --delete && aws cloudfront create-invalidation --distribution-id E3RBZNK0YVAUL3 --paths '/*'",
+    "deploy:pages": "PUBLIC_URL=/todos_app craco build && cp build/index.html build/404.html"
   },
   "eslintConfig": {
     "extends": [

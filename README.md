@@ -25,7 +25,19 @@ Personal project with the purpose of learning topics that include
 
 ## Deployment
 
-**Live at:** https://todos.jecu.eu
+| Target | URL | Trigger |
+|---|---|---|
+| Production | https://todos.jecu.eu | push to `main` → S3 + CloudFront |
+| GitHub Pages | https://danieljecu.github.io/todos_app | push to `main` → Actions |
+
+### Local deploy scripts (from `ui/`)
+
+```bash
+npm run deploy        # build + sync to S3 + invalidate CloudFront
+npm run deploy:pages  # build for GitHub Pages (PUBLIC_URL=/todos_app)
+```
+
+### Production (S3 + CloudFront)
 
 The UI is deployed to AWS S3 + CloudFront via GitHub Actions on push to `main`.
 
