@@ -34,7 +34,7 @@ jobs:
           node-version: "18"
 
       - name: Install dependencies
-        run: npm install --force
+        run: npm install
 
       - name: Build
         run: npm run build
@@ -42,6 +42,7 @@ jobs:
           PUBLIC_URL: /todos_app
           REACT_APP_API_HOST: ${{ secrets.API_HOST }}
           CI: false
+          TSC_COMPILE_ON_ERROR: true
 
       - name: Add 404 SPA redirect
         run: cp build/index.html build/404.html
