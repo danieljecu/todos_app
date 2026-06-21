@@ -16,13 +16,15 @@ const PORT = process.env.PORT || 3000;
 const app: Express = express();
 
 app.use(morganMiddleware);
-app.use(cors());
+app.use(cors({ origin: process.env.CORS_ORIGIN?.split(",") ?? true }));
 app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const swaggerDocument = YAML.load("./basic-api-doc.yml");
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+app.get("/health", (_, res) => res.send("ok"));
 
 app.get("/logger", (_, res) => {
   Logger.error("This is an error log");

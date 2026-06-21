@@ -6,6 +6,7 @@
   "scripts": {
     "watch": "tsc --watch",
     "build": "tsc",
+    "postinstall": "prisma generate",
     "preserve": "npm run build",
     "serve": "cross-env NODE_ENV=development concurrently \"tsc --watch\" \"nodemon -q dist/index.js\"",
     "prestart": "npm run build",
@@ -19,6 +20,9 @@
   },
   "author": "Daniel Jecu",
   "license": "ISC",
+  "engines": {
+    "node": "20.x"
+  },
   "dependencies": {
     "@prisma/client": "^3.6.0",
     "@types/body-parser": "^1.19.2",
