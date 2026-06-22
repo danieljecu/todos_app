@@ -8,6 +8,9 @@ import {
   CardBodyItem,
 } from "./styled";
 import { IProjectDetails } from "interfaces";
+import { TextField, Button, Typography } from "@mui/material";
+import { Delete, Build, Save } from "@mui/icons-material";
+import CardActions from "@mui/material/CardActions";
 
 interface ProjectCardProps {
   id: number;
@@ -29,7 +32,16 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
 
   return (
     <ProjectCardContainer>
-      <CardTitle>
+      <CardTitle
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          // padding: "0.33rem 0 0.33rem 1rem",
+          // height: "2rem",
+          alignItems: "center",
+        }}
+      >
         {editMode === false ? (
           <Link
             to={`/project/${projectId}`}
@@ -37,29 +49,44 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
             underline={"none"}
             color="black"
           >
-            {projectId}. {title}
+            <strong>
+              {projectId}. {title}
+            </strong>
           </Link>
         ) : (
-          <input
+          <TextField
+            variant="standard"
             type="text"
             value={newProjectName}
             //onChange={() => updateProjectById(projectId, projectName)}
             onChange={(e) => setNewProjectName(e.target.value)}
+            label="Input project name"
           />
         )}
-        <button onClick={() => removeProjectById(projectId)}>Remove</button>
-        <button
-          onClick={() => {
-            if (editMode === true) {
-              setEditMode(!editMode); //turn edit mode off
-              updateProjectById(projectId, newProjectName); //save new data
-            } else {
-              setEditMode(!editMode); //turn edit mode on
-            }
-          }}
-        >
-          {editMode ? "Save" : "Edit"}
-        </button>
+
+        <CardActions>
+          <Button
+            // style={{ color: "white", backgroundColor: "black" }}
+            sx={{ color: "red" }}
+            className="btn btn-danger btn-sm float-end mt-3 mx-2"
+            onClick={() => removeProjectById(projectId)}
+          >
+            <Delete fontSize="small" />
+            Del-✘
+          </Button>
+          <Button
+            onClick={() => {
+              if (editMode === true) {
+                setEditMode(!editMode); //turn edit mode off
+                updateProjectById(projectId, newProjectName); //save new data
+              } else {
+                setEditMode(!editMode); //turn edit mode on
+              }
+            }}
+          >
+            {editMode ? "Save" : "Edit"}
+          </Button>
+        </CardActions>
       </CardTitle>
       <CardBody>
         {items?.map(({ id, name }) => (

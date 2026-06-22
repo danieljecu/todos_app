@@ -4,22 +4,30 @@ import "@reach/dialog/styles.css";
 import React from "react";
 import { Dialog } from "@reach/dialog";
 import { Logo } from "../../components/logo";
-import { Input, Spinner, FormGroup, CircleButton } from "../../components/lib";
+import { Spinner, FormGroup, CircleButton } from "../../components/lib";
+import { TextField } from "@mui/material";
 import { display } from "@mui/system";
 import Button from "@mui/material/Button";
 import { AxiosResponse } from "axios";
 import { IUserSession } from "interfaces/users";
+import { toast } from "react-toastify";
 
 interface UserCredentialsFormDataType {
   email: string;
   password: string;
 }
 interface LoginFormProps {
-  onSubmit: (formData: { email: string; password: string }) => void;
+  onSubmit: (formData: {
+    firstName?: string;
+    lastName?: string;
+    email: string;
+    password: string;
+  }) => void;
   buttonText: string;
 }
-function LoginForm({ onSubmit, buttonText }: LoginFormProps) {
+const LoginForm = ({ onSubmit, buttonText }: LoginFormProps) => {
   const [isLoading, setIsLoading] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
 
   function handleSubmit(event: any): void {
     setIsLoading(true);
@@ -34,20 +42,24 @@ function LoginForm({ onSubmit, buttonText }: LoginFormProps) {
   return (
     <form onSubmit={handleSubmit}>
       <FormGroup>
-        <label htmlFor="email">Email</label>
-        <Input id="email" type="text" />
-      </FormGroup>
-      <FormGroup>
-        <label htmlFor="password">Password</label>
-        <Input id="password" type="password" />
+        <TextField variant="filled" label={"Email"} id="email" type="text" />
+
+        <TextField
+          style={{ marginBottom: "10px" }}
+          variant="filled"
+          label={"Password"}
+          id="password"
+          type="password"
+        />
       </FormGroup>
       <Button variant="contained" type="submit">
         {buttonText}
       </Button>
+
       {isLoading ? <Spinner style={{ marginLeft: 5 }} /> : null}
     </form>
   );
-}
+};
 
 interface LoginPropsInterface {
   login: (
@@ -64,32 +76,61 @@ export const Login = ({ login, register }: LoginPropsInterface) => {
 
   const handleLogin = (formData: UserCredentialsFormDataType) => {
     console.log("login", formData);
+    const loginToastId = toast.loading("Please wait...", {
+      closeButton: true,
+    });
 
     login(formData)
       .then((response) => {
-        console.log("login acc data", response.data.accessToken);
-        // window.location.replace("/"); i've added a redirect inside router that will trigger redirect /login to home page
-        // Another method is using useNavigate it also needs window.location.reload(); to work
+        toast.update(loginToastId, {
+          render: `Hello ${response.data.user.email}`,
+          type: "success",
+          isLoading: false,
+          closeButton: true,
+          autoClose: 3000,
+          icon: "🟢",
+        });
       })
       .catch((err) => {
-        console.log("err", err.response);
+        toast.update(loginToastId, {
+          render: "Something went wrong",
+          type: "error",
+          isLoading: false,
+          autoClose: 3000,
+        });
         if (err.response.status === 401) {
-          alert(JSON.stringify(err.response.data));
+          toast.warn(JSON.stringify(err.response.data));
         }
       });
   };
 
   const handleRegister = (formData: UserCredentialsFormDataType) => {
-    console.log("register", formData);
+    const registerToastId = toast.loading("Please wait...", {
+      closeButton: true,
+    });
+
     register(formData)
       .then((response) => {
-        console.log("register acc data", response.data);
+        toast.update(registerToastId, {
+          render: `Hello ${response.data.user.email}`,
+          type: "success",
+          autoClose: 3000,
+          isLoading: false,
+          closeButton: true,
+          icon: "🟢",
+        });
         return login(formData);
       })
       .catch((err) => {
-        console.log("err", err.response);
         if (err.response.status === 409) {
-          alert(err.response.data.error);
+          toast.update(registerToastId, {
+            render: err.response.data.error,
+            type: "error",
+            autoClose: 3000,
+            isLoading: false,
+            closeButton: true,
+            icon: "🔴",
+          });
         }
       });
   };
@@ -125,23 +166,30 @@ export const Login = ({ login, register }: LoginPropsInterface) => {
         </Button>
       </div>
       {openModal === "login" && (
-        <Dialog aria-label="login form" isOpen={openModal === "login"}>
-          <div>
-            <CircleButton
-              onClick={() => {
-                setOpenModal("none");
-              }}
-            >
-              Close
-            </CircleButton>
-            <LoginForm onSubmit={handleLogin} buttonText="Login" />
-          </div>
+        <Dialog
+          style={{ borderRadius: "4px" }}
+          aria-label="login form"
+          isOpen={openModal === "login"}
+        >
+          <CircleButton
+            onClick={() => {
+              setOpenModal("none");
+            }}
+          >
+            Close
+          </CircleButton>
+          <LoginForm onSubmit={handleLogin} buttonText="Login" />
         </Dialog>
       )}
       {openModal === "register" && (
-        <Dialog aria-label="register form" isOpen={openModal === "register"}>
+        <Dialog
+          style={{ borderRadius: "4px" }}
+          aria-label="register form"
+          isOpen={openModal === "register"}
+        >
           <div>
             <CircleButton
+              style={{ display: "flex", justifyContent: "flex-end" }}
               onClick={() => {
                 setOpenModal("none");
               }}

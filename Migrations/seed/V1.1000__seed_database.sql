@@ -56,3 +56,11 @@ VALUES (
     ),
     (2, 'api', 'Ladies Gaelic Football', 1, 1),
     (3, 'frontend', 'Ladies Gaelic Football', 2, 1);
+(
+    4,
+    'Lizard',
+    ' Lizards are a widespread group of squamate reptiles, with over 6,000
+            species, ranging across all continents except Antarctica',
+    2,
+    1
+);

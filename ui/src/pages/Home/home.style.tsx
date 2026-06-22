@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "@emotion/styled";
 
 export const MainWrapper = styled.main`
   border: 2px solid #aaa3a3;

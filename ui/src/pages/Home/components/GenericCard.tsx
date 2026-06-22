@@ -1,7 +1,7 @@
 import React from "react";
 import { Link as ReactLink } from "react-router-dom";
 import Link from "@mui/material/Link";
-import styled from "styled-components";
+import styled from "@emotion/styled/macro";
 
 interface CardProps {
   id: number;
