@@ -1,5 +1,10 @@
 import { NextFunction, Router, Response, Request } from "express";
 import * as jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+
+// These secrets are resolved at module load, which happens before index.ts runs
+// its own dotenv.config(); load env here too so a local .env is honored. Idempotent.
+dotenv.config();
 
 // TODO: move this to constants
 const isProd = process.env.NODE_ENV === "production";
