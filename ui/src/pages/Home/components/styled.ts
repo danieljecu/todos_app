@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "@emotion/styled/macro";
 
 const ProjectCardContainer = styled.div`
   width: 30vmax;
@@ -17,13 +17,14 @@ const TasklistCardContainer = styled.div`
 const TaskContainer = styled.div`
   width: 30vmax;
   border: 2px solid #aaa3a3;
-  margin: 1.5rem 0.5rem 1.5rem 0.5rem;
+  border-radius: 4px;
+  margin: 0.5rem 0.2rem;
   overflow: hidden;
 `;
 
 const CardTitle = styled.div`
-  background-color: #00d3ff;
-  padding: 0.33rem 0 0.33rem 1rem;
+  /* background-color: #00d3ff; */
+  padding: 0.33rem 1rem 0.33rem 1rem;
   border-bottom: 1px solid;
 `;
 const CardCreateTitle = styled.div`
@@ -36,10 +37,11 @@ const CardCreateTitle = styled.div`
 
 const CardBody = styled.div`
   display: flex;
+  padding: 0.33rem 1rem 0.33rem 1rem;
   flex-direction: column;
 `;
 const CardBodyItem = styled.div`
-  margin: 0.3rem 0 0.3rem 0.3rem;
+  margin: 0.1rem;
 `;
 
 export {

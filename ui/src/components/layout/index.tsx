@@ -1,5 +1,4 @@
-import React from "react";
-import { HeaderBar } from "components/Header/styles";
+import Header from "components/layout/navigation/header-bar";
 import { PageContainer } from "./page-container";
 
 // NOT USED YET, the ideea is to have a generic page container that can be used for all pages
@@ -7,7 +6,7 @@ import { PageContainer } from "./page-container";
 function Layout() {
   return (
     <div>
-      <HeaderBar></HeaderBar>
+      <Header />
       <PageContainer>
         here is the acctual content, maybe you want it inset by default
       </PageContainer>

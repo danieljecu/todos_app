@@ -1,6 +1,5 @@
 import { Home } from "pages";
-import Header from "components/Header";
-import React from "react";
+import Header from "components/layout/navigation/header-bar";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 
@@ -11,20 +10,15 @@ import { TasksView } from "../pages/Home/TasksView";
 
 import { IUserDetails } from "interfaces";
 
-interface AuthenticatedAppRouterProps {
+interface ProtectedRouterProps {
   user: IUserDetails;
   logout: () => void;
 }
-const AuthenticatedAppRouter = ({
-  user,
-  logout,
-}: AuthenticatedAppRouterProps) => {
+const ProtectedRouter = ({ user, logout }: ProtectedRouterProps) => {
   return (
     <BrowserRouter>
       <Header />
-      {!user && <div>loading user is null</div>}
-      {user?.email || "not email"}
-      {user?.first_name || "not firstName"} {user?.last_name || "not lastName"}
+
       <Routes>
         <Route path={NAVIGATION_ROUTES.HOME} element={<Home />} />
         <Route
@@ -44,4 +38,4 @@ const AuthenticatedAppRouter = ({
   );
 };
 
-export default AuthenticatedAppRouter;
+export default ProtectedRouter;
