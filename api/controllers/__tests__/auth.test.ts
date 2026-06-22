@@ -6,7 +6,6 @@ import * as bcrypt from "bcryptjs";
 import {
   ACCESS_TOKEN_SECRET,
   REFRESH_TOKEN_SECRET,
-  expiresIn,
 } from "../../middlewares/checkJwt";
 
 jest.mock("bcryptjs");

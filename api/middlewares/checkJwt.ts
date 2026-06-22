@@ -2,14 +2,24 @@ import { NextFunction, Router, Response, Request } from "express";
 import * as jwt from "jsonwebtoken";
 
 // TODO: move this to constants
-const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET || "not-a-secret";
-const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET || "not-a-secret";
-const expiresIn = "1m";
+const isProd = process.env.NODE_ENV === "production";
+
+function requireSecret(name: string): string {
+  const value = process.env[name];
+  if (!value) {
+    if (isProd) {
+      throw new Error(`Missing required environment variable: ${name}`);
+    }
+    return "not-a-secret"; // dev/test only fallback
+  }
+  return value;
+}
+
+const ACCESS_TOKEN_SECRET = requireSecret("ACCESS_TOKEN_SECRET");
+const REFRESH_TOKEN_SECRET = requireSecret("REFRESH_TOKEN_SECRET");
 
 async function verifyToken(req: Request, res: Response, next: NextFunction) {
   //Get auth header value
-  console.log("verifyToken1", req.headers.authorization);
-
   const token = req.headers.authorization?.split(" ")[1];
   if (!token) {
     res.status(401).json({ err: "token not found" });
@@ -33,4 +43,4 @@ async function verifyToken(req: Request, res: Response, next: NextFunction) {
   }
 }
 
-export { verifyToken, ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET, expiresIn };
+export { verifyToken, ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET };
