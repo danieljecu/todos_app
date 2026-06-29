@@ -1,0 +1,26 @@
+# Render Blueprint — https://render.com/docs/blueprint-spec
+# Deploy: Render Dashboard → New → Blueprint → connect this repo → Apply.
+# DATABASE_URL points at a free Neon Postgres; the secrets below are set
+# in the dashboard (sync: false) and are NOT stored in git.
+services:
+  - type: web
+    name: todos-api
+    runtime: node
+    rootDir: api
+    plan: free
+    branch: main
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL # Neon pooled connection string (postgresql://...sslmode=require)
+        sync: false
+      - key: ACCESS_TOKEN_SECRET
+        sync: false
+      - key: REFRESH_TOKEN_SECRET
+        sync: false
+      - key: CORS_ORIGIN # frontend origin(s), comma-separated
+        sync: false
