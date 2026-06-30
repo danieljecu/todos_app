@@ -9,7 +9,9 @@ services:
     rootDir: api
     plan: free
     branch: main
-    buildCommand: npm install && npm run build
+    # --include=dev: NODE_ENV=production (below) makes npm skip devDependencies,
+    # but the TypeScript build needs @types/* and tsc at build time.
+    buildCommand: npm install --include=dev && npm run build
     startCommand: npm start
     healthCheckPath: /health
     autoDeploy: true
