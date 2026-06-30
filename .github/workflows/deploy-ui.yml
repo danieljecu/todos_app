@@ -6,6 +6,7 @@ on:
       - main
       - aws-deploy
       - ui-improve-look-and-feel
+  workflow_dispatch:
 
 defaults:
   run:
