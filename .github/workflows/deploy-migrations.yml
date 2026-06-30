@@ -4,19 +4,28 @@ on:
   push:
     branches:
       - main
-      - ui-improve-look-and-feel
-    # paths:
-    #   - "migrations/**"
+    paths:
+      - "Migrations/**"
+      - ".github/workflows/deploy-migrations.yml"
 
-# database-1.cls13dgoatol.eu-west-2.rds.amazonaws.com
 jobs:
   migrate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: download flyway
-        run: wget https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/7.8.2/flyway-commandline-7.8.2-linux-x64.tar.gz
-      - name: extract and link flyway
-        run: tar -xvf flyway-commandline-7.8.2-linux-x64.tar.gz && sudo ln -s `pwd`/flyway-7.8.2/flyway /usr/local/bin
-      - name: migrate main
-        run: flyway -url='${{ secrets.DEV_DB_URL }}' -user=${{ secrets.DEV_DB_USER }} -password=${{ secrets.DEV_DB_PASSWORD }} -locations=filesystem:"./migrations/*" -outOfOrder=true migrate
+      - uses: actions/checkout@v4
+
+      - name: Run Flyway migrations against Neon
+        # flyway/flyway:10 bundles its own JRE and supports current PostgreSQL.
+        # NEON_DB_URL must be a JDBC url including SSL, e.g.
+        #   jdbc:postgresql://<host>.neon.tech/<db>?sslmode=require
+        run: |
+          docker run --rm \
+            -v "${{ github.workspace }}/Migrations:/flyway/sql" \
+            flyway/flyway:10 \
+            -url="${{ secrets.NEON_DB_URL }}" \
+            -user="${{ secrets.NEON_DB_USER }}" \
+            -password="${{ secrets.NEON_DB_PASSWORD }}" \
+            -locations="filesystem:/flyway/sql/schema" \
+            -outOfOrder=true \
+            -connectRetries=5 \
+            migrate

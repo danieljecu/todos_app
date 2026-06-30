@@ -16,13 +16,20 @@ const PORT = process.env.PORT || 3000;
 const app: Express = express();
 
 app.use(morganMiddleware);
-app.use(cors());
+const corsOrigin = process.env.CORS_ORIGIN?.split(",");
+if (!corsOrigin && process.env.NODE_ENV === "production") {
+  throw new Error("CORS_ORIGIN must be set in production");
+}
+// dev/test (no CORS_ORIGIN) reflects the request origin; prod uses the allow-list
+app.use(cors({ origin: corsOrigin ?? true }));
 app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const swaggerDocument = YAML.load("./basic-api-doc.yml");
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+app.get("/health", (_, res) => res.send("ok"));
 
 app.get("/logger", (_, res) => {
   Logger.error("This is an error log");
