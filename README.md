@@ -1,19 +1,48 @@
-# todos_app 
+# todos_app
 
-React.js, Node.js, Flyway, Prisma ORM, Docker, AWS, GitHub Actions
+React.js · Node.js · Prisma ORM · Neon · Render · AWS S3 · CloudFront · Route 53 · GitHub Actions
 
-Personal project with the purpose of learning topics that include 
+Personal project for learning full-stack development and cloud deployment. Topics covered:
 
-- Database Design (analysis, cardinality, normalisation, ERD), 
-- Database creation and seeding using Flyway. 
-- Docker & Compose, 
-- Open API Spec, 
-- Node Microservice development, Prisma ORM, 
-- Balsamiq prototyping, React application development, 
-- Authentication/Authorization using OAuth. 
-- DockerFile creation, 
-- AWS (Cloud formation, RDS, ECS, S3, Route53, Lightsail, CloudFront)
-- GitHub Actions
+- Database design (ERD, cardinality, normalisation)
+- Database migrations with Flyway
+- Node.js REST API with Express, Prisma ORM, JWT auth
+- React application with MUI, React Router, Axios
+- Open API Spec / Swagger
+- Docker & Docker Compose (local dev)
+- CI/CD with GitHub Actions
+- AWS: S3, CloudFront, Route 53
+- Serverless Postgres with Neon
+- API hosting on Render
+
+## Stack
+
+| Layer | Technology |
+|---|---|
+| Frontend | React 17, TypeScript, MUI v5, styled-components |
+| Backend | Node.js 20, Express, Prisma ORM, JWT |
+| Database | Neon (serverless Postgres) |
+| API host | Render (free tier) · `todos-api.jecu.eu` |
+| UI host | AWS S3 + CloudFront · `todos.jecu.eu` |
+| DNS | AWS Route 53 |
+| CI/CD | GitHub Actions |
+
+## Deployment History
+
+### v3 — Current (2026)
+- **UI**: AWS S3 + CloudFront (`todos.jecu.eu`) — deployed via GitHub Actions on push to `main`
+- **API**: Render free tier (`todos-api.jecu.eu` → `todos-api-99uw.onrender.com`)
+- **DB**: Neon serverless Postgres (free tier, eu-west-2)
+- **DNS**: Route 53 — A alias to CloudFront, CNAME for API subdomain
+
+### v2 — AWS Lightsail (2022–2026)
+- **API**: AWS Lightsail container service (`container-service-1.8j8useculgdf6.eu-central-1.cs.amazonlightsail.com`)
+- **DB**: AWS RDS Postgres
+- **UI**: AWS S3 + CloudFront
+
+### v1 — Local / Docker Compose
+- Full stack via `docker-compose up`: Postgres + Flyway migrations + Node API
+- No cloud hosting
 
 /api
 
