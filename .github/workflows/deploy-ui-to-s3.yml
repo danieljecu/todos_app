@@ -1,11 +1,9 @@
-name: Deploy UI
+name: Deploy UI to S3
 
 on:
   push:
     branches:
       - main
-      - aws-deploy
-      - ui-improve-look-and-feel
   workflow_dispatch:
 
 defaults:
