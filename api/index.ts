@@ -29,6 +29,31 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const swaggerDocument = YAML.load("./basic-api-doc.yml");
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
+app.get("/", (_, res) => {
+  res.send(`<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>todos-api</title>
+  <style>
+    body { font-family: sans-serif; max-width: 480px; margin: 80px auto; padding: 0 24px; color: #222; }
+    h1 { font-size: 1.4rem; margin-bottom: 8px; }
+    p { color: #666; margin-bottom: 32px; }
+    a { display: block; padding: 12px 16px; margin-bottom: 12px; border: 1px solid #ddd;
+        border-radius: 6px; text-decoration: none; color: #222; }
+    a:hover { background: #f5f5f5; }
+    a span { float: right; color: #999; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+  <h1>todos-api</h1>
+  <p>Node.js · Express · Prisma · Neon</p>
+  <a href="/api-docs">API Docs <span>Swagger UI →</span></a>
+  <a href="/health">Health check <span>/health →</span></a>
+  <a href="/logger">Logger test <span>/logger →</span></a>
+</body>
+</html>`);
+});
 app.get("/health", (_, res) => res.send("ok"));
 
 app.get("/logger", (_, res) => {
