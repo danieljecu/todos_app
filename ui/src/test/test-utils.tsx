@@ -1,9 +1,12 @@
 import React, { FC, ReactElement } from "react";
 import { render, RenderOptions } from "@testing-library/react";
-import { ThemeProvider } from "@mui/material/styles";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import Theme from "styles/theme";
+
+const theme = createTheme(Theme);
 
 const AllTheProviders: FC<{ children: React.ReactNode }> = ({ children }) => {
-  return <ThemeProvider theme="light">{children}</ThemeProvider>;
+  return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 };
 
 const customRender = (

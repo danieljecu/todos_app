@@ -2,6 +2,7 @@ import React from "react";
 import { Link as ReactLink } from "react-router-dom";
 import Link from "@mui/material/Link";
 import styled from "@emotion/styled/macro";
+import Theme from "styles/theme";
 
 interface CardProps {
   id: number;
@@ -27,7 +28,7 @@ export const GenericCard: React.FC<CardProps> = ({
               to={`/project/${id}/tasklist/${item.id}`}
               component={ReactLink}
               underline={"none"}
-              color="black"
+              color="text.primary"
             >
               {item.name}
             </Link>
@@ -41,13 +42,13 @@ export const GenericCard: React.FC<CardProps> = ({
 
 const CardContainer = styled.div`
   width: 30vmax;
-  border: 2px solid #aaa3a3;
+  border: 2px solid ${Theme.colors.border};
   margin: 1.5rem 0.5rem 1.5rem 0.5rem;
   overflow: hidden;
 `;
 
 const CardTitle = styled.div`
-  background-color: #00d3ff;
+  background-color: ${Theme.colors.cardHeader};
   padding: 0.33rem 0 0.33rem 1rem;
   border-bottom: 1px solid;
 `;

@@ -11,6 +11,7 @@ import { Delete, Build, Save } from "@mui/icons-material";
 import { Paper, Card } from "@mui/material";
 
 import Typography from "@mui/material/Typography";
+import Theme from "styles/theme";
 
 interface TaskProps {
   id: number;
@@ -77,7 +78,7 @@ export const ViewTaskCard = ({
     <Card
       elevation={3}
       style={{
-        border: "2px solid #aaa3a3",
+        border: `2px solid ${Theme.colors.border}`,
         borderRadius: "4px",
         margin: "0.5rem 0.2rem",
         overflow: "hidden",
@@ -94,7 +95,7 @@ export const ViewTaskCard = ({
           to={`/tasklist/${task_list_id}/task/${taskId}`}
           component={ReactLink}
           underline={"none"}
-          color="black"
+          color="text.primary"
         >
           {taskId}. <strong>{title}</strong>
         </Link>
@@ -114,7 +115,7 @@ export const ViewTaskCard = ({
       </CardBody>
       <CardActions>
         <Button
-          sx={{ color: "red" }}
+          color="error"
           className="btn btn-danger btn-sm float-end mt-3 mx-2"
           onClick={() => removeTaskById(taskId)}
         >
@@ -211,7 +212,7 @@ const EditTaskCard = ({
 {due_date&& <p>due_date: {due_date}</p>} */}
       <CardActions disableSpacing>
         <Button
-          sx={{ color: "red" }}
+          color="error"
           className="btn btn-danger btn-sm float-end mt-3 mx-2"
           onClick={() => removeTaskById(taskId)}
         >

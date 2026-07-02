@@ -14,4 +14,10 @@ export interface IPropsColor {
   greyCool: string;
   greyCloudy: string;
   greyCharcoal: string;
+  pageBg: string;
+  surface: string;
+  border: string;
+  textPrimary: string;
+  textSecondary: string;
+  cardHeader: string;
 }

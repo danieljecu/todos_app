@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import React from "react";
+import Theme from "styles/theme";
 
 export const SideBar = (props: any) => (
   <SideBarView>
@@ -15,7 +16,7 @@ export const SideBar = (props: any) => (
 
 const SideBarView = styled.header`
   float: left;
-  border: 2px solid #333;
+  border: 2px solid ${Theme.colors.border};
   margin-bottom: 25px;
   padding-right: 10px;
   overflow: hidden;
@@ -25,13 +26,13 @@ const Menu = styled.header`
   text-align: center;
   padding-right: 10px;
   header & div {
-    background-color: #e5e5e5;
+    background-color: ${Theme.colors.pageBg};
     padding: 8px;
     margin-top: 7px;
 
     display: block;
     width: 100%;
-    color: black;
+    color: ${Theme.colors.textPrimary};
   }
 `;
 

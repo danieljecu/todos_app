@@ -6,6 +6,7 @@ import { TaskCard } from "pages/Home/components/TaskCard";
 import { NewTaskCard } from "pages/Home/components/NewTaskCard";
 
 import styled from "@emotion/styled/macro";
+import Theme from "styles/theme";
 import { useParams } from "react-router-dom";
 import { IProjectDetails, ITaskDetails } from "interfaces";
 import { Link as ReactLink } from "react-router-dom";
@@ -66,7 +67,7 @@ export const TasksView: React.FC<{}> = () => {
             to={`/tasklist/${tasklistId}`}
             component={ReactLink}
             underline={"none"}
-            color="black"
+            color="text.primary"
           >
             List id: #{tasklistId} Tasklist name??
           </Link>
@@ -226,8 +227,8 @@ const ColumnContainer = styled.div`
   min-width: 400px;
   max-width: 600px;
   margin: 8px;
-  border: 1px solid lightgrey;
-  background-color: white;
+  border: 1px solid ${Theme.colors.border};
+  background-color: ${Theme.colors.surface};
   border-radius: 2px;
 `;
 
@@ -235,15 +236,16 @@ interface StyledDivProps {
   isDragging?: boolean;
 }
 const TaskContainer = styled.div<StyledDivProps>`
-  border: 1px solid lightgrey;
+  border: 1px solid ${Theme.colors.border};
   padding: 8px;
   margin-bottom: 8px;
 
-  background-color: ${(props) => (props.isDragging ? "lightgreen" : "white")};
+  background-color: ${(props) =>
+    props.isDragging ? Theme.colors.grassGreenLight : Theme.colors.surface};
 
   &:focus {
     outline: none;
-    border-color: red;
+    border-color: ${Theme.colors.ocean};
   }
 `;
 
@@ -275,7 +277,7 @@ const ColumnsRowContainer = styled.div`
 `;
 
 const CardTitle = styled.div`
-  background-color: white;
+  background-color: ${Theme.colors.cardHeader};
   padding: 0.33rem 0 0.33rem 1rem;
   border-bottom: 1px solid;
 `;
