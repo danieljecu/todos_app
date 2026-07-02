@@ -7,6 +7,7 @@ import { Logo } from "../../components/logo";
 import { Spinner, FormGroup, CircleButton } from "../../components/lib";
 import { TextField } from "@mui/material";
 import { display } from "@mui/system";
+import { useTheme } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import { AxiosResponse } from "axios";
 import { IUserSession } from "interfaces/users";
@@ -79,8 +80,17 @@ interface LoginPropsInterface {
 }
 
 export const Login = ({ login, register }: LoginPropsInterface) => {
+  const theme = useTheme();
   const [openModal, setOpenModal] = React.useState("none");
   const [error, setError] = React.useState("");
+
+  // @reach/dialog ships a fixed white background — inline style wins the
+  // cascade, so theme the dialog surface here for dark mode support.
+  const dialogStyle: React.CSSProperties = {
+    borderRadius: "4px",
+    background: theme.palette.background.paper,
+    color: theme.palette.text.primary,
+  };
 
   const handleLogin = (formData: UserCredentialsFormDataType) => {
     console.log("login", formData);
@@ -175,7 +185,7 @@ export const Login = ({ login, register }: LoginPropsInterface) => {
       </div>
       {openModal === "login" && (
         <Dialog
-          style={{ borderRadius: "4px" }}
+          style={dialogStyle}
           aria-label="login form"
           isOpen={openModal === "login"}
         >
@@ -191,7 +201,7 @@ export const Login = ({ login, register }: LoginPropsInterface) => {
       )}
       {openModal === "register" && (
         <Dialog
-          style={{ borderRadius: "4px" }}
+          style={dialogStyle}
           aria-label="register form"
           isOpen={openModal === "register"}
         >
