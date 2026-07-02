@@ -1,10 +1,9 @@
 import styled from "@emotion/styled";
-import Theme from "styles/theme";
 
 const ProjectCardContainer = styled.div`
   width: 30vmax;
   border-radius: 4px;
-  border: 2px solid ${Theme.colors.border};
+  border: 2px solid ${({ theme }) => theme.colors.border};
   margin: 1.5rem 0.5rem 1.5rem 0.5rem;
   overflow: hidden;
 `;

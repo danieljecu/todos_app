@@ -1,9 +1,9 @@
 import React, { FC, ReactElement } from "react";
 import { render, RenderOptions } from "@testing-library/react";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-import Theme from "styles/theme";
+import { ThemeProvider } from "@mui/material/styles";
+import { getTheme } from "styles/theme";
 
-const theme = createTheme(Theme);
+const theme = getTheme("light");
 
 const AllTheProviders: FC<{ children: React.ReactNode }> = ({ children }) => {
   return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
