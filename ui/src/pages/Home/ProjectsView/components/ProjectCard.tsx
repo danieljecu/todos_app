@@ -47,7 +47,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
             to={`/project/${projectId}`}
             component={ReactLink}
             underline={"none"}
-            color="black"
+            color="text.primary"
           >
             <strong>
               {projectId}. {title}
@@ -66,8 +66,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
 
         <CardActions>
           <Button
-            // style={{ color: "white", backgroundColor: "black" }}
-            sx={{ color: "red" }}
+            color="error"
             className="btn btn-danger btn-sm float-end mt-3 mx-2"
             onClick={() => removeProjectById(projectId)}
           >
@@ -95,7 +94,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
               to={`/project/${projectId}/tasklist/${id}`}
               component={ReactLink}
               underline={"none"}
-              color="black"
+              color="text.primary"
             >
               {name}
             </Link>

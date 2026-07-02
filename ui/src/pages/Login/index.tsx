@@ -42,17 +42,25 @@ const LoginForm = ({ onSubmit, buttonText }: LoginFormProps) => {
   return (
     <form onSubmit={handleSubmit}>
       <FormGroup>
-        <TextField variant="filled" label={"Email"} id="email" type="text" />
+        <TextField
+          variant="outlined"
+          margin="normal"
+          fullWidth
+          label={"Email"}
+          id="email"
+          type="text"
+        />
 
         <TextField
-          style={{ marginBottom: "10px" }}
-          variant="filled"
+          variant="outlined"
+          margin="normal"
+          fullWidth
           label={"Password"}
           id="password"
           type="password"
         />
       </FormGroup>
-      <Button variant="contained" type="submit">
+      <Button variant="contained" type="submit" sx={{ mt: 2 }}>
         {buttonText}
       </Button>
 

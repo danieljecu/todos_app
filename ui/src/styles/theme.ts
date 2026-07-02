@@ -1,7 +1,7 @@
 import { PaletteColorOptions } from "@mui/material";
 import { PaletteOptions } from "@mui/material/styles";
 import { IPropsColor } from "interfaces";
-import { TypeText } from "@mui/material/styles/createPalette";
+import { TypeText, TypeBackground } from "@mui/material/styles/createPalette";
 
 const colors: IPropsColor = {
   navy: "#013d54",
@@ -19,21 +19,28 @@ const colors: IPropsColor = {
   greyCool: "#E5E6E5",
   greyCloudy: "#c9c9c8",
   greyCharcoal: "#363936",
+  // Semantic tokens for surfaces/text (light theme)
+  pageBg: "#f4f6f8",
+  surface: "#ffffff",
+  border: "#d5d8dc",
+  textPrimary: "#20262b",
+  textSecondary: "#5f6360",
+  cardHeader: "#e3f1fb",
 };
 
 const primary: PaletteColorOptions = {
   main: colors.ocean,
-  contrastText: colors.greyCool,
+  contrastText: "#ffffff",
 };
 
 const secondary: PaletteColorOptions = {
   main: colors.tangerine,
-  contrastText: colors.greyCharcoal,
+  contrastText: "#ffffff",
 };
 
 const warning: PaletteColorOptions = {
   main: colors.tangerineLight,
-  contrastText: colors.greyCloudy,
+  contrastText: colors.greyCharcoal,
 };
 
 const success: PaletteColorOptions = {
@@ -43,20 +50,28 @@ const success: PaletteColorOptions = {
 
 const info: PaletteColorOptions = {
   main: colors.navy,
-  contrastText: colors.greyCool,
+  contrastText: "#ffffff",
 };
 const text: Partial<TypeText> = {
-  primary: colors.greyCool,
-  secondary: colors.greyCharcoal,
+  primary: colors.textPrimary,
+  secondary: colors.textSecondary,
+};
+
+const background: Partial<TypeBackground> = {
+  default: colors.pageBg,
+  paper: colors.surface,
 };
 
 const palette: PaletteOptions = {
+  mode: "light",
   primary,
   secondary,
   warning,
   success,
   info,
   text,
+  background,
+  divider: colors.border,
 };
 
 const Theme = { colors, palette };

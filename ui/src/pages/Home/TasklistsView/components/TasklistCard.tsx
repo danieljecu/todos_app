@@ -36,13 +36,13 @@ export const TasklistCard: React.FC<TasklistCardProps> = ({
             to={`/tasklist/${tasklistId}`}
             component={ReactLink}
             underline={"none"}
-            color="black"
+            color="text.primary"
           >
             {`${tasklistId}. ${name} List `}
           </Link>
 
           <Button
-            sx={{ color: "red" }}
+            color="error"
             className="btn btn-danger btn-sm float-end mt-3 mx-2"
             onClick={() => removeTasklistById(tasklistId)}
           >
@@ -90,7 +90,7 @@ export const TasklistCard: React.FC<TasklistCardProps> = ({
             to={`/tasklist/${tasklistId}`}
             component={ReactLink}
             underline={"none"}
-            color="black"
+            color="text.primary"
           >
             {name} List
           </Link>
