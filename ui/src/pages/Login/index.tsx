@@ -178,6 +178,7 @@ export const Login = ({ login, register }: LoginPropsInterface) => {
           style={{ borderRadius: "4px" }}
           aria-label="login form"
           isOpen={openModal === "login"}
+          onDismiss={() => setOpenModal("none")}
         >
           <CircleButton
             onClick={() => {
@@ -194,6 +195,7 @@ export const Login = ({ login, register }: LoginPropsInterface) => {
           style={{ borderRadius: "4px" }}
           aria-label="register form"
           isOpen={openModal === "register"}
+          onDismiss={() => setOpenModal("none")}
         >
           <div>
             <CircleButton
