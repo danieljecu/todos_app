@@ -35,8 +35,8 @@ async function verifyToken(req: Request, res: Response, next: NextFunction) {
   try {
     const tokenVerified =
       req.path === "/refresh"
-        ? <any>jwt.verify(token, REFRESH_TOKEN_SECRET)
-        : <any>jwt.verify(token, ACCESS_TOKEN_SECRET);
+        ? <any>jwt.verify(token, REFRESH_TOKEN_SECRET, { algorithms: ["HS256"] })
+        : <any>jwt.verify(token, ACCESS_TOKEN_SECRET, { algorithms: ["HS256"] });
 
     if (tokenVerified) {
       next();
