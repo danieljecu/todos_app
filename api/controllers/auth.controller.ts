@@ -22,7 +22,9 @@ async function refreshToken(req: Request, res: Response) {
   let jwtPayload;
   //Verify token
   try {
-    jwtPayload = <any>jwt.verify(String(refreshToken), REFRESH_TOKEN_SECRET);
+    jwtPayload = <any>jwt.verify(String(refreshToken), REFRESH_TOKEN_SECRET, {
+      algorithms: ["HS256"],
+    });
   } catch (error) {
     //If token is not valid, respond with 401 (unauthorized)
     res.status(401).send({ error });
@@ -48,7 +50,9 @@ async function logout(req: Request, res: Response) {
   try {
     const token = req.headers.authorization?.split(" ")[1];
 
-    const jwtPayload = <any>jwt.verify(String(token), ACCESS_TOKEN_SECRET);
+    const jwtPayload = <any>jwt.verify(String(token), ACCESS_TOKEN_SECRET, {
+      algorithms: ["HS256"],
+    });
     const user = await UserService.getUserById(jwtPayload.id);
     if (!user) {
       res.status(401).send();
