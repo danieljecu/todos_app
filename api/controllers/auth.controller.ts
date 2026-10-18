@@ -16,7 +16,7 @@ import Logger from "../utils/logger";
 async function refreshToken(req: Request, res: Response) {
   const { refreshToken } = req.body;
 
-  Logger.info("refreshToken ", refreshToken);
+  Logger.info("refresh token requested");
   const token = req.headers.authorization?.split(" ")[1];
 
   let jwtPayload;
@@ -159,9 +159,4 @@ export const createRefreshToken = (user: User) => {
   );
 };
 
-async function getHealth(req: Request, res: Response) {
-  Logger.http("test get helath");
-  res.sendStatus(200);
-}
-
-export { getHealth, refreshToken, login, logout, createUser };
+export { refreshToken, login, logout, createUser };

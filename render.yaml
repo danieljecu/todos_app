@@ -26,3 +26,7 @@ services:
         sync: false
       - key: CORS_ORIGIN # frontend origin(s), comma-separated
         sync: false
+      - key: SENTRY_DSN # optional; unset disables Sentry
+        sync: false
+      - key: LOG_LEVEL
+        value: info
