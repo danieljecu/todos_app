@@ -27,7 +27,7 @@ jobs:
         with:
           node-version: "18"
       - name: Install dependencies
-        run: npm install
+        run: npm install --legacy-peer-deps
       - name: npm build
         id: build-ui
         run: npm run build
