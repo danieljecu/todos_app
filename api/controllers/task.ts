@@ -1,5 +1,5 @@
 import { equal } from "assert";
-import { query, Request, Response } from "express";
+import { Request, Response } from "express";
 import { prisma } from "./../utils/db_client";
 import { TaskService } from "./../services/";
 
@@ -25,7 +25,7 @@ async function getTask(req: Request, res: Response) {
   console.log("getTask");
 
   try {
-    const task = await TaskService.getTask(task_id);
+    const task = await TaskService.getTask(String(task_id));
 
     res.status(200).json(task);
   } catch (db_error) {
@@ -61,7 +61,7 @@ async function updateTask(req: Request, res: Response) {
   try {
     console.log("updateTask");
     const task = await TaskService.updateTaskById(
-      task_id,
+      String(task_id),
       title,
       description,
       due_date,
@@ -79,7 +79,7 @@ async function deleteTask(req: Request, res: Response) {
   const { task_id } = req.params;
 
   try {
-    const task = await TaskService.deleteTaskById(task_id);
+    const task = await TaskService.deleteTaskById(String(task_id));
 
     console.log("deleteTask");
     res.sendStatus(204);

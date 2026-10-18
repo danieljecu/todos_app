@@ -24,7 +24,7 @@ async function getProject(req: Request, res: Response) {
   console.log("getProject");
 
   try {
-    const project = await ProjectService.getProjectById(project_id);
+    const project = await ProjectService.getProjectById(String(project_id));
 
     res.status(200).json(project);
   } catch (db_error) {
@@ -52,7 +52,7 @@ async function updateProject(req: Request, res: Response) {
   console.log("updateProject");
 
   try {
-    const project = await ProjectService.updateProject(project_id, name);
+    const project = await ProjectService.updateProject(String(project_id), name);
     res.status(204).json(project);
   } catch (db_error) {
     res.status(400).json({ error: "project not found", db_error });
@@ -64,7 +64,7 @@ async function deleteProject(req: Request, res: Response) {
   console.log("deleteProject");
 
   try {
-    const project = await ProjectService.deleteProject(project_id);
+    const project = await ProjectService.deleteProject(String(project_id));
     console.log("project deleted", project);
     res.sendStatus(204);
   } catch (db_error) {

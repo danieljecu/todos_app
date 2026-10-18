@@ -3,29 +3,35 @@ updates:
   - package-ecosystem: "npm"
     directory: "/api"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
+    open-pull-requests-limit: 2
     groups:
-      minor-and-patch:
+      all-dependencies:
         update-types:
+          - "major"
           - "minor"
           - "patch"
 
   - package-ecosystem: "npm"
     directory: "/ui"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
+    open-pull-requests-limit: 2
     groups:
-      minor-and-patch:
+      all-dependencies:
         update-types:
+          - "major"
           - "minor"
           - "patch"
 
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
+    open-pull-requests-limit: 2
     groups:
-      minor-and-patch:
+      all-dependencies:
         update-types:
+          - "major"
           - "minor"
           - "patch"
