@@ -38,10 +38,11 @@ Free-tier error tracking (Sentry) and structured logs (pino → Render → Grafa
 | `SENTRY_DSN` | API runtime (Render) | Sentry DSN for `@sentry/node`. Empty or unset → Sentry is skipped. |
 | `REACT_APP_SENTRY_DSN` | UI **build** (GitHub Actions) | Sentry DSN for `@sentry/react` (React 17). Create React App inlines it at build time. Empty or unset → Sentry is skipped. |
 | `LOG_LEVEL` | API runtime | Optional pino level (`debug`, `info`, `warn`, `error`). Defaults to `info` in production and `debug` otherwise. |
+| `LOG_FORMAT` | API runtime | `pretty` for colored console logs, `json` for one JSON object per line. Defaults to colored outside production and JSON when `NODE_ENV=production`. |
 
 Set `SENTRY_DSN` and `LOG_LEVEL` in the Render dashboard (or via `render.yaml`; `SENTRY_DSN` is `sync: false`). Set the GitHub Actions secret `REACT_APP_SENTRY_DSN` so the S3 and GitHub Pages workflows can inline it. Do not commit DSNs or tokens.
 
-The API writes one JSON object per line to stdout. Each request log includes `req.id` (also returned as `X-Request-Id`), `req.method`, `req.path` (query string stripped), `res.status`, and `duration` (milliseconds). Passwords, tokens, cookies, and `Authorization` headers are redacted and are never written.
+The API writes one JSON object per line to stdout in production. Each request log includes `req.id` (also returned as `X-Request-Id`), `req.method`, `req.path` (query string stripped), `res.status`, and `duration` (milliseconds). Outside production the same lines are colored (`error` red, `warn` yellow, `info` green, `debug` white), which is what you see locally. Set `LOG_FORMAT=json` to force JSON, or `LOG_FORMAT=pretty` to force color — do not enable pretty on Render if you ship logs to Loki, because ANSI codes break `| json`. Passwords, tokens, cookies, and `Authorization` headers are redacted and are never written.
 
 `GET /health` is public (no JWT). It runs `SELECT 1` and returns `200 {"status":"ok","db":"up"}` when Postgres answers, or `503 {"status":"error","db":"down"}` when it does not. Render uses this path as `healthCheckPath`.
 

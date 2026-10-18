@@ -1,10 +1,24 @@
 import pino from "pino";
+import pretty from "pino-pretty";
 
 const isProd = process.env.NODE_ENV === "production";
 
 /**
- * Structured JSON logs for stdout (Render log streams → Loki).
- * Redact secrets at the logger so a stray field never reaches the stream.
+ * Colored console outside production (same idea as the old Winston logger).
+ * Production stays JSON so Render log streams can be parsed in Loki.
+ * LOG_FORMAT=pretty forces color; LOG_FORMAT=json forces JSON.
+ */
+export function usePrettyLogs(
+  env: NodeJS.ProcessEnv = process.env
+): boolean {
+  if (env.LOG_FORMAT === "json") return false;
+  if (env.LOG_FORMAT === "pretty") return true;
+  return env.NODE_ENV !== "production";
+}
+
+/**
+ * Structured logs. Redact secrets at the logger so a stray field never
+ * reaches stdout, whether the line is colored or JSON.
  */
 export const loggerOptions: pino.LoggerOptions = {
   level: process.env.LOG_LEVEL || (isProd ? "info" : "debug"),
@@ -75,7 +89,20 @@ export const loggerOptions: pino.LoggerOptions = {
   },
 };
 
-const root = pino(loggerOptions);
+const root = usePrettyLogs()
+  ? pino(
+      loggerOptions,
+      pretty({
+        colorize: true,
+        translateTime: "yyyy-mm-dd HH:MM:ss.l",
+        ignore: "pid,hostname",
+        singleLine: true,
+        // Match the previous Winston palette: info green, warn yellow, error red.
+        customColors:
+          "fatal:red,error:red,warn:yellow,info:green,debug:white,trace:white",
+      })
+    )
+  : pino(loggerOptions);
 
 function write(
   level: "fatal" | "error" | "warn" | "info" | "debug",

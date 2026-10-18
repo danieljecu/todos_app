@@ -1,6 +1,6 @@
 import { PassThrough } from "stream";
 import pino from "pino";
-import { loggerOptions } from "../utils/logger";
+import { loggerOptions, usePrettyLogs } from "../utils/logger";
 import {
   requestPath,
   serializeRequest,
@@ -17,6 +17,18 @@ function capture(log: (logger: pino.Logger) => void): string {
 }
 
 describe("structured logger", () => {
+  it("colors logs outside production and keeps JSON in production", () => {
+    expect(usePrettyLogs({ NODE_ENV: "development" })).toBe(true);
+    expect(usePrettyLogs({ NODE_ENV: "test" })).toBe(true);
+    expect(usePrettyLogs({ NODE_ENV: "production" })).toBe(false);
+    expect(usePrettyLogs({ NODE_ENV: "production", LOG_FORMAT: "pretty" })).toBe(
+      true
+    );
+    expect(usePrettyLogs({ NODE_ENV: "development", LOG_FORMAT: "json" })).toBe(
+      false
+    );
+  });
+
   it("redacts passwords, tokens and authorization headers", () => {
     const line = capture((logger) => {
       logger.info(
