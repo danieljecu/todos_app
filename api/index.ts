@@ -3,7 +3,8 @@ import bodyParser from "body-parser";
 import helmet from "helmet";
 import dotenv from "dotenv";
 import swaggerUi from "swagger-ui-express";
-import YAML from "yamljs";
+import yaml from "js-yaml";
+import fs from "fs";
 import { UserRouter, ProjectRouter, TaskRouter, AuthRouter } from "./routers";
 import cors from "cors";
 import { verifyToken } from "./middlewares/checkJwt";
@@ -26,7 +27,7 @@ app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const swaggerDocument = YAML.load("./basic-api-doc.yml");
+const swaggerDocument = yaml.load(fs.readFileSync("./basic-api-doc.yml", "utf8")) as swaggerUi.JsonObject;
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.get("/", (_, res) => {

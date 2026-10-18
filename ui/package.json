@@ -11,30 +11,30 @@
     "@mui/icons-material": "^5.16.7",
     "@mui/material": "^5.16.7",
     "@mui/styled-engine-sc": "^5.14.12",
-    "@reach/dialog": "^0.16.2",
+    "@reach/dialog": "^0.18.0",
     "@testing-library/jest-dom": "^5.16.1",
-    "@testing-library/react": "^12.1.2",
+    "@testing-library/react": "^16.3.3",
     "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.0.3",
+    "@types/jest": "^30.0.0",
     "@types/node": "^16.11.14",
     "@types/react": "^17.0.37",
     "@types/react-beautiful-dnd": "^13.1.2",
     "@types/react-dom": "^17.0.11",
     "@types/react-router-dom": "^5.3.2",
     "@types/styled-components": "^5.1.18",
-    "axios": "^0.24.0",
-    "eslint-plugin-jest": "^25.3.0",
+    "axios": "^1.20.0",
+    "eslint-plugin-jest": "^29.17.0",
     "react": "^17.0.2",
     "react-beautiful-dnd": "^13.1.0",
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",
     "react-router-dom": "^6.2.1",
-    "react-scripts": "5.0.0",
-    "react-toastify": "^9.0.8",
+    "react-scripts": "5.0.1",
+    "react-toastify": "^11.1.0",
     "styled-components": "^5.3.5",
+    "ts-jest": "^29.1.0",
     "typescript": "^4.5.4",
-    "web-vitals": "^2.1.2",
-    "ts-jest": "^29.1.0"
+    "web-vitals": "^2.1.2"
   },
   "alias": {
     "@mui/styled-engine": "@mui/styled-engine-sc"
@@ -65,7 +65,7 @@
   },
   "devDependencies": {
     "craco-alias": "^3.0.1",
-    "jest": "^29.0.1",
+    "jest": "^30.5.2",
     "msw": "^0.45.0"
   },
   "jest": {
