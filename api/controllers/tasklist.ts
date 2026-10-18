@@ -1,14 +1,15 @@
 import { Request, Response } from "express";
 import { prisma } from "./../utils/db_client";
 import { TasklistService } from "./../services";
+import logger from "../utils/logger";
 
 async function getAllTasklists(req: Request, res: Response) {
   const { project_id } = req.params;
-  console.log("proID", project_id);
+  logger.info("getAllTasklists", { project_id });
   const tasklists = await TasklistService.getTasklistsByProjectId(
     Number(project_id)
   );
-  console.log("getAllTasklists", tasklists);
+  logger.info("getAllTasklists result", { count: tasklists?.length ?? 0 });
 
   if (tasklists?.length > 0) {
     res.status(200).json(tasklists);
@@ -19,7 +20,7 @@ async function getAllTasklists(req: Request, res: Response) {
 
 async function getTasklist(req: Request, res: Response) {
   const { project_id, tasklist_id } = req.params;
-  console.log("getTasklist");
+  logger.info("getTasklist", { project_id, tasklist_id });
 
   //TODO why is not working
   try {
@@ -35,7 +36,7 @@ async function createTasklist(req: Request, res: Response) {
   // const { project_id } = req.params;
   const { project_id, name } = req.body;
 
-  console.log("createTasklist", project_id, name);
+  logger.info("createTasklist", { project_id, name });
 
   try {
     const tasklist = await TasklistService.createTasklist(project_id, name);
@@ -50,7 +51,7 @@ async function updateTasklist(req: Request, res: Response) {
   const { project_id, tasklist_id } = req.params;
   const { name } = req.body;
 
-  console.log("updateTasklist");
+  logger.info("updateTasklist", { project_id, tasklist_id });
 
   try {
     const tasklist = TasklistService.updateTasklist(
@@ -70,7 +71,7 @@ async function deleteTasklist(req: Request, res: Response) {
   try {
     const tasklist = await TasklistService.deleteTasklist(Number(tasklist_id));
 
-    console.log("deleteTasklist");
+    logger.info("deleteTasklist", { project_id, tasklist_id });
     res.sendStatus(200).json(tasklist);
   } catch (db_error) {
     res.status(404).json({ error: "tasklist not found", db_error });

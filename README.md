@@ -27,6 +27,64 @@ Personal project for learning full-stack development and cloud deployment. Topic
 | DNS | AWS Route 53 |
 | CI/CD | GitHub Actions |
 
+## Observability
+
+Free-tier error tracking (Sentry) and structured logs (pino → Render → Grafana Cloud Loki). Nothing is sent unless you configure it. A missing DSN does not crash the API or the UI.
+
+### Environment variables
+
+| Variable | Where | Purpose |
+|---|---|---|
+| `SENTRY_DSN` | API runtime (Render) | Sentry DSN for `@sentry/node`. Empty or unset → Sentry is skipped. |
+| `REACT_APP_SENTRY_DSN` | UI **build** (GitHub Actions) | Sentry DSN for `@sentry/react` (React 17). Create React App inlines it at build time. Empty or unset → Sentry is skipped. |
+| `LOG_LEVEL` | API runtime | Optional pino level (`debug`, `info`, `warn`, `error`). Defaults to `info` in production and `debug` otherwise. |
+
+Set `SENTRY_DSN` and `LOG_LEVEL` in the Render dashboard (or via `render.yaml`; `SENTRY_DSN` is `sync: false`). Set the GitHub Actions secret `REACT_APP_SENTRY_DSN` so the S3 and GitHub Pages workflows can inline it. Do not commit DSNs or tokens.
+
+The API writes one JSON object per line to stdout. Each request log includes `req.id` (also returned as `X-Request-Id`), `req.method`, `req.path` (query string stripped), `res.status`, and `duration` (milliseconds). Passwords, tokens, cookies, and `Authorization` headers are redacted and are never written.
+
+`GET /health` is public (no JWT). It runs `SELECT 1` and returns `200 {"status":"ok","db":"up"}` when Postgres answers, or `503 {"status":"error","db":"down"}` when it does not. Render uses this path as `healthCheckPath`.
+
+### Render Log Streams → Grafana Cloud Loki
+
+Render does **not** speak Loki's HTTP push API. [Log Streams](https://render.com/docs/log-streams) forward stdout as **RFC5424 syslog over TLS** to `host:port`. An HTTPS URL that is not Datadog or Loggly is treated as syslog, so pasting the Loki push URL into Render will not work. Grafana Cloud Logs (free tier: 50 GB ingested / month, 14-day retention) accepts `POST /loki/api/v1/push` with basic auth. Bridge the two with [Grafana Alloy](https://grafana.com/docs/alloy/latest/) (open source, no license fee) on a host that can accept public TLS on a TCP port. A Render free web service cannot do this — its proxy is HTTP only.
+
+1. Create a free Grafana Cloud stack. In the stack, open **Loki → Details** and copy the push URL (for example `https://logs-prod-XXX.grafana.net/loki/api/v1/push`) and the **User** (numeric instance id). Create an access-policy token with scope `logs:write`. That token is Alloy's basic-auth password. Keep it on Alloy only — do not put it in Render's log-stream token field, which is embedded in the syslog message.
+2. Run Alloy with a config that terminates TLS (a publicly trusted certificate, such as Let's Encrypt) and forwards to Loki. Raise `max_message_length` above the 8192 default so JSON lines are not truncated:
+
+```alloy
+loki.source.syslog "render" {
+  listener {
+    address             = "0.0.0.0:6514"
+    protocol            = "tcp"
+    syslog_format       = "rfc5424"
+    max_message_length  = 65536
+    labels              = { job = "todos-api", source = "render" }
+
+    tls_config {
+      cert_file = "/etc/alloy/tls/fullchain.pem"
+      key_file  = "/etc/alloy/tls/privkey.pem"
+    }
+  }
+
+  forward_to = [loki.write.grafana_cloud.receiver]
+}
+
+loki.write "grafana_cloud" {
+  endpoint {
+    url = env("LOKI_PUSH_URL")
+
+    basic_auth {
+      username = env("LOKI_USER")
+      password = env("LOKI_TOKEN")
+    }
+  }
+}
+```
+
+3. In the Render Dashboard open **Integrations → Observability → Log Streams → + Set default**. Endpoint: `your-alloy-host:6514` (host and port only, no scheme). Leave the token blank unless your Alloy config validates one. Hobby workspaces can only set this default for the whole workspace; per-service overrides need a higher plan. Log-stream traffic does not count against Render usage.
+4. In Grafana, open **Explore → Loki** and run `{job="todos-api"} | json`. The JSON line inside the syslog message exposes `level`, `req_method` / `req.method`, `req.path`, `res.status`, and `duration` (the exact label names follow LogQL's JSON parser).
+
 ## Deployment History
 
 ### v3 — Current (2026)
