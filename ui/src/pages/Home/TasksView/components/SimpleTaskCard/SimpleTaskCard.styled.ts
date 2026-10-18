@@ -1,5 +1,4 @@
 import styled from "@emotion/styled/macro";
-import Theme from "styles/theme";
 // import styled from "@emotion/styled";
 // import { MyThemeType } from "styles/theme";
 // import { styled, alpha } from "@mui/material/styles";
@@ -7,14 +6,14 @@ import Theme from "styles/theme";
 
 const ProjectCardContainer = styled.div`
   width: 30vmax;
-  border: 2px solid ${Theme.colors.border};
+  border: 2px solid ${({ theme }) => theme.colors.border};
   margin: 1.5rem 0.5rem 1.5rem 0.5rem;
   overflow: hidden;
 `;
 
 const TasklistCardContainer = styled.div`
   width: 30vmax;
-  border: 2px solid ${Theme.colors.border};
+  border: 2px solid ${({ theme }) => theme.colors.border};
   margin: 1.5rem 0.5rem 1.5rem 0.5rem;
   overflow: hidden;
 `;
@@ -40,7 +39,7 @@ const CardTitle = styled.div`
 const CardCreateTitle = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: ${Theme.colors.cardHeader};
+  background-color: ${({ theme }) => theme.colors.cardHeader};
   padding: 0.33rem 0 0.33rem 1rem;
   border-bottom: 1px solid;
 `;

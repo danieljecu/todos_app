@@ -6,7 +6,6 @@ import { TaskCard } from "pages/Home/components/TaskCard";
 import { NewTaskCard } from "pages/Home/components/NewTaskCard";
 
 import styled from "@emotion/styled/macro";
-import Theme from "styles/theme";
 import { useParams } from "react-router-dom";
 import { IProjectDetails, ITaskDetails } from "interfaces";
 import { Link as ReactLink } from "react-router-dom";
@@ -227,8 +226,8 @@ const ColumnContainer = styled.div`
   min-width: 400px;
   max-width: 600px;
   margin: 8px;
-  border: 1px solid ${Theme.colors.border};
-  background-color: ${Theme.colors.surface};
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  background-color: ${({ theme }) => theme.colors.surface};
   border-radius: 2px;
 `;
 
@@ -236,16 +235,20 @@ interface StyledDivProps {
   isDragging?: boolean;
 }
 const TaskContainer = styled.div<StyledDivProps>`
-  border: 1px solid ${Theme.colors.border};
+  border: 1px solid ${({ theme }) => theme.colors.border};
   padding: 8px;
   margin-bottom: 8px;
 
-  background-color: ${(props) =>
-    props.isDragging ? Theme.colors.grassGreenLight : Theme.colors.surface};
+  background-color: ${({ theme, isDragging }) =>
+    isDragging
+      ? theme.palette.mode === "dark"
+        ? theme.colors.grassGreenDark
+        : theme.colors.grassGreenLight
+      : theme.colors.surface};
 
   &:focus {
     outline: none;
-    border-color: ${Theme.colors.ocean};
+    border-color: ${({ theme }) => theme.colors.ocean};
   }
 `;
 
@@ -277,7 +280,7 @@ const ColumnsRowContainer = styled.div`
 `;
 
 const CardTitle = styled.div`
-  background-color: ${Theme.colors.cardHeader};
+  background-color: ${({ theme }) => theme.colors.cardHeader};
   padding: 0.33rem 0 0.33rem 1rem;
   border-bottom: 1px solid;
 `;

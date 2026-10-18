@@ -1,9 +1,25 @@
-import { PaletteColorOptions } from "@mui/material";
-import { PaletteOptions } from "@mui/material/styles";
+import { PaletteColorOptions, PaletteMode } from "@mui/material";
+import {
+  createTheme,
+  PaletteOptions,
+  Theme as MuiTheme,
+} from "@mui/material/styles";
 import { IPropsColor } from "interfaces";
 import { TypeText, TypeBackground } from "@mui/material/styles/createPalette";
 
-const colors: IPropsColor = {
+// Expose the semantic color tokens on the MUI theme so emotion styled
+// components can read them from context and react to mode changes.
+declare module "@mui/material/styles" {
+  interface Theme {
+    colors: IPropsColor;
+  }
+  interface ThemeOptions {
+    colors?: IPropsColor;
+  }
+}
+
+// Brand colors — identical in both modes
+const brand = {
   navy: "#013d54",
   navyLight: "#3a6781",
   navyDark: "#00172b",
@@ -19,7 +35,11 @@ const colors: IPropsColor = {
   greyCool: "#E5E6E5",
   greyCloudy: "#c9c9c8",
   greyCharcoal: "#363936",
-  // Semantic tokens for surfaces/text (light theme)
+};
+
+// Semantic tokens for surfaces/text, per mode
+const lightColors: IPropsColor = {
+  ...brand,
   pageBg: "#f4f6f8",
   surface: "#ffffff",
   border: "#d5d8dc",
@@ -28,52 +48,74 @@ const colors: IPropsColor = {
   cardHeader: "#e3f1fb",
 };
 
-const primary: PaletteColorOptions = {
-  main: colors.ocean,
-  contrastText: "#ffffff",
+const darkColors: IPropsColor = {
+  ...brand,
+  pageBg: "#10161a",
+  surface: "#1c242b",
+  border: "#3b464f",
+  textPrimary: "#e6e9eb",
+  textSecondary: "#9fa8ae",
+  cardHeader: "#16324a",
 };
 
-const secondary: PaletteColorOptions = {
-  main: colors.tangerine,
-  contrastText: "#ffffff",
+export const getColors = (mode: PaletteMode): IPropsColor =>
+  mode === "dark" ? darkColors : lightColors;
+
+const getPalette = (mode: PaletteMode): PaletteOptions => {
+  const colors = getColors(mode);
+
+  const primary: PaletteColorOptions = {
+    main: colors.ocean,
+    contrastText: "#ffffff",
+  };
+
+  const secondary: PaletteColorOptions = {
+    main: colors.tangerine,
+    contrastText: "#ffffff",
+  };
+
+  const warning: PaletteColorOptions = {
+    main: colors.tangerineLight,
+    contrastText: colors.greyCharcoal,
+  };
+
+  const success: PaletteColorOptions = {
+    main: colors.grassGreen,
+    contrastText: colors.greyCharcoal,
+  };
+
+  const info: PaletteColorOptions = {
+    main: mode === "dark" ? colors.navyLight : colors.navy,
+    contrastText: "#ffffff",
+  };
+
+  const text: Partial<TypeText> = {
+    primary: colors.textPrimary,
+    secondary: colors.textSecondary,
+  };
+
+  const background: Partial<TypeBackground> = {
+    default: colors.pageBg,
+    paper: colors.surface,
+  };
+
+  return {
+    mode,
+    primary,
+    secondary,
+    warning,
+    success,
+    info,
+    text,
+    background,
+    divider: colors.border,
+  };
 };
 
-const warning: PaletteColorOptions = {
-  main: colors.tangerineLight,
-  contrastText: colors.greyCharcoal,
-};
+export const getTheme = (mode: PaletteMode): MuiTheme =>
+  createTheme({ palette: getPalette(mode), colors: getColors(mode) });
 
-const success: PaletteColorOptions = {
-  main: colors.grassGreen,
-  contrastText: colors.greyCharcoal,
-};
-
-const info: PaletteColorOptions = {
-  main: colors.navy,
-  contrastText: "#ffffff",
-};
-const text: Partial<TypeText> = {
-  primary: colors.textPrimary,
-  secondary: colors.textSecondary,
-};
-
-const background: Partial<TypeBackground> = {
-  default: colors.pageBg,
-  paper: colors.surface,
-};
-
-const palette: PaletteOptions = {
-  mode: "light",
-  primary,
-  secondary,
-  warning,
-  success,
-  info,
-  text,
-  background,
-  divider: colors.border,
-};
-
-const Theme = { colors, palette };
+// Back-compat default export: light-mode tokens/palette
+const Theme = { colors: lightColors, palette: getPalette("light") };
 
 export default Theme;
