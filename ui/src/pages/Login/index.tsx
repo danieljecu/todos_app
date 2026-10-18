@@ -4,11 +4,13 @@ import "@reach/dialog/styles.css";
 import React from "react";
 import { Dialog } from "@reach/dialog";
 import { Logo } from "../../components/logo";
-import { Spinner, FormGroup, CircleButton } from "../../components/lib";
+import { Spinner, FormGroup } from "../../components/lib";
 import { TextField } from "@mui/material";
 import { display } from "@mui/system";
 import { useTheme } from "@mui/material/styles";
 import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
 import { AxiosResponse } from "axios";
 import { IUserSession } from "interfaces/users";
 import { toast } from "react-toastify";
@@ -87,6 +89,7 @@ export const Login = ({ login, register }: LoginPropsInterface) => {
   // @reach/dialog ships a fixed white background — inline style wins the
   // cascade, so theme the dialog surface here for dark mode support.
   const dialogStyle: React.CSSProperties = {
+    position: "relative",
     borderRadius: "4px",
     background: theme.palette.background.paper,
     color: theme.palette.text.primary,
@@ -189,13 +192,15 @@ export const Login = ({ login, register }: LoginPropsInterface) => {
           aria-label="login form"
           isOpen={openModal === "login"}
         >
-          <CircleButton
+          <IconButton
+            aria-label="close"
             onClick={() => {
               setOpenModal("none");
             }}
+            sx={{ position: "absolute", top: 8, right: 8, color: "text.secondary" }}
           >
-            Close
-          </CircleButton>
+            <CloseIcon />
+          </IconButton>
           <LoginForm onSubmit={handleLogin} buttonText="Login" />
         </Dialog>
       )}
@@ -206,14 +211,15 @@ export const Login = ({ login, register }: LoginPropsInterface) => {
           isOpen={openModal === "register"}
         >
           <div>
-            <CircleButton
-              style={{ display: "flex", justifyContent: "flex-end" }}
+            <IconButton
+              aria-label="close"
               onClick={() => {
                 setOpenModal("none");
               }}
+              sx={{ position: "absolute", top: 8, right: 8, color: "text.secondary" }}
             >
-              Close
-            </CircleButton>
+              <CloseIcon />
+            </IconButton>
             <LoginForm onSubmit={handleRegister} buttonText="register" />
           </div>
         </Dialog>
