@@ -68,9 +68,9 @@ app.get("/logger", (_, res) => {
 });
 
 app.use("/", AuthRouter);
-app.use("/user", UserRouter, verifyToken);
-app.use("/project", ProjectRouter, verifyToken);
+app.use("/user", verifyToken, UserRouter);
+app.use("/project", verifyToken, ProjectRouter);
 // will use /tasklist always under the project
-app.use("/task", TaskRouter, verifyToken);
+app.use("/task", verifyToken, TaskRouter);
 
 app.listen(PORT, () => console.log(`Running on ${PORT} ⚡`));

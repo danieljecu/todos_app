@@ -55,17 +55,20 @@ ProjectRouter.post(
 );
 
 ProjectRouter.put(
-  "/:project_id([0-9]+)",
-  check("name")
-    .notEmpty()
-    .isLength({ min: 3 })
-    .withMessage("name longer than 3 characters"),
+  "/:project_id",
+  [
+    param("project_id").isNumeric().withMessage("project_id must be numeric"),
+    check("name")
+      .notEmpty()
+      .isLength({ min: 3 })
+      .withMessage("name longer than 3 characters"),
+  ],
   generalValidate,
   updateProject
 );
 
 ProjectRouter.delete(
-  "/:project_id([0-9]+)",
+  "/:project_id",
   param("project_id").isNumeric().withMessage("project_id must be numeric"),
   generalValidate,
   deleteProject
@@ -85,8 +88,7 @@ TasklistRouter.get(
 );
 
 TasklistRouter.get(
-  "/:tasklist_id([0-9]+)",
-  // param('project_id').isNumeric().withMessage("project_id must be numeric"),
+  "/:tasklist_id",
   param("tasklist_id").isNumeric().withMessage("tasklist_id must be numeric"),
   generalValidate,
   getTasklist
@@ -100,16 +102,20 @@ TasklistRouter.post(
 );
 
 TasklistRouter.put(
-  "/:tasklist_id([0-9]+)",
-  param("project_id").isNumeric().withMessage("project_id must be numeric"),
-  param("tasklist_id").isNumeric().withMessage("tasklist_id must be numeric"),
+  "/:tasklist_id",
+  [
+    param("project_id").isNumeric().withMessage("project_id must be numeric"),
+    param("tasklist_id").isNumeric().withMessage("tasklist_id must be numeric"),
+  ],
   generalValidate,
   updateTasklist
 );
 TasklistRouter.delete(
-  "/:tasklist_id([0-9]+)",
-  param("project_id").isNumeric().withMessage("project_id must be numeric"),
-  param("tasklist_id").isNumeric().withMessage("tasklist_id must be numeric"),
+  "/:tasklist_id",
+  [
+    param("project_id").isNumeric().withMessage("project_id must be numeric"),
+    param("tasklist_id").isNumeric().withMessage("tasklist_id must be numeric"),
+  ],
   generalValidate,
   deleteTasklist
 );
