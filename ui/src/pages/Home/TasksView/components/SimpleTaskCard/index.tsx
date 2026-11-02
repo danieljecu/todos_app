@@ -11,7 +11,6 @@ import { Delete, Build, Save } from "@mui/icons-material";
 import { Paper, Card } from "@mui/material";
 
 import Typography from "@mui/material/Typography";
-import Theme from "styles/theme";
 
 // interface TaskProps {
 //   id: number;
@@ -76,8 +75,9 @@ export const SimpleTaskCard = ({
   return (
     <Card
       elevation={3}
-      style={{
-        border: `2px solid ${Theme.colors.border}`,
+      sx={{
+        border: "2px solid",
+        borderColor: "divider",
         borderRadius: "4px",
         margin: "0.5rem 0.2rem",
         overflow: "hidden",
