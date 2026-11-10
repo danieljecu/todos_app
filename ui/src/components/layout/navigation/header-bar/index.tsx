@@ -11,6 +11,9 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
+import { useColorMode } from "providers/app-provider";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 
@@ -21,6 +24,7 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 
 const NewResponsiveHeader = () => {
+  const { mode, toggleColorMode } = useColorMode();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -105,6 +109,13 @@ const NewResponsiveHeader = () => {
           <Box sx={{ flexGrow: 1 }} />
 
           <SearchBar />
+          <IconButton
+            onClick={toggleColorMode}
+            color="inherit"
+            aria-label="toggle dark mode"
+          >
+            {mode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />}
+          </IconButton>
           <UserStatus />
         </Toolbar>
       </Container>
