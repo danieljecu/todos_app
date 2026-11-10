@@ -38,7 +38,8 @@ jobs:
         run: npm run build
 
       - name: Unit tests
-        # services + auth controller unit tests (no DB needed).
+        # services + auth controller unit tests, plus observability tests
+        # (health, logger redaction, sentry no-op). No live database.
         # project.test.ts is excluded: it has a pre-existing failure on main
         # (createProject controller/service arg mismatch) tracked separately.
-        run: npx jest --testPathPattern="services|auth\.test" --ci --passWithNoTests
+        run: npx jest --testPathPattern="services|auth\.test|health|logger|sentry" --ci --passWithNoTests

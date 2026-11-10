@@ -33,6 +33,7 @@ jobs:
         run: npm run build
         env:
           REACT_APP_API_HOST: ${{ secrets.API_HOST }}
+          REACT_APP_SENTRY_DSN: ${{ secrets.REACT_APP_SENTRY_DSN }}
           CI: false
       - name: updated app to s3
         run: aws s3 sync ./build s3://todos.jecu.eu --delete

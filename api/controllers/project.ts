@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
 import { prisma } from "./../utils/db_client";
 import { ProjectService } from "./../services/";
+import logger from "../utils/logger";
 
 async function getAllProjects(req: Request, res: Response) {
-  console.log("getAllProjects");
+  logger.info("getAllProjects");
   // TODO get projects by user_id
   try {
     const projects = await ProjectService.getProjectsWithTasklistIds();
@@ -14,14 +15,14 @@ async function getAllProjects(req: Request, res: Response) {
       res.status(200).json(projects);
     }
   } catch (db_error) {
-    console.log(db_error);
+    logger.error("getAllProjects failed", db_error);
     res.sendStatus(404);
   }
 }
 
 async function getProject(req: Request, res: Response) {
   const { project_id } = req.params;
-  console.log("getProject");
+  logger.info("getProject", { project_id });
 
   try {
     const project = await ProjectService.getProjectById(String(project_id));
@@ -34,7 +35,7 @@ async function getProject(req: Request, res: Response) {
 }
 
 async function createProject(req: Request, res: Response) {
-  console.log("createProject");
+  logger.info("createProject");
   const { name } = req.body;
 
   try {
@@ -49,7 +50,7 @@ async function createProject(req: Request, res: Response) {
 async function updateProject(req: Request, res: Response) {
   const { project_id } = req.params;
   const { name } = req.body;
-  console.log("updateProject");
+  logger.info("updateProject", { project_id });
 
   try {
     const project = await ProjectService.updateProject(String(project_id), name);
@@ -61,11 +62,11 @@ async function updateProject(req: Request, res: Response) {
 
 async function deleteProject(req: Request, res: Response) {
   const { project_id } = req.params;
-  console.log("deleteProject");
+  logger.info("deleteProject", { project_id });
 
   try {
-    const project = await ProjectService.deleteProject(String(project_id));
-    console.log("project deleted", project);
+    await ProjectService.deleteProject(String(project_id));
+    logger.info("project deleted", { project_id });
     res.sendStatus(204);
   } catch (db_error) {
     res.status(404).json({ error: "Project not found", db_error });

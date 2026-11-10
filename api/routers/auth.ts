@@ -1,10 +1,10 @@
 import {
-  getHealth,
   createUser,
   login,
   refreshToken,
   logout,
 } from "../controllers/auth.controller";
+import { getHealth } from "../controllers/health";
 import { NextFunction, Router, Response, Request } from "express";
 import { check, param, body, validationResult } from "express-validator";
 import generalValidate from "./generalValidate";
