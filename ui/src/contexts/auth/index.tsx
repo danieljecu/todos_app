@@ -59,7 +59,7 @@ async function getUser() {
   return userData;
 }
 
-const AuthProvider: React.FC = ({ children }) => {
+const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   // const [user, setUser] = useLocalStorageState<IUserDetails | null>(
   //   "user",
   //   null

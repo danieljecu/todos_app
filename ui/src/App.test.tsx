@@ -2,7 +2,6 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import App from "./App";
 import { AppProvider } from "./providers/app-provider";
-import { rest } from "msw";
 import { server } from "test/mocks/server";
 
 // it renders the unauthenticated page

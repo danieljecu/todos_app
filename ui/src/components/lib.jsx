@@ -2,7 +2,7 @@
 import { jsx, css, keyframes } from "@emotion/react";
 import styled from "@emotion/styled/macro";
 import { FaSpinner } from "react-icons/fa";
-import { Dialog as ReachDialog } from "@reach/dialog";
+import { Dialog as BaseDialog } from "./dialog";
 import * as colors from "../styles/colors";
 import * as mq from "../styles/media-queries";
 
@@ -67,7 +67,7 @@ const CircleButton = styled.button({
   marginBottom: "10px",
 });
 
-const Dialog = styled(ReachDialog)({
+const Dialog = styled(BaseDialog)({
   maxWidth: "450px",
   borderRadius: "3px",
   paddingBottom: "3.5em",

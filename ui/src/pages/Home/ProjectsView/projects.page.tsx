@@ -2,7 +2,7 @@ import React from "react";
 import { useProjectsHandler } from "./hooks";
 import { GenericCard } from "pages/Home/components/GenericCard";
 import { ProjectCard, CreateProject } from "./components";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
 import { Link as ReactLink } from "react-router-dom";
 import Link from "@mui/material/Link";

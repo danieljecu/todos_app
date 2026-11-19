@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import Task from "./Task";
-import { Droppable, Draggable } from "react-beautiful-dnd";
+import { Droppable, Draggable } from "@hello-pangea/dnd";
 // import ToDoItems from "../ToDoItems";
 
 const Container = styled.div`

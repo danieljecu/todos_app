@@ -39,7 +39,6 @@ export const useTasklistTasks = (tasklistId: number) => {
           autoClose: 3000,
           isLoading: false,
           closeButton: true,
-          icon: "🟢",
         });
       })
       .catch(console.error);

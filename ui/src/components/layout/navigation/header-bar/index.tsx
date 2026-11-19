@@ -97,7 +97,7 @@ const NewResponsiveHeader = () => {
             >
               {["Projects", "Blog"].map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                  <Typography sx={{ textAlign: "center" }}>{page}</Typography>
                 </MenuItem>
               ))}
             </Menu>

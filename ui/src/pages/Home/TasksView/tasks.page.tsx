@@ -16,9 +16,9 @@ import Box from "@mui/material/Box";
 
 import initialData from "./components/initialData";
 
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import { TaskStatusEnum, STATUSES } from "constants/taskStatuses";
-import { DropResult, ResponderProvided } from "react-beautiful-dnd";
+import { DropResult, ResponderProvided } from "@hello-pangea/dnd";
 
 export const TasksView: React.FC<{}> = () => {
   const { tasklistId } = useParams();

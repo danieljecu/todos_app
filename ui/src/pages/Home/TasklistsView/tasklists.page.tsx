@@ -1,7 +1,7 @@
 import React from "react";
 import { useProjectTasklists } from "./hooks";
 import { TasklistCard, CreateTasklistCard } from "./components";
-// import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+// import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
 import styled from "@emotion/styled";
 import { useParams } from "react-router-dom";

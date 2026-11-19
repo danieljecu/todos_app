@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { IProjectDetails } from "interfaces";
-import { DropResult, ResponderProvided } from "react-beautiful-dnd";
+import { DropResult, ResponderProvided } from "@hello-pangea/dnd";
 import { ProjectService } from "services";
 import { toast } from "react-toastify";
 

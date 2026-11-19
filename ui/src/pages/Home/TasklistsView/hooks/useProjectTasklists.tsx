@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { IProjectDetails, ITaskDetails, ITasklistDetails } from "interfaces";
-import { DropResult, ResponderProvided } from "react-beautiful-dnd";
+import { DropResult, ResponderProvided } from "@hello-pangea/dnd";
 import { ProjectService, TasklistService } from "services";
 
 // i want something like a set project action
