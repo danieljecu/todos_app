@@ -1,8 +1,7 @@
 import { css } from "@emotion/css";
 
-import "@reach/dialog/styles.css";
 import React from "react";
-import { Dialog } from "@reach/dialog";
+import { Dialog } from "../../components/dialog";
 import { Logo } from "../../components/logo";
 import { Spinner, FormGroup, CircleButton } from "../../components/lib";
 import { TextField } from "@mui/material";
@@ -29,13 +28,15 @@ const LoginForm = ({ onSubmit, buttonText }: LoginFormProps) => {
   const [isLoading, setIsLoading] = React.useState(false);
   const [open, setOpen] = React.useState(false);
 
-  function handleSubmit(event: any): void {
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
     setIsLoading(true);
     event.preventDefault();
-    const [email, password] = event.target.elements;
+    const form = event.currentTarget;
+    const email = form.querySelector<HTMLInputElement>("#email");
+    const password = form.querySelector<HTMLInputElement>("#password");
     onSubmit({
-      email: email.value,
-      password: password.value,
+      email: email?.value ?? "",
+      password: password?.value ?? "",
     });
     setIsLoading(false);
   }
@@ -96,7 +97,6 @@ export const Login = ({ login, register }: LoginPropsInterface) => {
           isLoading: false,
           closeButton: true,
           autoClose: 3000,
-          icon: "🟢",
         });
       })
       .catch((err) => {
@@ -125,7 +125,6 @@ export const Login = ({ login, register }: LoginPropsInterface) => {
           autoClose: 3000,
           isLoading: false,
           closeButton: true,
-          icon: "🟢",
         });
         return login(formData);
       })
@@ -137,7 +136,6 @@ export const Login = ({ login, register }: LoginPropsInterface) => {
             autoClose: 3000,
             isLoading: false,
             closeButton: true,
-            icon: "🔴",
           });
         }
       });

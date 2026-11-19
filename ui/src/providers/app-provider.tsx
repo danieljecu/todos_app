@@ -1,9 +1,7 @@
 import React, { Suspense } from "react";
 
 import { AuthProvider } from "../contexts/auth";
-// import "react-toastify/dist/ReactToastify.css";
-// minified version is also included
-import "react-toastify/dist/ReactToastify.min.css";
+import "react-toastify/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 
 import { ThemeProvider, createTheme } from "@mui/material/styles";
